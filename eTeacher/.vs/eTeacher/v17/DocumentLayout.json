@@ -1,0 +1,117 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\eTeacher\\eTeacher\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\eteacher.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:eteacher.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\data\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\data\\adddbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\adddbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABIAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-22T08:32:17.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Users.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Data\\Users.cs",
+              "RelativeDocumentMoniker": "Data\\Users.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Data\\Users.cs",
+              "RelativeToolTip": "Data\\Users.cs",
+              "ViewState": "AQIAABgAAAAAAAAAAAAAAB8AAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T03:04:45.128Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "eTeacher.http",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\eTeacher.http",
+              "RelativeDocumentMoniker": "eTeacher.http",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\eTeacher.http",
+              "RelativeToolTip": "eTeacher.http",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2024-05-21T03:02:10.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T02:52:59.65Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-05-21T02:52:45.495Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AddDbContext.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Data\\AddDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AddDbContext.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Data\\AddDbContext.cs",
+              "RelativeToolTip": "Data\\AddDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-21T02:51:55.751Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
