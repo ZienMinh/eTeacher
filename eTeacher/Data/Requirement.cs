@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace eTeacher.Data
 {
@@ -8,31 +9,29 @@ namespace eTeacher.Data
     {
         [Key]
         [MaxLength(10)]
-        public string requirement_id { get; set; }
+        public string Requirement_id { get; set; }
         [Required]
+        [MaxLength(450)]
+        public string User_id { get; set; }
         [MaxLength(10)]
-        public string user_id { get; set; }
-
-        [MaxLength(10)]
-        public string subject_id { get; set; }
+        public string Subject_id { get; set; }
         [Required]
         [MaxLength(50)]
-        public string subject_name { get; set; }
+        public string Subject_name { get; set; }
         [Required]
-        public DateOnly start_date { get; set; }
+        public DateOnly Start_date { get; set; }
         [Required]
-        public DateOnly end_date { get; set; }
+        public DateOnly End_date { get; set; }
         [Required]
-        public TimeOnly start_time { get; set; }
+        public TimeOnly Start_time { get; set; }
         [Required]
-        public TimeOnly end_time { get; set; }
+        public TimeOnly End_time { get; set; }
         [Required]
-        public byte grade { get; set; }
+        public byte Grade { get; set; }
         [MaxLength(10)]
-        public string rank { get; set; }
+        public string Rank { get; set; }
         [Required]
-        public double price { get; set; }
-
-        public int number_of_session { get; set; }
+        public double Price { get; set; }
+        public int Number_of_session { get; set; }
     }
 }

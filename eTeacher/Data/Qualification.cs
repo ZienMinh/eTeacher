@@ -1,27 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace eTeacher.Data
 {
     [Table("Qualification")]
     public class Qualification
-    {
+	{
         [Key]
         [MaxLength(10)]
-        public string qualification_id { get; set; }
-
-        [MaxLength(10)]
-        public string user_id { get; set; }
-
-        public int graduation_year { get; set; }
+        public string Qualification_id { get; set; }
+		[Required]
+		[MaxLength(450)]
+        public string User_id { get; set; }
+        public int Graduation_year { get; set; }
         [MaxLength(50)]
-        public string specialize { get; set; }
+        public string Specialize { get; set; }
         [MaxLength(10)]
-        public string classification { get; set; }
+        public string Classification { get; set; }
         [MaxLength(50)]
-        public string training_facility { get; set; }
+        public string Training_facility { get; set; }
         [MaxLength(100)]
-        public string image { get; set; }
-
+        public string Image { get; set; }
     }
 }

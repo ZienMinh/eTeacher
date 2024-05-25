@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using eTeacher.Data;
+using eTeacher.Core.DbContext;
 
 #nullable disable
 
@@ -22,295 +22,662 @@ namespace eTeacher.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("eTeacher.Data.Classes", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.Property<string>("class_id")
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Class", b =>
+                {
+                    b.Property<string>("Class_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("address")
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateOnly>("End_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("End_time")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Number_of_session")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<DateOnly>("Start_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly>("Start_time")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Student_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("student_id");
+
+                    b.Property<string>("Subject_id")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Subject_name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateOnly>("end_date")
-                        .HasColumnType("date");
+                    b.Property<string>("Tutor_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<TimeOnly>("end_time")
-                        .HasColumnType("time");
-
-                    b.Property<int>("number_of_session")
-                        .HasColumnType("int");
-
-                    b.Property<double>("price")
-                        .HasColumnType("float");
-
-                    b.Property<DateOnly>("start_date")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("start_time")
-                        .HasColumnType("time");
+                    b.Property<byte>("Type_class")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("student_id")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("subject_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.HasKey("Class_id");
 
-                    b.Property<string>("subject_name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.HasIndex("Student_id");
 
-                    b.Property<string>("tutor_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.HasIndex("Tutor_id");
 
-                    b.Property<byte>("type_class")
-                        .HasColumnType("tinyint");
+                    b.HasIndex("student_id");
 
-                    b.HasKey("class_id");
-
-                    b.ToTable("Classes");
+                    b.ToTable("Classes", t =>
+                        {
+                            t.Property("student_id")
+                                .HasColumnName("student_id1");
+                        });
                 });
 
             modelBuilder.Entity("eTeacher.Data.Order", b =>
                 {
-                    b.Property<string>("order_id")
+                    b.Property<string>("Order_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("class_id")
+                    b.Property<string>("Class_id")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("order_time")
+                    b.Property<DateTime>("Order_time")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("order_type")
+                    b.Property<byte>("Order_type")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("user_id")
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("User_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Wallet_id")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("wallet_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.HasKey("Order_id");
 
-                    b.HasKey("order_id");
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("User_id");
+
+                    b.HasIndex("Wallet_id");
 
                     b.ToTable("Order");
                 });
 
             modelBuilder.Entity("eTeacher.Data.Qualification", b =>
                 {
-                    b.Property<string>("qualification_id")
+                    b.Property<string>("Qualification_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("classification")
+                    b.Property<string>("Classification")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("graduation_year")
+                    b.Property<int>("Graduation_year")
                         .HasColumnType("int");
 
-                    b.Property<string>("image")
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("specialize")
+                    b.Property<string>("Specialize")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("training_facility")
+                    b.Property<string>("Training_facility")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("qualification_id");
+                    b.Property<string>("User_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Qualification_id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("User_id");
 
                     b.ToTable("Qualification");
                 });
 
             modelBuilder.Entity("eTeacher.Data.Report", b =>
                 {
-                    b.Property<string>("report_id")
+                    b.Property<string>("Report_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("content")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(750)
                         .HasColumnType("nvarchar(750)");
 
-                    b.Property<string>("title")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("report_id");
+                    b.Property<string>("User_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Report_id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("User_id");
 
                     b.ToTable("Report");
                 });
 
             modelBuilder.Entity("eTeacher.Data.Requirement", b =>
                 {
-                    b.Property<string>("requirement_id")
+                    b.Property<string>("Requirement_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateOnly>("end_date")
+                    b.Property<DateOnly>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly>("end_time")
+                    b.Property<TimeOnly>("End_time")
                         .HasColumnType("time");
 
-                    b.Property<byte>("grade")
+                    b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
-                    b.Property<int>("number_of_session")
+                    b.Property<int>("Number_of_session")
                         .HasColumnType("int");
 
-                    b.Property<double>("price")
+                    b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("rank")
+                    b.Property<string>("Rank")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateOnly>("start_date")
+                    b.Property<DateOnly>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly>("start_time")
+                    b.Property<TimeOnly>("Start_time")
                         .HasColumnType("time");
 
-                    b.Property<string>("subject_id")
+                    b.Property<string>("Subject_id")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("subject_name")
+                    b.Property<string>("Subject_name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("requirement_id");
+                    b.Property<string>("User_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Requirement_id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("User_id");
 
                     b.ToTable("Requirement");
                 });
 
-            modelBuilder.Entity("eTeacher.Data.Users", b =>
+            modelBuilder.Entity("eTeacher.Data.User", b =>
                 {
-                    b.Property<string>("user_id")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateOnly>("birth_date")
-                        .HasColumnType("date");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("first_name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<byte>("gender")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("image")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("last_name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("link_contact")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("password")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("phone_number")
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<byte>("rating")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte>("role")
-                        .HasColumnType("tinyint");
+                    b.Property<DateOnly>("Birth_date")
+                        .HasColumnType("date");
 
-                    b.Property<string>("user_name")
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("First_name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("wallet_id")
+                    b.Property<byte>("Gender")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Last_name")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Link_contact")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("Rating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("Role")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Wallet_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("user_id");
+                    b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("Wallet_id")
+                        .IsUnique()
+                        .HasFilter("[Wallet_id] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("eTeacher.Data.Wallet", b =>
                 {
-                    b.Property<string>("wallet_id")
+                    b.Property<string>("Wallet_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<double>("balance")
+                    b.Property<double>("Balance")
                         .HasColumnType("float");
 
-                    b.HasKey("wallet_id");
+                    b.HasKey("Wallet_id");
 
                     b.ToTable("Wallet");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Class", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("Student_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("Tutor_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("eTeacher.Data.User", "Student")
+                        .WithMany("Classes")
+                        .HasForeignKey("student_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Order", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("User_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("eTeacher.Data.Wallet", null)
+                        .WithMany()
+                        .HasForeignKey("Wallet_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Qualification", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany("Qualifications")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("User_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Report", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany("Reports")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("User_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Requirement", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany("Requirements")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("eTeacher.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("User_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("eTeacher.Data.User", b =>
+                {
+                    b.HasOne("eTeacher.Data.Wallet", null)
+                        .WithOne()
+                        .HasForeignKey("eTeacher.Data.User", "Wallet_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("eTeacher.Data.User", b =>
+                {
+                    b.Navigation("Classes");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Qualifications");
+
+                    b.Navigation("Reports");
+
+                    b.Navigation("Requirements");
                 });
 #pragma warning restore 612, 618
         }
