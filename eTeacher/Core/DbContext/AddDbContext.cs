@@ -1,5 +1,4 @@
 ﻿using eTeacher.Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,24 +9,20 @@ namespace eTeacher.Core.DbContext
         public AddDbContext(DbContextOptions<AddDbContext> options) : base(options) { }
 
         public override DbSet<User> Users { get; set; }
-
-        public DbSet<Wallet> Wallets { get; set; }
-
         public DbSet<Requirement> Requirements { get; set; }
-
         public DbSet<Report> Reports { get; set; }
-
         public DbSet<Qualification> Qualifications { get; set; }
-
         public DbSet<Order> Orders { get; set; }
-
         public DbSet<Class> Classes { get; set; }
+        public DbSet<Otp> Otps { get; set; }
+
+        public DbSet<Subject> Subjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //Users entity configuration
+            // Users entity configuration
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasMany(e => e.Requirements)
@@ -37,98 +32,91 @@ namespace eTeacher.Core.DbContext
 
                 entity.HasMany(e => e.Classes)
                       .WithOne()
-                      .HasForeignKey(e => e.Tutor_id)
+                      .HasForeignKey(c => c.Tutor_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.Classes)
+                      .WithOne(c => c.Student)
+                      .HasForeignKey(c => c.Student_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(e => e.Orders)
                       .WithOne()
-                      .HasForeignKey(e => e.User_id)
+                      .HasForeignKey(o => o.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(e => e.Qualifications)
                       .WithOne()
-                      .HasForeignKey(e => e.User_id)
+                      .HasForeignKey(q => q.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(e => e.Reports)
                       .WithOne()
-                      .HasForeignKey(e => e.User_id)
+                      .HasForeignKey(r => r.User_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.Otps)
+                      .WithOne(o => o.User)
+                      .HasForeignKey(o => o.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            //Requirement entity configuration
             modelBuilder.Entity<Requirement>(entity =>
             {
                 entity.HasKey(e => e.Requirement_id);
-                entity.HasOne<User>()
+                entity.HasOne(e => e.Subject)
                       .WithMany()
-                      .HasForeignKey(e => e.User_id)
+                      .HasForeignKey(e => e.Subject_name)
+                      .HasPrincipalKey(s => s.Subject_name)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            //Wallet entity configuration
-            modelBuilder.Entity<Wallet>(entity =>
-            {
-                entity.HasKey(e => e.Wallet_id);
-                entity.HasOne<User>()
-                      .WithOne()
-                      .HasForeignKey<User>(e => e.Wallet_id)
-                      .OnDelete(DeleteBehavior.Restrict);
-            });
-
-            //Classes entity configuration
+            // Class entity configuration
             modelBuilder.Entity<Class>(entity =>
             {
                 entity.HasKey(e => e.Class_id);
-
-                entity.HasOne<User>()
-                        .WithMany()
-                        .HasForeignKey(e => e.Student_id)
-                        .HasPrincipalKey(u => u.Id)
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne<User>()
-                        .WithMany()
-                        .HasForeignKey(e => e.Tutor_id)
-                        .HasPrincipalKey(u => u.Id)
-                        .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(e => e.Subject)
+                      .WithMany()
+                      .HasForeignKey(e => e.Subject_name)
+                      .HasPrincipalKey(s => s.Subject_name)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
-            //Order entity configuration
+            // Order entity configuration
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.HasKey(e => e.Order_id);
-                entity.HasOne<User>()
-                      .WithMany()
-                      .HasForeignKey(e => e.User_id)
-                      .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasOne<Wallet>()
-                      .WithMany()
-                      .HasForeignKey(e => e.Wallet_id)
-                      .OnDelete(DeleteBehavior.Restrict);
             });
 
-            //Qualification entity configuration
+            // Qualification entity configuration
             modelBuilder.Entity<Qualification>(entity =>
             {
                 entity.HasKey(e => e.Qualification_id);
-                entity.HasOne<User>()
-                      .WithMany()
-                      .HasForeignKey(e => e.User_id)
-                      .OnDelete(DeleteBehavior.Restrict);
             });
 
-            //Report entity configuration
+            // Report entity configuration
             modelBuilder.Entity<Report>(entity =>
             {
                 entity.HasKey(e => e.Report_id);
-                entity.HasOne<User>()
-                      .WithMany()
-                      .HasForeignKey(e => e.User_id)
+            });
+
+            // Otp entity configuration
+            modelBuilder.Entity<Otp>(entity =>
+            {
+                entity.HasKey(e => e.Otp_id);
+                entity.HasOne(o => o.User)
+                      .WithMany(u => u.Otps)
+                      .HasForeignKey(o => o.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Subject entity configuration
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.HasKey(e => e.Subject_id);
+                entity.HasIndex(e => e.Subject_name)
+                      .IsUnique();
             });
         }
     }
 }
-

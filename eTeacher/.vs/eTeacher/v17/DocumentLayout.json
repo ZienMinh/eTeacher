@@ -1,30 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\",
+  "WorkspaceRootPath": "D:\\eTeacher\\eTeacher\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|c:\\users\\phong\\documents\\github\\eteacher\\eteacher\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|c:\\users\\phong\\documents\\github\\eteacher\\eteacher\\eteacher.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
-      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:eteacher.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\data\\requirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\requirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|c:\\users\\phong\\documents\\github\\eteacher\\eteacher\\data\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|c:\\users\\phong\\documents\\github\\eteacher\\eteacher\\data\\adddbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\adddbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|c:\\users\\phong\\documents\\github\\eteacher\\eteacher\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|c:\\users\\phong\\documents\\github\\eteacher\\eteacher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,80 +34,93 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\UserDto.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\UserDto.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\DTO\\UserDto.cs",
+              "RelativeToolTip": "Core\\DTO\\UserDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T01:19:52.472Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AQIAAGwAAAAAAAAAAAAkwIUAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T01:05:54.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAowFcAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T00:56:13.353Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Requirement.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Data\\Requirement.cs",
+              "RelativeDocumentMoniker": "Data\\Requirement.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Data\\Requirement.cs",
+              "RelativeToolTip": "Data\\Requirement.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwBcAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T00:48:39.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\RegisterDto.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\DTO\\RegisterDto.cs",
+              "RelativeToolTip": "Core\\DTO\\RegisterDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T00:48:20.19Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AQIAAFEAAAAAAAAAAAAAAGMAAAAFAAAA",
+              "Title": "RequirementController.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\RequirementController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RequirementController.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\RequirementController.cs",
+              "RelativeToolTip": "Controllers\\RequirementController.cs",
+              "ViewState": "AQIAAFsAAAAAAAAAAAAkwHMAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-22T08:32:17.271Z",
+              "WhenOpened": "2024-06-02T08:04:48.543Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Users.cs",
-              "DocumentMoniker": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Data\\Users.cs",
-              "RelativeDocumentMoniker": "Data\\Users.cs",
-              "ToolTip": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Data\\Users.cs",
-              "RelativeToolTip": "Data\\Users.cs",
-              "ViewState": "AQIAABgAAAAAAAAAAAAAAB8AAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T03:04:45.128Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "eTeacher.http",
-              "DocumentMoniker": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\eTeacher.http",
-              "RelativeDocumentMoniker": "eTeacher.http",
-              "ToolTip": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\eTeacher.http",
-              "RelativeToolTip": "eTeacher.http",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2024-05-21T03:02:10.755Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T02:52:59.65Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-05-21T02:52:45.495Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AddDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Data\\AddDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\AddDbContext.cs",
-              "ToolTip": "C:\\Users\\PHONG\\Documents\\GitHub\\eTeacher\\eTeacher\\Data\\AddDbContext.cs",
-              "RelativeToolTip": "Data\\AddDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-21T02:51:55.751Z"
             }
           ]
         }

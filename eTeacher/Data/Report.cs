@@ -15,6 +15,9 @@ namespace eTeacher.Data
         public string User_id { get; set; }
         [Required]
         [MaxLength(50)]
+        public string Class_id { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string Title { get; set; }
         [Required]
         [MaxLength(750)]

@@ -189,15 +189,10 @@ namespace eTeacher.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("student_id");
 
-                    b.Property<string>("Subject_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("Subject_name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Tutor_id")
                         .IsRequired()
@@ -209,15 +204,13 @@ namespace eTeacher.Migrations
 
                     b.Property<string>("student_id")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Class_id");
 
                     b.HasIndex("Student_id");
 
-                    b.HasIndex("Tutor_id");
-
-                    b.HasIndex("student_id");
+                    b.HasIndex("Subject_name");
 
                     b.ToTable("Classes", t =>
                         {
@@ -243,28 +236,42 @@ namespace eTeacher.Migrations
                     b.Property<byte>("Order_type")
                         .HasColumnType("tinyint");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("User_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Order_id");
+
+                    b.HasIndex("User_id");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Otp", b =>
+                {
+                    b.Property<string>("Otp_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("Expiry_time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Otp_code")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("User_id")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Wallet_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("Order_id");
-
-                    b.HasIndex("UserId");
+                    b.HasKey("Otp_id");
 
                     b.HasIndex("User_id");
 
-                    b.HasIndex("Wallet_id");
-
-                    b.ToTable("Order");
+                    b.ToTable("Otp");
                 });
 
             modelBuilder.Entity("eTeacher.Data.Qualification", b =>
@@ -296,17 +303,12 @@ namespace eTeacher.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("User_id")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Qualification_id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("User_id");
 
@@ -319,6 +321,11 @@ namespace eTeacher.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("Class_id")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(750)
@@ -329,17 +336,12 @@ namespace eTeacher.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("User_id")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Report_id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("User_id");
 
@@ -378,17 +380,9 @@ namespace eTeacher.Migrations
                     b.Property<TimeOnly>("Start_time")
                         .HasColumnType("time");
 
-                    b.Property<string>("Subject_id")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("Subject_name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("User_id")
@@ -398,11 +392,30 @@ namespace eTeacher.Migrations
 
                     b.HasKey("Requirement_id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("Subject_name");
 
                     b.HasIndex("User_id");
 
                     b.ToTable("Requirement");
+                });
+
+            modelBuilder.Entity("eTeacher.Data.Subject", b =>
+                {
+                    b.Property<string>("Subject_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Subject_name")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Subject_id");
+
+                    b.HasIndex("Subject_name")
+                        .IsUnique();
+
+                    b.ToTable("Subject");
                 });
 
             modelBuilder.Entity("eTeacher.Data.User", b =>
@@ -492,10 +505,6 @@ namespace eTeacher.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Wallet_id")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -506,25 +515,7 @@ namespace eTeacher.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("Wallet_id")
-                        .IsUnique()
-                        .HasFilter("[Wallet_id] IS NOT NULL");
-
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("eTeacher.Data.Wallet", b =>
-                {
-                    b.Property<string>("Wallet_id")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<double>("Balance")
-                        .HasColumnType("float");
-
-                    b.HasKey("Wallet_id");
-
-                    b.ToTable("Wallet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -580,54 +571,48 @@ namespace eTeacher.Migrations
 
             modelBuilder.Entity("eTeacher.Data.Class", b =>
                 {
-                    b.HasOne("eTeacher.Data.User", null)
-                        .WithMany()
+                    b.HasOne("eTeacher.Data.User", "Student")
+                        .WithMany("Classes")
                         .HasForeignKey("Student_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("eTeacher.Data.User", null)
+                    b.HasOne("eTeacher.Data.Subject", "Subject")
                         .WithMany()
-                        .HasForeignKey("Tutor_id")
+                        .HasForeignKey("Subject_name")
+                        .HasPrincipalKey("Subject_name")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("eTeacher.Data.User", "Student")
-                        .WithMany("Classes")
-                        .HasForeignKey("student_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Student");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("eTeacher.Data.Order", b =>
                 {
                     b.HasOne("eTeacher.Data.User", null)
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("User_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
 
-                    b.HasOne("eTeacher.Data.User", null)
-                        .WithMany()
+            modelBuilder.Entity("eTeacher.Data.Otp", b =>
+                {
+                    b.HasOne("eTeacher.Data.User", "User")
+                        .WithMany("Otps")
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("eTeacher.Data.Wallet", null)
-                        .WithMany()
-                        .HasForeignKey("Wallet_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eTeacher.Data.Qualification", b =>
                 {
                     b.HasOne("eTeacher.Data.User", null)
                         .WithMany("Qualifications")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("eTeacher.Data.User", null)
-                        .WithMany()
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -637,10 +622,6 @@ namespace eTeacher.Migrations
                 {
                     b.HasOne("eTeacher.Data.User", null)
                         .WithMany("Reports")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("eTeacher.Data.User", null)
-                        .WithMany()
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -648,23 +629,20 @@ namespace eTeacher.Migrations
 
             modelBuilder.Entity("eTeacher.Data.Requirement", b =>
                 {
-                    b.HasOne("eTeacher.Data.User", null)
-                        .WithMany("Requirements")
-                        .HasForeignKey("UserId");
+                    b.HasOne("eTeacher.Data.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("Subject_name")
+                        .HasPrincipalKey("Subject_name")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("eTeacher.Data.User", null)
-                        .WithMany()
+                        .WithMany("Requirements")
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("eTeacher.Data.User", b =>
-                {
-                    b.HasOne("eTeacher.Data.Wallet", null)
-                        .WithOne()
-                        .HasForeignKey("eTeacher.Data.User", "Wallet_id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("eTeacher.Data.User", b =>
@@ -672,6 +650,8 @@ namespace eTeacher.Migrations
                     b.Navigation("Classes");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("Otps");
 
                     b.Navigation("Qualifications");
 

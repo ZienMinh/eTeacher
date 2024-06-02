@@ -11,9 +11,6 @@ namespace eTeacher.Data
         [MaxLength(10)]
         public string Order_id { get; set; }
         [Required]
-        [MaxLength(10)]
-        public string Wallet_id { get; set; }
-        [Required]
         public DateTime Order_time { get; set; }
         [Required]
         [MaxLength(450)]

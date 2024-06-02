@@ -69,6 +69,14 @@ builder.Services
 // Inject app Dependencies (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IEmailService>(provider => new EmailService(
+    smtpHost: builder.Configuration["EmailSettings:SmtpHost"],
+    smtpPort: int.Parse(builder.Configuration["EmailSettings:SmtpPort"]),
+    fromEmail: builder.Configuration["EmailSettings:FromEmail"],
+    smtpUser: builder.Configuration["EmailSettings:SmtpUser"],
+    smtpPass: builder.Configuration["EmailSettings:SmtpPass"]
+));
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddEndpointsApiExplorer();

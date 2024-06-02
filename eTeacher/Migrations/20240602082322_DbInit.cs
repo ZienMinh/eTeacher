@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace eTeacher.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class DbInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,39 +26,6 @@ namespace eTeacher.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Wallet",
-                columns: table => new
-                {
-                    Wallet_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Balance = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Wallet", x => x.Wallet_id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -68,7 +35,6 @@ namespace eTeacher.Migrations
                     Gender = table.Column<byte>(type: "tinyint", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Wallet_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Birth_date = table.Column<DateOnly>(type: "date", nullable: false),
                     Link_contact = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Rating = table.Column<byte>(type: "tinyint", nullable: false),
@@ -91,12 +57,40 @@ namespace eTeacher.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subject",
+                columns: table => new
+                {
+                    Subject_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subject", x => x.Subject_id);
+                    table.UniqueConstraint("AK_Subject_Subject_name", x => x.Subject_name);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Wallet_Wallet_id",
-                        column: x => x.Wallet_id,
-                        principalTable: "Wallet",
-                        principalColumn: "Wallet_id",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,78 +179,43 @@ namespace eTeacher.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classes",
-                columns: table => new
-                {
-                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    student_id1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Subject_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Subject_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Start_date = table.Column<DateOnly>(type: "date", nullable: false),
-                    End_date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Start_time = table.Column<TimeOnly>(type: "time", nullable: false),
-                    End_time = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Type_class = table.Column<byte>(type: "tinyint", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Number_of_session = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Classes", x => x.Class_id);
-                    table.ForeignKey(
-                        name: "FK_Classes_AspNetUsers_Tutor_id",
-                        column: x => x.Tutor_id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Classes_AspNetUsers_student_id",
-                        column: x => x.student_id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Classes_AspNetUsers_student_id1",
-                        column: x => x.student_id1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
                     Order_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Wallet_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Order_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Order_type = table.Column<byte>(type: "tinyint", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Order_type = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Order", x => x.Order_id);
-                    table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Order_AspNetUsers_User_id",
                         column: x => x.User_id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Otp",
+                columns: table => new
+                {
+                    Otp_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Otp_code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Expiry_time = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Otp", x => x.Otp_id);
                     table.ForeignKey(
-                        name: "FK_Order_Wallet_Wallet_id",
-                        column: x => x.Wallet_id,
-                        principalTable: "Wallet",
-                        principalColumn: "Wallet_id",
+                        name: "FK_Otp_AspNetUsers_User_id",
+                        column: x => x.User_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -270,17 +229,11 @@ namespace eTeacher.Migrations
                     Specialize = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Classification = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Training_facility = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Qualification", x => x.Qualification_id);
-                    table.ForeignKey(
-                        name: "FK_Qualification_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Qualification_AspNetUsers_User_id",
                         column: x => x.User_id,
@@ -295,18 +248,13 @@ namespace eTeacher.Migrations
                 {
                     Report_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Class_id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(750)", maxLength: 750, nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Content = table.Column<string>(type: "nvarchar(750)", maxLength: 750, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Report", x => x.Report_id);
-                    table.ForeignKey(
-                        name: "FK_Report_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Report_AspNetUsers_User_id",
                         column: x => x.User_id,
@@ -316,13 +264,47 @@ namespace eTeacher.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Start_date = table.Column<DateOnly>(type: "date", nullable: false),
+                    End_date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Start_time = table.Column<TimeOnly>(type: "time", nullable: false),
+                    End_time = table.Column<TimeOnly>(type: "time", nullable: false),
+                    Type_class = table.Column<byte>(type: "tinyint", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Number_of_session = table.Column<int>(type: "int", nullable: false),
+                    student_id1 = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Class_id);
+                    table.ForeignKey(
+                        name: "FK_Classes_AspNetUsers_student_id",
+                        column: x => x.student_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Classes_Subject_Subject_name",
+                        column: x => x.Subject_name,
+                        principalTable: "Subject",
+                        principalColumn: "Subject_name",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Requirement",
                 columns: table => new
                 {
                     Requirement_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Subject_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Subject_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Start_date = table.Column<DateOnly>(type: "date", nullable: false),
                     End_date = table.Column<DateOnly>(type: "date", nullable: false),
                     Start_time = table.Column<TimeOnly>(type: "time", nullable: false),
@@ -330,22 +312,22 @@ namespace eTeacher.Migrations
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Rank = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    Number_of_session = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Number_of_session = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Requirement", x => x.Requirement_id);
                     table.ForeignKey(
-                        name: "FK_Requirement_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Requirement_AspNetUsers_User_id",
                         column: x => x.User_id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Requirement_Subject_Subject_name",
+                        column: x => x.Subject_name,
+                        principalTable: "Subject",
+                        principalColumn: "Subject_name",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -382,13 +364,6 @@ namespace eTeacher.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_Wallet_id",
-                table: "AspNetUsers",
-                column: "Wallet_id",
-                unique: true,
-                filter: "[Wallet_id] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -401,14 +376,9 @@ namespace eTeacher.Migrations
                 column: "student_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Classes_student_id1",
+                name: "IX_Classes_Subject_name",
                 table: "Classes",
-                column: "student_id1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Classes_Tutor_id",
-                table: "Classes",
-                column: "Tutor_id");
+                column: "Subject_name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_User_id",
@@ -416,14 +386,9 @@ namespace eTeacher.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UserId",
-                table: "Order",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_Wallet_id",
-                table: "Order",
-                column: "Wallet_id");
+                name: "IX_Otp_User_id",
+                table: "Otp",
+                column: "User_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Qualification_User_id",
@@ -431,19 +396,14 @@ namespace eTeacher.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Qualification_UserId",
-                table: "Qualification",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Report_User_id",
                 table: "Report",
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Report_UserId",
-                table: "Report",
-                column: "UserId");
+                name: "IX_Requirement_Subject_name",
+                table: "Requirement",
+                column: "Subject_name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requirement_User_id",
@@ -451,9 +411,10 @@ namespace eTeacher.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requirement_UserId",
-                table: "Requirement",
-                column: "UserId");
+                name: "IX_Subject_Subject_name",
+                table: "Subject",
+                column: "Subject_name",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -481,6 +442,9 @@ namespace eTeacher.Migrations
                 name: "Order");
 
             migrationBuilder.DropTable(
+                name: "Otp");
+
+            migrationBuilder.DropTable(
                 name: "Qualification");
 
             migrationBuilder.DropTable(
@@ -496,7 +460,7 @@ namespace eTeacher.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Wallet");
+                name: "Subject");
         }
     }
 }

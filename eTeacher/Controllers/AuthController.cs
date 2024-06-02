@@ -87,5 +87,18 @@ namespace eTeacher.Controllers
 
 			return BadRequest(operationResult);
 		}
-	}
+
+        // Route -> reset-password
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+        {
+            var resetResult = await _authService.ResetPasswordAsync(resetPasswordDto);
+
+            if (resetResult.IsSucceed)
+                return Ok(resetResult);
+
+            return BadRequest(resetResult);
+        }
+    }
 }

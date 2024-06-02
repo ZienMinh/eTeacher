@@ -21,11 +21,10 @@ namespace eTeacher.Data
 		[Required]
 		[MaxLength(450)]
         public string Tutor_id { get; set; }
-        [MaxLength(10)]
-        public string Subject_id { get; set; }
         [Required]
-        [MaxLength(50)]
+        [MaxLength(450)]
         public string Subject_name { get; set; }
+        public Subject Subject { get; set; }
         [Required]
         public DateOnly Start_date { get; set; }
         [Required]

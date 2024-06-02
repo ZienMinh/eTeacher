@@ -1,8 +1,10 @@
-﻿using eTeacher.Core.DTO;
+﻿using eTeacher.Core.DbContext;
+using eTeacher.Core.DTO;
 using eTeacher.Core.Interfaces;
 using eTeacher.Core.OtherObjects;
 using eTeacher.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,18 +12,24 @@ using System.Text;
 
 namespace eTeacher.Core.Services
 {
+
 	public class AuthService : IAuthService
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly IConfiguration _configuration;
+        private readonly AddDbContext _context;
+        private readonly IEmailService _emailService;
 
-		public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+
+        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AddDbContext context, IEmailService emailService)
 		{
 			_userManager = userManager;
 			_roleManager = roleManager;
 			_configuration = configuration;
-		}
+            _context = context;
+            _emailService = emailService;
+        }
 
 		public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
 		{
@@ -194,6 +202,102 @@ namespace eTeacher.Core.Services
 
 			return token;
 		}
-	}
+
+        public async Task<AuthServiceResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await _userManager.FindByNameAsync(resetPasswordDto.UserName);
+
+            if (user == null)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "User not found"
+                };
+            }
+
+            var isOtpValid = await VerifyOtpAsync(user, resetPasswordDto.Otp);
+            if (!isOtpValid)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "Invalid OTP"
+                };
+            }
+
+            var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetPasswordToken, resetPasswordDto.NewPassword);
+
+            if (!resetPasswordResult.Succeeded)
+            {
+                var errorString = "Password Reset Failed Because: ";
+                foreach (var error in resetPasswordResult.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
+
+            return new AuthServiceResponseDto()
+            {
+                IsSucceed = true,
+                Message = "Password reset successfully"
+            };
+        }
+
+        private async Task<bool> VerifyOtpAsync(User user, string otp)
+        {
+            var otpEntry = await _context.Otps
+                .SingleOrDefaultAsync(o => o.User_id == user.Id && o.Otp_code == otp);
+
+            if (otpEntry == null)
+            {
+                return false;
+            }
+
+            if (otpEntry.Expiry_time < DateTime.UtcNow)
+            {
+                return false;
+            }
+
+            _context.Otps.Remove(otpEntry);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task SendOtpAsync(User user)
+        {
+            var otpCode = GenerateOtpCode();
+            var expiryTime = DateTime.UtcNow.AddMinutes(5);
+
+            var otp = new Otp
+            {
+                User_id = user.Id,
+                Otp_code = otpCode,
+                Expiry_time = expiryTime
+            };
+            _context.Otps.Add(otp);
+            await _context.SaveChangesAsync();
+
+            await _emailService.SendEmailAsync(user.Email, "Your OTP Code", $"Your OTP code is {otpCode}");
+        }
+
+        private string GenerateOtpCode()
+        {
+            var random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        Task<bool> IAuthService.VerifyOtpAsync(User user, string otp)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 
