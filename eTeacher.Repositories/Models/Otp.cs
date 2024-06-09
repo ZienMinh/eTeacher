@@ -14,7 +14,6 @@ namespace BusinessObject.Models
         [Required]
         [MaxLength(10)]
         public string Otp_id { get; set; }
-        [Required]
         [MaxLength(450)]
         public string User_id { get; set; }
         public User User { get; set; }

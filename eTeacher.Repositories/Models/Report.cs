@@ -14,10 +14,8 @@ namespace BusinessObject.Models
         [Key]
         [MaxLength(10)]
         public string Report_id { get; set; }
-        [Required]
         [MaxLength(450)]
         public string User_id { get; set; }
-        [Required]
         [MaxLength(50)]
         public string Class_id { get; set; }
         [Required]

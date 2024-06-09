@@ -14,20 +14,22 @@ namespace BusinessObject.Models
         [Key]
         [MaxLength(10)]
         public string Requirement_id { get; set; }
-        [Required]
         [MaxLength(450)]
         public string User_id { get; set; }
-        [Required]
         [MaxLength(450)]
         public string Subject_name { get; set; }
         public Subject Subject { get; set; }
         [Required]
+        [NotMapped]
         public DateOnly Start_date { get; set; }
         [Required]
+        [NotMapped]
         public DateOnly End_date { get; set; }
         [Required]
+        [NotMapped]
         public TimeOnly Start_time { get; set; }
         [Required]
+        [NotMapped]
         public TimeOnly End_time { get; set; }
         [Required]
         public byte Grade { get; set; }

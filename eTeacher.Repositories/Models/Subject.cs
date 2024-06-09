@@ -17,5 +17,8 @@ namespace BusinessObject.Models
         [Required]
         [MaxLength(450)]
         public string Subject_name { get; set; }
+
+        public ICollection<Requirement> Requirements { get; set; }
+        public ICollection<Class> Classes { get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace BusinessObject.Models
         public string Order_id { get; set; }
         [Required]
         public DateTime Order_time { get; set; }
-        [Required]
         [MaxLength(450)]
         public string User_id { get; set; }
         [MaxLength(10)]

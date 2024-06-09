@@ -10,8 +10,11 @@ namespace BusinessObject.Models
 {
     public partial class AddDbContext : DbContext
     {
-        public AddDbContext() { }
+        
         public AddDbContext(DbContextOptions<AddDbContext> options) : base(options) { }
+
+        public AddDbContext() { }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Requirement> Requirements { get; set; }
         public DbSet<Report> Reports { get; set; }
@@ -25,7 +28,7 @@ namespace BusinessObject.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            // Users entity configuration
+            // User entity configuration
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasMany(e => e.Requirements)
@@ -33,12 +36,12 @@ namespace BusinessObject.Models
                       .HasForeignKey(e => e.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(e => e.Classes)
-                      .WithOne()
+                entity.HasMany(e => e.TutorClasses)
+                      .WithOne(c => c.Tutor)
                       .HasForeignKey(c => c.Tutor_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(e => e.Classes)
+                entity.HasMany(e => e.StudentClasses)
                       .WithOne(c => c.Student)
                       .HasForeignKey(c => c.Student_id)
                       .OnDelete(DeleteBehavior.Restrict);
@@ -64,11 +67,12 @@ namespace BusinessObject.Models
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
+            // Requirement entity configuration
             modelBuilder.Entity<Requirement>(entity =>
             {
                 entity.HasKey(e => e.Requirement_id);
                 entity.HasOne(e => e.Subject)
-                      .WithMany()
+                      .WithMany(s => s.Requirements)
                       .HasForeignKey(e => e.Subject_name)
                       .HasPrincipalKey(s => s.Subject_name)
                       .OnDelete(DeleteBehavior.Restrict);
@@ -79,7 +83,7 @@ namespace BusinessObject.Models
             {
                 entity.HasKey(e => e.Class_id);
                 entity.HasOne(e => e.Subject)
-                      .WithMany()
+                      .WithMany(s => s.Classes)
                       .HasForeignKey(e => e.Subject_name)
                       .HasPrincipalKey(s => s.Subject_name)
                       .OnDelete(DeleteBehavior.Restrict);

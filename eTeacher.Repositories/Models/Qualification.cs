@@ -14,7 +14,6 @@ namespace BusinessObject.Models
         [Key]
         [MaxLength(10)]
         public string Qualification_id { get; set; }
-        [Required]
         [MaxLength(450)]
         public string User_id { get; set; }
         public int Graduation_year { get; set; }
