@@ -442,3 +442,7 @@ D:\eTeacher\eTeacher\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 D:\eTeacher\eTeacher\bin\Debug\net8.0\Scrutor.dll
 D:\eTeacher\eTeacher\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 D:\eTeacher\eTeacher\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+<<<<<<< HEAD
+=======
+D:\eTeacher\eTeacher\bin\Debug\net8.0\eTeacher.staticwebassets.runtime.json
+>>>>>>> test

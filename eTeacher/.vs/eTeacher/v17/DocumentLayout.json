@@ -3,6 +3,7 @@
   "WorkspaceRootPath": "D:\\eTeacher\\eTeacher\\",
   "Documents": [
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,14 +18,63 @@
     {
       "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\data\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> test
     },
     {
       "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\authserviceresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\authserviceresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\logindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:controllers\\requirementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\data\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\core\\dto\\classdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:core\\dto\\classdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|d:\\eteacher\\eteacher\\data\\requirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A269F032-62EC-4494-8B67-B71DE15747D2}|eTeacher.csproj|solutionrelative:data\\requirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> test
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +84,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 2,
+=======
+          "SelectedChildIndex": 1,
+>>>>>>> test
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,6 +96,7 @@
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 3,
               "Title": "UserDto.cs",
               "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\UserDto.cs",
@@ -51,23 +106,104 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T01:19:52.472Z",
+=======
+              "DocumentIndex": 0,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Data\\User.cs",
+              "RelativeDocumentMoniker": "Data\\User.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Data\\User.cs",
+              "RelativeToolTip": "Data\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-05T09:20:07.278Z",
+>>>>>>> test
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 1,
+=======
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T03:09:47.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AuthServiceResponseDto.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\AuthServiceResponseDto.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\AuthServiceResponseDto.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\DTO\\AuthServiceResponseDto.cs",
+              "RelativeToolTip": "Core\\DTO\\AuthServiceResponseDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T03:02:57.303Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "LoginDto.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\LoginDto.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\LoginDto.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\DTO\\LoginDto.cs",
+              "RelativeToolTip": "Core\\DTO\\LoginDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T02:41:29.978Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Core\\Services\\AuthService.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\Services\\AuthService.cs",
+              "RelativeToolTip": "Core\\Services\\AuthService.cs",
+              "ViewState": "AQIAAHMAAAAAAAAAAAAkwC8BAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T02:40:16.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Class.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Data\\Class.cs",
+              "RelativeDocumentMoniker": "Data\\Class.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Data\\Class.cs",
+              "RelativeToolTip": "Data\\Class.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-04T00:24:18.837Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+>>>>>>> test
               "Title": "UsersController.cs",
               "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
               "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Controllers\\UsersController.cs",
+<<<<<<< HEAD
               "ViewState": "AQIAAGwAAAAAAAAAAAAkwIUAAAAJAAAA",
+=======
+              "ViewState": "AQIAADMAAAAAAAAAAAAUwDoAAAA2AAAA",
+>>>>>>> test
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-31T01:05:54.546Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 5,
               "Title": "AuthController.cs",
               "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\AuthController.cs",
@@ -112,15 +248,86 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+=======
+              "DocumentIndex": 11,
+              "Title": "ClassDto.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\ClassDto.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\ClassDto.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\DTO\\ClassDto.cs",
+              "RelativeToolTip": "Core\\DTO\\ClassDto.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAA7wAgAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-03T07:50:38.098Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+>>>>>>> test
               "Title": "RequirementController.cs",
               "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\RequirementController.cs",
               "RelativeDocumentMoniker": "Controllers\\RequirementController.cs",
               "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\RequirementController.cs",
               "RelativeToolTip": "Controllers\\RequirementController.cs",
+<<<<<<< HEAD
               "ViewState": "AQIAAFsAAAAAAAAAAAAkwHMAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-02T08:04:48.543Z",
               "EditorCaption": ""
+=======
+              "ViewState": "AQIAABEAAAAAAAAAAAAmwBoAAAAZAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-02T09:17:03.655Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AuthController.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Controllers\\AuthController.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAA1wCYAAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T00:56:13.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RegisterDto.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Core\\DTO\\RegisterDto.cs",
+              "RelativeDocumentMoniker": "Core\\DTO\\RegisterDto.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Core\\DTO\\RegisterDto.cs",
+              "RelativeToolTip": "Core\\DTO\\RegisterDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAABnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T00:48:20.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "index.html",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "wwwroot\\index.html",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\wwwroot\\index.html",
+              "RelativeToolTip": "wwwroot\\index.html",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2024-06-04T09:07:38.68Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Requirement.cs",
+              "DocumentMoniker": "D:\\eTeacher\\eTeacher\\Data\\Requirement.cs",
+              "RelativeDocumentMoniker": "Data\\Requirement.cs",
+              "ToolTip": "D:\\eTeacher\\eTeacher\\Data\\Requirement.cs",
+              "RelativeToolTip": "Data\\Requirement.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAYwBwAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-31T00:48:39.685Z"
+>>>>>>> test
             }
           ]
         }

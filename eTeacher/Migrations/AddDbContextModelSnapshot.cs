@@ -186,8 +186,12 @@ namespace eTeacher.Migrations
                     b.Property<string>("Student_id")
                         .IsRequired()
                         .HasMaxLength(450)
+<<<<<<< HEAD
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("student_id");
+=======
+                        .HasColumnType("nvarchar(450)");
+>>>>>>> test
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
@@ -202,21 +206,30 @@ namespace eTeacher.Migrations
                     b.Property<byte>("Type_class")
                         .HasColumnType("tinyint");
 
+<<<<<<< HEAD
                     b.Property<string>("student_id")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+=======
+>>>>>>> test
                     b.HasKey("Class_id");
 
                     b.HasIndex("Student_id");
 
                     b.HasIndex("Subject_name");
 
+<<<<<<< HEAD
                     b.ToTable("Classes", t =>
                         {
                             t.Property("student_id")
                                 .HasColumnName("student_id1");
                         });
+=======
+                    b.HasIndex("Tutor_id");
+
+                    b.ToTable("Classes");
+>>>>>>> test
                 });
 
             modelBuilder.Entity("eTeacher.Data.Order", b =>
@@ -572,21 +585,43 @@ namespace eTeacher.Migrations
             modelBuilder.Entity("eTeacher.Data.Class", b =>
                 {
                     b.HasOne("eTeacher.Data.User", "Student")
+<<<<<<< HEAD
                         .WithMany("Classes")
+=======
+                        .WithMany("StudentClasses")
+>>>>>>> test
                         .HasForeignKey("Student_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("eTeacher.Data.Subject", "Subject")
+<<<<<<< HEAD
                         .WithMany()
+=======
+                        .WithMany("Classes")
+>>>>>>> test
                         .HasForeignKey("Subject_name")
                         .HasPrincipalKey("Subject_name")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+<<<<<<< HEAD
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
+=======
+                    b.HasOne("eTeacher.Data.User", "Tutor")
+                        .WithMany("TutorClasses")
+                        .HasForeignKey("Tutor_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Tutor");
+>>>>>>> test
                 });
 
             modelBuilder.Entity("eTeacher.Data.Order", b =>
@@ -630,7 +665,11 @@ namespace eTeacher.Migrations
             modelBuilder.Entity("eTeacher.Data.Requirement", b =>
                 {
                     b.HasOne("eTeacher.Data.Subject", "Subject")
+<<<<<<< HEAD
                         .WithMany()
+=======
+                        .WithMany("Requirements")
+>>>>>>> test
                         .HasForeignKey("Subject_name")
                         .HasPrincipalKey("Subject_name")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -645,10 +684,22 @@ namespace eTeacher.Migrations
                     b.Navigation("Subject");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("eTeacher.Data.User", b =>
                 {
                     b.Navigation("Classes");
 
+=======
+            modelBuilder.Entity("eTeacher.Data.Subject", b =>
+                {
+                    b.Navigation("Classes");
+
+                    b.Navigation("Requirements");
+                });
+
+            modelBuilder.Entity("eTeacher.Data.User", b =>
+                {
+>>>>>>> test
                     b.Navigation("Orders");
 
                     b.Navigation("Otps");
@@ -658,6 +709,13 @@ namespace eTeacher.Migrations
                     b.Navigation("Reports");
 
                     b.Navigation("Requirements");
+<<<<<<< HEAD
+=======
+
+                    b.Navigation("StudentClasses");
+
+                    b.Navigation("TutorClasses");
+>>>>>>> test
                 });
 #pragma warning restore 612, 618
         }
