@@ -18,5 +18,6 @@ namespace Repositories
         Task<AuthServiceResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto);
         Task<bool> VerifyOtpAsync(User user, string otp);
         Task SendOtpAsync(User user);
+        Task RegisterAsyn(RegisterDto registerDto);
     }
 }

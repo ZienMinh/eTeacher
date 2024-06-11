@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace BusinessObject.Models
 {
-    public partial class AddDbContext : DbContext
-    {
+    public partial class AddDbContext : IdentityDbContext<User>
+	{
         
         public AddDbContext(DbContextOptions<AddDbContext> options) : base(options) { }
 

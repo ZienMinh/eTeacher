@@ -149,15 +149,25 @@ namespace eTeacher.Services
                 };
             }
 
-            // Add a Default USER Role to all users
-            await _userManager.AddToRoleAsync(newUser, StaticUserRoles.USER);
+			// Add a Default USER Role to all users
+			var role = registerDto.Role.ToUpper();
+			if (role != StaticUserRoles.USER && role != StaticUserRoles.ADMIN && role != StaticUserRoles.OWNER)
+			{
+				return new AuthServiceResponseDto()
+				{
+					IsSucceed = false,
+					Message = "Invalid Role"
+				};
+			}
 
-            return new AuthServiceResponseDto()
-            {
-                IsSucceed = true,
-                Message = "User Created Successfully"
-            };
-        }
+			await _userManager.AddToRoleAsync(newUser, role);
+
+			return new AuthServiceResponseDto()
+			{
+				IsSucceed = true,
+				Message = "User Created Successfully"
+			};
+		}   
 
         public async Task<AuthServiceResponseDto> SeedRolesAsync()
         {
@@ -270,6 +280,11 @@ namespace eTeacher.Services
         }
 
         public Task SendOtpAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RegisterAsyn(RegisterDto registerDto)
         {
             throw new NotImplementedException();
         }

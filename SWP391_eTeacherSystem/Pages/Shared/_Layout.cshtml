@@ -1,51 +1,131 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SWP391_eTeacherSystem</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SWP391_eTeacherSystem.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Arsha Bootstrap Template - Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/img/favicon.png" rel="icon">
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/lib/aos/aos.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top ">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a asp-page="/Index">eTeacher</a></h1>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" asp-page="/Index">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                    <li><a class="nav-link   scrollto active" href="#portfolio">Contact</a></li>
+
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="btn" asp-page="/Login"><button class="btnLogin-popup">Login</button></a></li>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <main id="main">
+        @RenderBody()
+    </main>
+
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">SWP391_eTeacherSystem</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>eTeacher</h3>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br><br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Social Networks</h4>
+                        <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - SWP391_eTeacherSystem - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
-    </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
+    </footer><!-- End Footer -->
+    <!-- Vendor JS Files -->
+    <script src="~/lib/aos/aos.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/glightbox/js/glightbox.min.js"></script>
+    <script src="~/lib/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/lib/php-email-form/validate.js"></script>
+    <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+    <script src="~/lib/waypoints/noframework.waypoints.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="~/js/main.js"></script>
+    <script src="~/js/register.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
