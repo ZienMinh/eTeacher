@@ -5,6 +5,7 @@ namespace SWP391_eTeacherSystem.Pages
 {
     public class IndexModel : PageModel
     {
+        
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -16,5 +17,7 @@ namespace SWP391_eTeacherSystem.Pages
         {
 
         }
+
+      
     }
 }
