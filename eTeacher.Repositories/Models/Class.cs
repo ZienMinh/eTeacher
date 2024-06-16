@@ -46,6 +46,8 @@ namespace BusinessObject.Models
         [NotMapped]
         public TimeOnly End_time { get; set; }
 
+        public byte Grade { get; set; }
+
         public byte Type_class { get; set; }
 
         public double Price { get; set; }

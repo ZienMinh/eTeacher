@@ -11,7 +11,6 @@ namespace DataAccess
     {
         public string Requirement_id { get; set; }
         public string User_id { get; set; }
-        public string Subject_id { get; set; }
 
         [Required(ErrorMessage = "Subject name is required")]
         public string Subject_name { get; set; }
@@ -21,7 +20,7 @@ namespace DataAccess
         public TimeOnly End_time { get; set; }
 
         [Required(ErrorMessage = "Grade is required")]
-        [MaxLength(2, ErrorMessage = "Maximum Grade 2 numeric characters")]
+        [Range(1, 12, ErrorMessage = "Grade must be between 1 and 12")]
         public byte Grade { get; set; }
 
         [Required(ErrorMessage = "Rank is required")]
@@ -29,8 +28,8 @@ namespace DataAccess
 
         [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
-        [Required(ErrorMessage = "Number of session is required")]
-        [MaxLength(10, ErrorMessage = "Maximum number of lessons 10 numeric characters")]
+        [Required(ErrorMessage = "Number of sessions is required")]
+        [Range(1, 10, ErrorMessage = "Number of sessions must be between 1 and 10")]
         public int Number_of_session { get; set; }
     }
 }

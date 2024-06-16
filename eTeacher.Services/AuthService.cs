@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
 using Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,14 +19,16 @@ namespace eTeacher.Services
         private readonly IConfiguration _configuration;
         private readonly AddDbContext _context;
         private readonly IEmailService _emailService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AddDbContext context, IEmailService emailService)
+        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AddDbContext context, IEmailService emailService, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
             _context = context;
             _emailService = emailService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
@@ -287,6 +290,20 @@ namespace eTeacher.Services
         public Task RegisterAsyn(RegisterDto registerDto)
         {
             throw new NotImplementedException();
+        }
+
+        public string GetCurrentUserId()
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("AccessToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                return null;
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
     }
 }

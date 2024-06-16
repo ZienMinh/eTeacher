@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
+using Services;
 using System;
 using System.Text;
 
@@ -64,6 +65,9 @@ builder.Services
 
 // Inject app Dependencies (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IRequirementService, RequirementService>();
+
 
 builder.Services.AddScoped<IEmailService>(provider =>
 {
@@ -142,6 +146,10 @@ async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 		}
 	}
 }
+
+// Configure logging
+//builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())

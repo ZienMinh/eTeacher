@@ -40,9 +40,9 @@
                     <li><a class="nav-link scrollto active" asp-page="/Index">Home</a></li>
                     <li><a class="nav-link scrollto active" href="#about">About</a></li>
                     <li><a class="nav-link scrollto active" href="#services">Services</a></li>
-                    <li><a class="nav-link   scrollto active" href="#portfolio">Contact</a></li>
-
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto active" href="#portfolio">Contact</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="Class">Class</a></li>
                     <li><a class="btn" asp-page="/Login"><button class="btnLogin-popup">Login</button></a></li>
                 </ul>
             </nav><!-- .navbar -->
@@ -124,7 +124,7 @@
 
     <!-- Template Main JS File -->
     <script src="~/js/main.js"></script>
-    <script src="~/js/register.js"></script>
+    <!--<script src="~/js/register.js"></script>-->
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
