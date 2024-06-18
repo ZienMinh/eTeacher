@@ -85,8 +85,8 @@ builder.Services.AddSession(options =>
 	options.Cookie.IsEssential = true;
 });
 
-// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
+
 //builder.Services.AddSwaggerGen(options =>
 //{
 //    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
