@@ -1,0 +1,38 @@
+﻿@page
+@using DataAccess
+@model SWP391_eTeacherSystem.Pages.AcceptClassModel
+@{
+}
+<!-- ======= Accept Class Section ======= -->
+<section id="accept_class" class="accept_class">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>List of requirements</h2>
+            <p>Tutoring requirements that may suit you</p>
+        </div>
+        <div class="row">
+            @foreach (var requirement in Model.Requirements)
+            {
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">
+                            @requirement.Requirement_id
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@requirement.Subject_name - Grade @requirement.Grade</h5>
+                            <p class="card-text">
+                                <i class="fa fa-dollar-sign"></i> @requirement.Price đ/course, @requirement.Number_of_session sessions/course<br />
+                                <i class="fa fa-user"></i> Requirement: @requirement.Grade
+                            </p>
+                            <form method="get" asp-page="/RequirementDetails">
+                                <input type="hidden" name="id" value="@requirement.Requirement_id" />
+                                <button type="submit" class="btn btn-success">More Details →</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- ======= End Accept Class Section ======= -->

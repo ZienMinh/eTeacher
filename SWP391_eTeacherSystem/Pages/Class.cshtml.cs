@@ -50,7 +50,6 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Console.WriteLine("Vi");
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("ModelState is not valid");

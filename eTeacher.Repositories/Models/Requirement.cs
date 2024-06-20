@@ -38,5 +38,10 @@ namespace BusinessObject.Models
         [Required]
         public double Price { get; set; }
         public int Number_of_session { get; set; }
+
+        [MaxLength(50)]
+        public string? Address { get; set; }
+        [MaxLength(450)]
+        public string? Description { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240611152003_DbInit")]
+    [Migration("20240620041401_DbInit")]
     partial class DbInit
     {
         /// <inheritdoc />
@@ -34,6 +34,9 @@ namespace BusinessObject.Migrations
                     b.Property<string>("Address")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte>("Grade")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("Number_of_session")
                         .HasColumnType("int");
@@ -209,6 +212,14 @@ namespace BusinessObject.Migrations
                     b.Property<string>("Requirement_id")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");

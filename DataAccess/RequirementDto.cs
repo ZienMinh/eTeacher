@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -29,7 +30,18 @@ namespace DataAccess
         [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
         [Required(ErrorMessage = "Number of sessions is required")]
-        [Range(1, 10, ErrorMessage = "Number of sessions must be between 1 and 10")]
+        [Range(1, 100, ErrorMessage = "Number of sessions must be between 1 and 100")]
         public int Number_of_session { get; set; }
+
+        [MaxLength(50)]
+        public string? Address { get; set; }
+
+        [MaxLength(450)]
+        public string? Description { get; set; }
+
+        public static implicit operator RequirementDto?(Requirement? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

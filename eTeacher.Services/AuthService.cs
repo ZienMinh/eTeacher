@@ -305,5 +305,6 @@ namespace eTeacher.Services
 
             return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
+
     }
 }

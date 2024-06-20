@@ -11,8 +11,6 @@ namespace Repositories
     {
         Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId);
 
-        Task<ClassServiceResponseDto> AcceptClassAsync(ClassDto model);
-
         Task<ClassServiceResponseDto> DeleteClassAsync(string id);
 
         string GenerateClassId();

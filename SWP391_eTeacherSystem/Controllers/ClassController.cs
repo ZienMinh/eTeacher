@@ -67,64 +67,6 @@ namespace SWP391_eTeacherSystem.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Accept")]
-        public IActionResult AcceptClass(ClassDto model)
-        {
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                try
-                {
-                    var userId = GetCurrentUserId();
-                    if (userId == null)
-                    {
-                        return BadRequest("User is not authenticated.");
-                    }
-
-                    var subject = _context.Subjects.SingleOrDefault(s => s.Subject_name == model.Subject_name);
-                    if (subject == null)
-                    {
-                        return BadRequest("Invalid Subject_name.");
-                    }
-
-                    var requirement = _context.Requirements.SingleOrDefault(r => r.User_id == model.Student_id);
-                    if (requirement == null)
-                    {
-                        return BadRequest("Invalid Student_id.");
-                    }
-
-                    var classId = GenerateClassId();
-
-                    var classes = new Class
-                    {
-                        Class_id = classId,
-                        Address = model.Address,
-                        Student_id = requirement.User_id,
-                        Tutor_id = userId,
-                        Subject_name = requirement.Subject_name,
-                        Start_date = requirement.Start_date,
-                        End_date = requirement.End_date,
-                        Start_time = requirement.Start_time,
-                        End_time = requirement.End_time,
-                        Type_class = 1,
-                        Price = requirement.Price,
-                        Number_of_session = requirement.Number_of_session
-                    };
-
-                    _context.Add(classes);
-
-                    _context.SaveChanges();
-                    transaction.Commit();
-
-                    return Ok(classes);
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    return BadRequest(ex.Message);
-                }
-            }
-        }
 
         [HttpPost]
         [Route("Create")]

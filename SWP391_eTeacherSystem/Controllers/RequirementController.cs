@@ -2,6 +2,7 @@
 using DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -24,25 +25,35 @@ namespace SWP391_eTeacherSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequirementDto requirementDto)
         {
-            var dsRequirement = _context.Requirements.ToList();
-            return Ok(dsRequirement);
+            var dsRequirement = await _context.Requirements.ToListAsync();
+
+            var response = new RequirementServiceResponseDto
+            {
+                Requirements = dsRequirement
+            };
+
+            return Ok(response);
         }
 
+
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var requirements = _context.Requirements.Where(r => r.User_id == id).ToList();
-            if (requirements.Any())
+            var requirementDto = new RequirementDto();
+            var response = await _requirementService.GetByIdAsync(requirementDto, id);
+
+            if (response.IsSucceed)
             {
-                return Ok(requirements);
+                return Ok(response.Requirements);
             }
             else
             {
-                return NotFound();
+                return NotFound(response.Message);
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateClass([FromForm] RequirementDto model)
@@ -84,19 +95,16 @@ namespace SWP391_eTeacherSystem.Controllers
 
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeleteRequiment(string id)
+        public async Task<IActionResult> DeleteRequirement(string id)
         {
-            var requirements = _context.Requirements.SingleOrDefault(lo => lo.Requirement_id == id);
-            if (requirements != null)
+            var result = await _requirementService.DeleteByIdAsync(id);
+            if (result.IsSucceed)
             {
-                _context.Remove(requirements);
-                _context.SaveChanges();
                 return NoContent();
             }
             else
             {
-                return NotFound();
+                return NotFound(result.Message);
             }
         }
     }

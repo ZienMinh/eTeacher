@@ -30,7 +30,7 @@ namespace DataAccess
         public double Price { get; set; }
 
         [Required(ErrorMessage = "Number of sessions is required")]
-        [Range(1, 10, ErrorMessage = "Number of sessions must be between 1 and 10")]
+        [Range(1, 100, ErrorMessage = "Number of sessions must be between 1 and 100")]
         public int Number_of_session { get; set; }
     }
 }

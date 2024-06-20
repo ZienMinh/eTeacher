@@ -271,6 +271,7 @@ namespace BusinessObject.Migrations
                     Student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Type_class = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
@@ -314,7 +315,9 @@ namespace BusinessObject.Migrations
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Rank = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    Number_of_session = table.Column<int>(type: "int", nullable: false)
+                    Number_of_session = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {

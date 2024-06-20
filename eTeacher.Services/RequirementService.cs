@@ -46,7 +46,9 @@ namespace Services
                     Grade = requirementDto.Grade,
                     Rank = requirementDto.Rank,
                     Price = requirementDto.Price,
-                    Number_of_session = requirementDto.Number_of_session
+                    Number_of_session = requirementDto.Number_of_session,
+                    Address = requirementDto.Address,
+                    Description = requirementDto.Description
                 };
 
                 _context.Requirements.Add(requirement);
@@ -61,6 +63,68 @@ namespace Services
                 return (false, ex.Message, null);
             }
         }
+
+        public async Task<RequirementServiceResponseDto> GetAll(RequirementDto requirementDto)
+        {
+            var dsRequirement = await _context.Requirements.ToListAsync();
+
+            var response = new RequirementServiceResponseDto
+            {
+                Requirements = dsRequirement
+            };
+
+            return response;
+        }
+
+        public async Task<RequirementServiceResponseDto> GetByIdAsync(RequirementDto requirementDto, string id)
+        {
+            var requirement = await _context.Requirements
+                                            .FirstOrDefaultAsync(r => r.Requirement_id == id);
+
+            if (requirement != null)
+            {
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Requirement found.",
+                    Requirements = new List<Requirement> { requirement }
+                };
+            }
+            else
+            {
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "No requirement found for the given ID.",
+                    Requirements = null
+                };
+            }
+        }
+
+        public async Task<RequirementServiceResponseDto> DeleteByIdAsync(string id)
+        {
+            var requirement = await _context.Requirements.SingleOrDefaultAsync(lo => lo.Requirement_id == id);
+            if (requirement != null)
+            {
+                _context.Remove(requirement);
+                await _context.SaveChangesAsync();
+
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Requirement deleted successfully."
+                };
+            }
+            else
+            {
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "Requirement not found."
+                };
+            }
+        }
+
 
         public string GenerateRequirementId()
         {

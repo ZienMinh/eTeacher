@@ -32,6 +32,9 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<byte>("Grade")
+                        .HasColumnType("tinyint");
+
                     b.Property<int>("Number_of_session")
                         .HasColumnType("int");
 
@@ -207,6 +210,14 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
@@ -217,11 +228,6 @@ namespace BusinessObject.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Rank")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Subject_id")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
