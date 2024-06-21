@@ -1,4 +1,4 @@
-using BusinessObject.Models;
+﻿using BusinessObject.Models;
 using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -39,6 +39,5 @@ namespace SWP391_eTeacherSystem.Pages
                 return Page();
             }
         }
-
     }
 }

@@ -26,7 +26,6 @@ namespace SWP391_eTeacherSystem.Controllers
             return Ok(seerRoles);
         }
 
-
         // Route -> Register
         [HttpPost]
         [Route("register")]
@@ -40,7 +39,6 @@ namespace SWP391_eTeacherSystem.Controllers
             return BadRequest(registerResult);
         }
 
-
         // Route -> Login
         [HttpPost]
         [Route("login")]
@@ -53,8 +51,6 @@ namespace SWP391_eTeacherSystem.Controllers
 
             return Unauthorized(loginResult);
         }
-
-
 
         // Route -> make user -> admin
         [HttpPost]
