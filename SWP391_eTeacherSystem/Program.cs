@@ -5,6 +5,7 @@ using eTeacher.Core.Services.eTeacher.Core.Services;
 using eTeacher.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,7 +65,7 @@ builder.Services
         };
     });
 
-// Inject app Dependencies (Dependency Injection)
+//Inject app Dependencies (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClassService, ClassService>();
@@ -93,39 +94,7 @@ builder.Services.AddSession(options =>
 	options.Cookie.IsEssential = true;
 });
 
-// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen(options =>
-//{
-//    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-//    {
-//        Name = "Authorization",
-//        In = ParameterLocation.Header,
-//        Description = "Please enter your token with this format: 'Bearer YOUR_TOKEN'",
-//        Type = SecuritySchemeType.ApiKey,
-//        BearerFormat = "JWT",
-//        Scheme = "bearer"
-//    });
-//    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-//    {
-//        {
-//            new OpenApiSecurityScheme
-//            {
-//                Name = "Bearer",
-//                In = ParameterLocation.Header,
-//                Reference = new OpenApiReference
-//                {
-//                    Id = "Bearer",
-//                    Type = ReferenceType.SecurityScheme
-//                }
-//            },
-//            new List<string>()
-//        }
-//    });
-//});
-
-//
-
 
 // Add services to the container
 builder.Services.AddRazorPages();
@@ -147,7 +116,7 @@ async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 		if (!await roleManager.RoleExistsAsync(role))
 		{
 			await roleManager.CreateAsync(new IdentityRole(role));
-		}
+        }
 	}
 }
 
@@ -168,12 +137,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
 
-app.MapControllers();
-app.MapRazorPages();
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapRazorPages();
+	endpoints.MapControllers();
+});
 
 app.Run();
