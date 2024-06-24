@@ -1,6 +1,7 @@
 using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
+using eTeacher.Core.Services.eTeacher.Core.Services;
 using eTeacher.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -67,18 +68,20 @@ builder.Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
 
 
-builder.Services.AddScoped<IEmailService>(provider =>
+builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
+    var emailSettings = configuration.GetSection("EmailSettings");
     return new EmailService(
-        smtpHost: configuration["EmailSettings:SmtpHost"],
-        smtpPort: int.Parse(configuration["EmailSettings:SmtpPort"]),
-        fromEmail: configuration["EmailSettings:FromEmail"],
-        smtpUser: configuration["EmailSettings:SmtpUser"],
-        smtpPass: configuration["EmailSettings:SmtpPass"]
+        emailSettings["SmtpHost"],
+        int.Parse(emailSettings["SmtpPort"]),
+        emailSettings["FromEmail"],
+        emailSettings["SmtpUser"],
+        emailSettings["SmtpPass"]
     );
 });
 

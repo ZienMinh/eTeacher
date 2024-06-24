@@ -199,26 +199,6 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Otp",
-                columns: table => new
-                {
-                    Otp_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Otp_code = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Expiry_time = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Otp", x => x.Otp_id);
-                    table.ForeignKey(
-                        name: "FK_Otp_AspNetUsers_User_id",
-                        column: x => x.User_id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Qualification",
                 columns: table => new
                 {
@@ -271,6 +251,10 @@ namespace BusinessObject.Migrations
                     Student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Start_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    End_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    Start_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    End_time = table.Column<TimeOnly>(type: "time", nullable: true),
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Type_class = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -306,12 +290,51 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClassHour",
+                columns: table => new
+                {
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Start_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    End_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    Start_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    End_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    Grade = table.Column<byte>(type: "tinyint", nullable: false),
+                    Type_class = table.Column<byte>(type: "tinyint", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Number_of_session = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassHour", x => x.Class_id);
+                    table.ForeignKey(
+                        name: "FK_ClassHour_AspNetUsers_User_id",
+                        column: x => x.User_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ClassHour_Subject_Subject_name",
+                        column: x => x.Subject_name,
+                        principalTable: "Subject",
+                        principalColumn: "Subject_name",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Requirement",
                 columns: table => new
                 {
                     Requirement_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Start_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    End_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    Start_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    End_time = table.Column<TimeOnly>(type: "time", nullable: true),
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Rank = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
@@ -396,13 +419,18 @@ namespace BusinessObject.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_User_id",
-                table: "Order",
+                name: "IX_ClassHour_Subject_name",
+                table: "ClassHour",
+                column: "Subject_name");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassHour_User_id",
+                table: "ClassHour",
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Otp_User_id",
-                table: "Otp",
+                name: "IX_Order_User_id",
+                table: "Order",
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
@@ -454,10 +482,10 @@ namespace BusinessObject.Migrations
                 name: "Classes");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "ClassHour");
 
             migrationBuilder.DropTable(
-                name: "Otp");
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Qualification");

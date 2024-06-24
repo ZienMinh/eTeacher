@@ -19,18 +19,10 @@ namespace BusinessObject.Models
         [MaxLength(450)]
         public string Subject_name { get; set; }
         public Subject Subject { get; set; }
-        [Required]
-        [NotMapped]
-        public DateOnly Start_date { get; set; }
-        [Required]
-        [NotMapped]
-        public DateOnly End_date { get; set; }
-        [Required]
-        [NotMapped]
-        public TimeOnly Start_time { get; set; }
-        [Required]
-        [NotMapped]
-        public TimeOnly End_time { get; set; }
+        public DateOnly? Start_date { get; set; }
+        public DateOnly? End_date { get; set; }
+        public TimeOnly? Start_time { get; set; }
+        public TimeOnly? End_time { get; set; }
         [Required]
         public byte Grade { get; set; }
         [MaxLength(10)]

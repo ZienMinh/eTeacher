@@ -21,8 +21,8 @@
                         <div class="card-body">
                             <h5 class="card-title">@requirement.Subject_name - Grade @requirement.Grade</h5>
                             <p class="card-text">
-                                <i class="fa fa-dollar-sign"></i> @requirement.Price đ/course, @requirement.Number_of_session sessions/course<br />
-                                <i class="fa fa-user"></i> Requirement: @requirement.Grade
+                                <i class="fa fa-dollar-sign"></i> @requirement.Price VNĐ/lesson, @requirement.Number_of_session sessions/course<br />
+                                <i class="fa fa-user"></i> Address: @requirement.Address
                             </p>
                             <form method="get" asp-page="/RequirementDetails">
                                 <input type="hidden" name="id" value="@requirement.Requirement_id" />

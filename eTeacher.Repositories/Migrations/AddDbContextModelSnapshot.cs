@@ -32,6 +32,12 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<DateOnly?>("End_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("End_time")
+                        .HasColumnType("time");
+
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
@@ -40,6 +46,12 @@ namespace BusinessObject.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<DateOnly?>("Start_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("Start_time")
+                        .HasColumnType("time");
 
                     b.Property<string>("Student_id")
                         .IsRequired()
@@ -75,6 +87,63 @@ namespace BusinessObject.Migrations
                     b.ToTable("Classes");
                 });
 
+            modelBuilder.Entity("BusinessObject.Models.ClassHour", b =>
+                {
+                    b.Property<string>("Class_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateOnly?>("End_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("End_time")
+                        .HasColumnType("time");
+
+                    b.Property<byte>("Grade")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("Number_of_session")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<DateOnly?>("Start_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("Start_time")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Subject_name")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte>("Type_class")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("User_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Class_id");
+
+                    b.HasIndex("Subject_name");
+
+                    b.HasIndex("User_id");
+
+                    b.ToTable("ClassHour");
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Order", b =>
                 {
                     b.Property<string>("Order_id")
@@ -102,32 +171,6 @@ namespace BusinessObject.Migrations
                     b.HasIndex("User_id");
 
                     b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("BusinessObject.Models.Otp", b =>
-                {
-                    b.Property<string>("Otp_id")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<DateTime>("Expiry_time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Otp_code")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("User_id")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Otp_id");
-
-                    b.HasIndex("User_id");
-
-                    b.ToTable("Otp");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Qualification", b =>
@@ -218,6 +261,12 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateOnly?>("End_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("End_time")
+                        .HasColumnType("time");
+
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
@@ -231,6 +280,12 @@ namespace BusinessObject.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateOnly?>("Start_date")
+                        .HasColumnType("date");
+
+                    b.Property<TimeOnly?>("Start_time")
+                        .HasColumnType("time");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
@@ -531,6 +586,24 @@ namespace BusinessObject.Migrations
                     b.Navigation("Tutor");
                 });
 
+            modelBuilder.Entity("BusinessObject.Models.ClassHour", b =>
+                {
+                    b.HasOne("BusinessObject.Models.Subject", "Subject")
+                        .WithMany("ClassHours")
+                        .HasForeignKey("Subject_name")
+                        .HasPrincipalKey("Subject_name")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObject.Models.User", null)
+                        .WithMany("ClassHours")
+                        .HasForeignKey("User_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Order", b =>
                 {
                     b.HasOne("BusinessObject.Models.User", null)
@@ -538,17 +611,6 @@ namespace BusinessObject.Migrations
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BusinessObject.Models.Otp", b =>
-                {
-                    b.HasOne("BusinessObject.Models.User", "User")
-                        .WithMany("Otps")
-                        .HasForeignKey("User_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Qualification", b =>
@@ -640,6 +702,8 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Subject", b =>
                 {
+                    b.Navigation("ClassHours");
+
                     b.Navigation("Classes");
 
                     b.Navigation("Requirements");
@@ -647,11 +711,11 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.User", b =>
                 {
+                    b.Navigation("ClassHours");
+
                     b.Navigation("Classes");
 
                     b.Navigation("Orders");
-
-                    b.Navigation("Otps");
 
                     b.Navigation("Qualifications");
 

@@ -17,10 +17,10 @@ namespace DataAccess
 
         [Required(ErrorMessage = "Subject name is required")]
         public string Subject_name { get; set; }
-        public DateOnly Start_date { get; set; }
-        public DateOnly End_date { get; set; }
-        public TimeOnly Start_time { get; set; }
-        public TimeOnly End_time { get; set; }
+        public DateOnly? Start_date { get; set; }
+        public DateOnly? End_date { get; set; }
+        public TimeOnly? Start_time { get; set; }
+        public TimeOnly? End_time { get; set; }
         [Required(ErrorMessage = "Grade is required")]
         [Range(1, 12, ErrorMessage = "Grade must be between 1 and 12")]
         public byte Grade { get; set; }

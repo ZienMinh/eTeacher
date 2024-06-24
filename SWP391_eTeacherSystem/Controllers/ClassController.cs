@@ -2,6 +2,7 @@
 using DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories;
 using System.Security.Claims;
 
 namespace SWP391_eTeacherSystem.Controllers
@@ -11,11 +12,12 @@ namespace SWP391_eTeacherSystem.Controllers
     public class ClassController : ControllerBase
     {
         private readonly AddDbContext _context;
+        private readonly IClassService _classService;
 
-        public ClassController(AddDbContext context)
+        public ClassController(AddDbContext context, IClassService classService)
         {
             _context = context;
-
+            _classService = classService;
         }
 
         [HttpGet]
@@ -67,6 +69,12 @@ namespace SWP391_eTeacherSystem.Controllers
             }
         }
 
+        [HttpPost("Getbytype")]
+        public async Task<ActionResult<ClassServiceResponseDto>> GetByTypeAsync(ClassDto classDto, byte type)
+        {
+            var response = await _classService.GetByTypeAsync(classDto);
+            return Ok(response);
+        }
 
         [HttpPost]
         [Route("Create")]
@@ -119,6 +127,22 @@ namespace SWP391_eTeacherSystem.Controllers
                     return BadRequest(ex.Message);
                 }
             }
+        }
+
+        [HttpPost("updateStudent")]
+        public async Task<ActionResult<ClassServiceResponseDto>> UpdateStudentAsync([FromBody] ClassDto classDto, [FromQuery] string userId)
+        {
+            if (classDto == null || string.IsNullOrEmpty(classDto.Class_id) || string.IsNullOrEmpty(classDto.Student_id) || string.IsNullOrEmpty(userId))
+            {
+                return BadRequest(new ClassServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "Invalid request."
+                });
+            }
+
+            var response = await _classService.UpdateStudentAsync(classDto, userId);
+            return Ok(response);
         }
 
         private string GetCurrentUserId()

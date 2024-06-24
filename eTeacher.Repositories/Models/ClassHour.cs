@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessObject.Models
 {
-    [Table("Classes")]
-    public partial class Class
+    [Table("ClassHour")]
+    public partial class ClassHour
     {
         [Key]
         [MaxLength(10)]
@@ -14,16 +19,7 @@ namespace BusinessObject.Models
         public string? Address { get; set; }
 
         [MaxLength(450)]
-        public string Student_id { get; set; }
-
-        [ForeignKey("Student_id")]
-        public User Student { get; set; }
-
-        [MaxLength(450)]
-        public string Tutor_id { get; set; }
-
-        [ForeignKey("Tutor_id")]
-        public User Tutor { get; set; }
+        public string User_id { get; set; }
 
         [MaxLength(450)]
         public string Subject_name { get; set; }
@@ -45,6 +41,8 @@ namespace BusinessObject.Models
         public double Price { get; set; }
 
         public int Number_of_session { get; set; }
+
+        [MaxLength(450)]
+        public string? Description { get; set; }
     }
-    
 }

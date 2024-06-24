@@ -115,14 +115,13 @@ namespace SWP391_eTeacherSystem.Pages
                 var result = await _classService.CreateClassAsync(ClassDto, userId);
                 if (result.IsSucceed)
                 {
-                    // Log the ID to ensure it's being passed correctly
                     _logger.LogInformation("Deleting requirement with ID: {ID}", RequirementId);
 
                     var delete = await _requirementService.DeleteByIdAsync(RequirementId); // Use the stored ID
                     if (delete.IsSucceed)
                     {
                         _logger.LogInformation("Class created and requirement deleted successfully");
-                        return RedirectToPage("/ClassDetails", new { id = result.CreatedClass.Class_id });
+                        return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
                     }
                     else
                     {

@@ -21,8 +21,8 @@ namespace BusinessObject.Models
         public DbSet<Report> Reports { get; set; }
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<ClassHour> ClassHours { get; set; }
         public DbSet<Class> Classes { get; set; }
-        public DbSet<Otp> Otps { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +33,11 @@ namespace BusinessObject.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasMany(e => e.Requirements)
+                      .WithOne()
+                      .HasForeignKey(e => e.User_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.ClassHours)
                       .WithOne()
                       .HasForeignKey(e => e.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
@@ -61,11 +66,6 @@ namespace BusinessObject.Models
                       .WithOne()
                       .HasForeignKey(r => r.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasMany(e => e.Otps)
-                      .WithOne(o => o.User)
-                      .HasForeignKey(o => o.User_id)
-                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Requirement entity configuration
@@ -74,6 +74,17 @@ namespace BusinessObject.Models
                 entity.HasKey(e => e.Requirement_id);
                 entity.HasOne(e => e.Subject)
                       .WithMany(s => s.Requirements)
+                      .HasForeignKey(e => e.Subject_name)
+                      .HasPrincipalKey(s => s.Subject_name)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ClassHour entity configuration
+            modelBuilder.Entity<ClassHour>(entity =>
+            {
+                entity.HasKey(e => e.Class_id);
+                entity.HasOne(e => e.Subject)
+                      .WithMany(s => s.ClassHours)
                       .HasForeignKey(e => e.Subject_name)
                       .HasPrincipalKey(s => s.Subject_name)
                       .OnDelete(DeleteBehavior.Restrict);
@@ -108,15 +119,6 @@ namespace BusinessObject.Models
                 entity.HasKey(e => e.Report_id);
             });
 
-            // Otp entity configuration
-            modelBuilder.Entity<Otp>(entity =>
-            {
-                entity.HasKey(e => e.Otp_id);
-                entity.HasOne(o => o.User)
-                      .WithMany(u => u.Otps)
-                      .HasForeignKey(o => o.User_id)
-                      .OnDelete(DeleteBehavior.Restrict);
-            });
 
             // Subject entity configuration
             modelBuilder.Entity<Subject>(entity =>

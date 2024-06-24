@@ -1,5 +1,6 @@
 using BusinessObject.Models;
 using DataAccess;
+using eTeacher.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -8,29 +9,27 @@ using Services;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class ClassDetailsModel : PageModel
+    public class CancelClassModel : PageModel
     {
         private readonly AddDbContext _context;
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IClassService _classService;
-        private readonly IClassHourService _classHourService;
-        private readonly ILogger<ClassDetailsModel> _logger;
+        private readonly ILogger<CancelClassModel> _logger;
 
-        public ClassDetailsModel(AddDbContext context, IAuthService authService, 
-            IUserService userService, IClassService classService, ILogger<ClassDetailsModel> logger, IClassHourService classHourService)
+        public CancelClassModel(AddDbContext context, IAuthService authService,
+                IUserService userService, IClassService classService, ILogger<CancelClassModel> logger)
         {
             _context = context;
             _authService = authService;
             _userService = userService;
             _classService = classService;
             _logger = logger;
-            _classHourService = classHourService;
         }
 
         public UserDto UserDto { get; set; }
 
-        public ClassHour ClassHour { get; set; }
+        public Class Class { get; set; }
 
         [BindProperty]
         public ClassDto ClassDto { get; set; }
@@ -41,10 +40,9 @@ namespace SWP391_eTeacherSystem.Pages
         public async Task InitializeClassDtoAsync()
         {
             var userId = _authService.GetCurrentUserId();
-            if (userId != null)
+            if (userId == null)
             {
-                var classId = _classService.GenerateClassId();
-                ClassDto = new ClassDto { Student_id = userId, Class_id = classId };
+                _logger.LogWarning("Login to perform the function.");
             }
         }
 
@@ -60,18 +58,18 @@ namespace SWP391_eTeacherSystem.Pages
 
             ClassId = id;
 
-            ClassHour = await _context.ClassHours.FirstOrDefaultAsync(c => c.Class_id == id);
+            Class = await _context.Classes.FirstOrDefaultAsync(c => c.Class_id == id);
 
-            if (ClassHour == null)
+            if (Class == null)
             {
                 _logger.LogWarning("Class not found.");
                 return NotFound();
             }
 
             var userId = _authService.GetCurrentUserId();
-            if (userId != null)
+            if (userId == null)
             {
-                ClassDto = new ClassDto { Student_id = userId };
+                _logger.LogWarning("Login to perform the function.");
             }
 
             _logger.LogInformation("OnGetAsync completed successfully.");
@@ -81,21 +79,6 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            ModelState.Remove("ClassId");
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("ModelState is not valid");
-                foreach (var state in ModelState)
-                {
-                    if (state.Value.Errors.Count > 0)
-                    {
-                        _logger.LogWarning($"Property: {state.Key} - Errors: {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-                    }
-                }
-                return Page();
-            }
-
             var userId = _authService.GetCurrentUserId();
             if (userId == null)
             {
@@ -108,27 +91,16 @@ namespace SWP391_eTeacherSystem.Pages
 
             try
             {
-                _logger.LogInformation("Attempting to create class and delete class hour");
-                var result = await _classService.CreateClassAsync(ClassDto, userId);
+                _logger.LogInformation("Deleting class with ID: {ID}", ClassId);
+                var result = await _classService.DeleteClassAsync(ClassId);
                 if (result.IsSucceed)
                 {
-                    _logger.LogInformation("Deleting requirement with ID: {ID}", ClassId);
-
-                    var delete = await _classHourService.DeleteClassAsync(ClassId);
-                    if (delete.IsSucceed)
-                    {
-                        _logger.LogInformation("Class created and class hour deleted successfully");
-                        return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
-                    }
-                    else
-                    {
-                        _logger.LogWarning("Failed to delete requirement: " + delete.Message);
-                        ModelState.AddModelError(string.Empty, delete.Message);
-                    }
+                    _logger.LogInformation("Class deleted successfully");
+                    return RedirectToPage("/Index");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to create class: " + result.Message);
+                    _logger.LogWarning("Failed to delete class: " + result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
                 }
             }
@@ -137,8 +109,8 @@ namespace SWP391_eTeacherSystem.Pages
                 _logger.LogError("An error occurred while saving data: " + ex.Message);
                 ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
             }
-
             return Page();
         }
+
     }
 }
