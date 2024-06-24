@@ -19,5 +19,6 @@ namespace Repositories
         Task<bool> VerifyOtpAsync(User user, string otp);
         Task SendOtpAsync(User user);
         Task RegisterAsyn(RegisterDto registerDto);
+        string GetCurrentUserId();
     }
 }

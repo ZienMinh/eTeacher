@@ -1,0 +1,105 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.RequirementDetailsModel
+@{
+    var requirement = Model.Requirement;
+    //var user = Model.CurrentUser;
+}
+@if (requirement == null)
+{
+    <h2>Requirement not found</h2>
+}
+else
+{
+    <!-- ======= Requirement Detail Section ======= -->
+    <form method="post" role="form" class="">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <h1>Class details @requirement.Requirement_id</h1>
+        <p>Môn học: @requirement.Subject_name - Lớp: @requirement.Grade</p>
+        <p>Học phí: @requirement.Price.ToString() VNĐ/buổi - Số buổi: @requirement.Number_of_session buổi/khóa</p>
+        <p>Ngày bắt đầu học: @requirement.Start_date - Đến: @requirement.End_date</p>
+        <p>Giờ bắt đầu học: @requirement.Start_time - Đến: @requirement.End_time</p>
+        <p>Học lực hiện tại: @requirement.Rank</p>
+        <p>Địa chỉ: @requirement.Address</p>
+        <p>Mô tả về yêu cầu khác: @requirement.Description</p>
+        <p>Tổng thu nhập toàn khóa: <b>@requirement.Price.ToString() VNĐ</b></p>
+
+
+        <div class="row">
+            <input type="hidden" asp-for="RequirementId" />
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Tutor_id" class="form-control">
+                <span asp-validation-for="ClassDto.Tutor_id" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Class_id" class="form-control">
+                <span asp-validation-for="ClassDto.Class_id" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Student_id" class="form-control" value="@requirement.User_id">
+                <span asp-validation-for="ClassDto.Student_id" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Type_class" class="form-control" value="1">
+                <span asp-validation-for="ClassDto.Type_class" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Subject_name" class="form-control" value="@requirement.Subject_name">
+                <span asp-validation-for="ClassDto.Subject_name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Address" class="form-control" value="@requirement.Address">
+                <span asp-validation-for="ClassDto.Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Start_date" class="form-control" value="@requirement.Start_date">
+                <span asp-validation-for="ClassDto.Start_date" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.End_date" class="form-control" value="@requirement.End_date">
+                <span asp-validation-for="ClassDto.End_date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Start_time" class="form-control" value="@requirement.Start_time">
+                <span asp-validation-for="ClassDto.Start_time" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.End_time" class="form-control" value="@requirement.End_time">
+                <span asp-validation-for="ClassDto.End_time" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Grade" class="form-control" value="@requirement.Grade">
+                <span asp-validation-for="ClassDto.Grade" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="hidden" asp-for="ClassDto.Price" class="form-control" value="@requirement.Price">
+                <span asp-validation-for="ClassDto.Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="hidden" asp-for="ClassDto.Number_of_session" class="form-control" value="@requirement.Number_of_session">
+            <span asp-validation-for="ClassDto.Number_of_session" class="text-danger"></span>
+        </div>
+
+        <div class="my-3">
+            <div class="loading"></div>
+            <div class="error-message"></div>
+            <div class="sent-message"></div>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary form-control">Register for class</button>
+            <p></p>
+        </div>
+    </form>
+    <!-- ======= End Requirement Detail Section ======= -->
+}
