@@ -31,5 +31,10 @@ namespace DataAccess
         [MaxLength(100)]
         public string? Image { get; set; }
         public byte Role { get; set; }
+
+        public static implicit operator UserDto(UserServiceResponseDto v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

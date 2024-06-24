@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -11,42 +12,41 @@ namespace SWP391_eTeacherSystem.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RequirementController : ControllerBase
+    public class ClassHourController : ControllerBase
     {
         private readonly AddDbContext _context;
-        private readonly IRequirementService _requirementService;
+        private readonly IClassHourService _classHourService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RequirementController(AddDbContext context, IRequirementService requirementService, IHttpContextAccessor httpContextAccessor)
+        public ClassHourController(AddDbContext context, IClassHourService classHourService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
-            _requirementService = requirementService;
+            _classHourService = classHourService;
             _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] RequirementDto requirementDto)
+        public async Task<IActionResult> GetAll([FromQuery] ClassHourDto classHourDto)
         {
-            var dsRequirement = await _context.Requirements.ToListAsync();
+            var dsClassHour = await _context.ClassHours.ToListAsync();
 
-            var response = new RequirementServiceResponseDto
+            var response = new ClassHourServiceResponseDto
             {
-                Requirements = dsRequirement
+                Classes = dsClassHour
             };
 
             return Ok(response);
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
-            var requirementDto = new RequirementDto();
-            var response = await _requirementService.GetByIdAsync(requirementDto, id);
+            var classHourDto = new ClassHourDto();
+            var response = await _classHourService.GetByIdAsync(classHourDto, id);
 
             if (response.IsSucceed)
             {
-                return Ok(response.Requirements);
+                return Ok(response.Classes);
             }
             else
             {
@@ -54,17 +54,16 @@ namespace SWP391_eTeacherSystem.Controllers
             }
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> CreateClass([FromForm] RequirementDto model)
+        public async Task<IActionResult> CreateClass([FromForm] ClassHourDto model)
         {
-            var userId = _requirementService.GetCurrentUserId();
+            var userId = _classHourService.GetCurrentUserId();
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("User is not authenticated.");
             }
 
-            var response = await _requirementService.CreateRequirementAsync(model, userId);
+            var response = await _classHourService.CreateClassAsync(model, userId);
             if (response.IsSucceed)
             {
                 return Ok("OK");
@@ -72,6 +71,21 @@ namespace SWP391_eTeacherSystem.Controllers
 
             return BadRequest(response.Message);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequirement(string id)
+        {
+            var result = await _classHourService.DeleteClassAsync(id);
+            if (result.IsSucceed)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return NotFound(result.Message);
+            }
+        }
+
 
         public string GetCurrentUserId()
         {
@@ -91,21 +105,6 @@ namespace SWP391_eTeacherSystem.Controllers
         {
             int currentCount = _context.Requirements.Count();
             return "R" + (currentCount + 1).ToString("D9");
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRequirement(string id)
-        {
-            var result = await _requirementService.DeleteByIdAsync(id);
-            if (result.IsSucceed)
-            {
-                return NoContent();
-            }
-            else
-            {
-                return NotFound(result.Message);
-            }
         }
     }
 }

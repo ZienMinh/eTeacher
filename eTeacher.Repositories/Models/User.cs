@@ -38,12 +38,12 @@ namespace BusinessObject.Models
         public byte Role { get; set; }
 
         public ICollection<Requirement> Requirements { get; set; }
+        public ICollection<ClassHour> ClassHours { get; set; }
         public ICollection<Class> Classes { get; set; }
         public ICollection<Class> TutorClasses { get; set; }
         public ICollection<Class> StudentClasses { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Qualification> Qualifications { get; set; }
         public ICollection<Report> Reports { get; set; }
-        public ICollection<Otp> Otps { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace BusinessObject.Models
         public string Subject_name { get; set; }
 
         public ICollection<Requirement> Requirements { get; set; }
+        public ICollection<ClassHour> ClassHours { get; set; }
         public ICollection<Class> Classes { get; set; }
     }
 }
