@@ -38,8 +38,8 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto active" asp-page="/Index">Home</a></li>
-                    <li><a class="nav-link scrollto active" asp-page="/Profile">About</a></li>
-                    <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="/Profile">Profile</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="/Admin">Admin</a></li>
                     <li><a class="nav-link scrollto active" href="#portfolio">Contact</a></li>
                     <li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
                     <li><a class="nav-link scrollto active" asp-page="Class">Class</a></li>
@@ -125,8 +125,6 @@
 
     <!-- Template Main JS File -->
     <script src="~/js/main.js"></script>
-    <!--<script src="~/js/register.js"></script>-->
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>
