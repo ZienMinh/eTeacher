@@ -2,6 +2,9 @@
 using DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Repositories;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace SWP391_eTeacherSystem.Controllers
@@ -11,87 +14,77 @@ namespace SWP391_eTeacherSystem.Controllers
     public class RequirementController : ControllerBase
     {
         private readonly AddDbContext _context;
+        private readonly IRequirementService _requirementService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RequirementController(AddDbContext context)
+        public RequirementController(AddDbContext context, IRequirementService requirementService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _requirementService = requirementService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequirementDto requirementDto)
         {
-            var dsRequirement = _context.Requirements.ToList();
-            return Ok(dsRequirement);
+            var dsRequirement = await _context.Requirements.ToListAsync();
+
+            var response = new RequirementServiceResponseDto
+            {
+                Requirements = dsRequirement
+            };
+
+            return Ok(response);
         }
 
+
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var requirements = _context.Requirements.Where(r => r.User_id == id).ToList();
-            if (requirements.Any())
+            var requirementDto = new RequirementDto();
+            var response = await _requirementService.GetByIdAsync(requirementDto, id);
+
+            if (response.IsSucceed)
             {
-                return Ok(requirements);
+                return Ok(response.Requirements);
             }
             else
             {
-                return NotFound();
+                return NotFound(response.Message);
             }
         }
+
 
         [HttpPost]
-        public IActionResult CreateRequirement(RequirementDto model)
+        public async Task<IActionResult> CreateClass([FromForm] RequirementDto model)
         {
-            using (var transaction = _context.Database.BeginTransaction())
+            var userId = _requirementService.GetCurrentUserId();
+            if (string.IsNullOrEmpty(userId))
             {
-                try
-                {
-                    var userId = GetCurrentUserId();
-                    if (userId == null)
-                    {
-                        return BadRequest("User is not authenticated.");
-                    }
-
-                    var subject = _context.Subjects.SingleOrDefault(s => s.Subject_name == model.Subject_name);
-                    if (subject == null)
-                    {
-                        return BadRequest("Invalid Subject_name.");
-                    }
-
-                    var requirementId = GenerateRequirementId();
-
-                    var requirement = new Requirement
-                    {
-                        Requirement_id = requirementId,
-                        User_id = userId,
-                        Subject_name = model.Subject_name,
-                        Start_date = model.Start_date,
-                        End_date = model.End_date,
-                        Start_time = model.Start_time,
-                        End_time = model.End_time,
-                        Grade = model.Grade,
-                        Rank = model.Rank,
-                        Price = model.Price,
-                        Number_of_session = model.Number_of_session
-                    };
-
-                    _context.Add(requirement);
-
-                    _context.SaveChanges();
-                    transaction.Commit();
-
-                    return Ok(requirement);
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    return BadRequest(ex.Message);
-                }
+                return Unauthorized("User is not authenticated.");
             }
+
+            var response = await _requirementService.CreateRequirementAsync(model, userId);
+            if (response.IsSucceed)
+            {
+                return Ok("OK");
+            }
+
+            return BadRequest(response.Message);
         }
 
-        private string GetCurrentUserId()
+        public string GetCurrentUserId()
         {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("AccessToken");
+            if (string.IsNullOrEmpty(token))
+            {
+                return null;
+            }
+
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
         private string GenerateRequirementId()
@@ -102,19 +95,16 @@ namespace SWP391_eTeacherSystem.Controllers
 
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeleteRequiment(string id)
+        public async Task<IActionResult> DeleteRequirement(string id)
         {
-            var requirements = _context.Requirements.SingleOrDefault(lo => lo.Requirement_id == id);
-            if (requirements != null)
+            var result = await _requirementService.DeleteByIdAsync(id);
+            if (result.IsSucceed)
             {
-                _context.Remove(requirements);
-                _context.SaveChanges();
                 return NoContent();
             }
             else
             {
-                return NotFound();
+                return NotFound(result.Message);
             }
         }
     }

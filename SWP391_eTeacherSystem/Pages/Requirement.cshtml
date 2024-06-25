@@ -1,0 +1,124 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.RequirementModel
+@{
+}
+<!-- ======= Requirements Section ======= -->
+<section id="contact" class="contact cta">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Requirements</h2>
+            <p>To find the most suitable tutor for you</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2"></div>
+
+            <div class="col-lg-8 ">
+                <form method="post" role="form" class="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.User_id">User Id</label>
+                            <input type="text" asp-for="RequirementDto.User_id" class="form-control" readonly>
+                            <span asp-validation-for="RequirementDto.User_id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Requirement_id">Requirement Id</label>
+                            <input type="text" asp-for="RequirementDto.Requirement_id" class="form-control" readonly>
+                            <span asp-validation-for="RequirementDto.Requirement_id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Subject_name">Subject Name</label>
+                            <select asp-for="RequirementDto.Subject_name" class="form-control" required>
+                                <option value="">Please select a subject</option>
+                                @foreach (var subject in Model.Subjects)
+                                {
+                                    <option value="@subject.Subject_name">@subject.Subject_name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="RequirementDto.Subject_name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Address">Address</label>
+                            <input type="text" asp-for="RequirementDto.Address" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Start_date">From Day</label>
+                            <input type="date" asp-for="RequirementDto.Start_date" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.Start_date" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.End_date">To</label>
+                            <input type="date" asp-for="RequirementDto.End_date" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.End_date" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Start_time">Study From</label>
+                            <input type="time" asp-for="RequirementDto.Start_time" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.Start_time" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.End_time">To Until</label>
+                            <input type="time" asp-for="RequirementDto.End_time" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.End_time" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Grade">Grade</label>
+                            <input type="number" asp-for="RequirementDto.Grade" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.Grade" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Price">Price</label>
+                            <input type="number" asp-for="RequirementDto.Price" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Number_of_session">Number of Sessions</label>
+                            <input type="number" asp-for="RequirementDto.Number_of_session" class="form-control" required>
+                            <span asp-validation-for="RequirementDto.Number_of_session" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="RequirementDto.Rank">Accomplishment (Excellent, Good, Average or weak)</label>
+                            <input type="text" class="form-control" asp-for="RequirementDto.Rank" required>
+                            <span asp-validation-for="RequirementDto.Rank" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label asp-for="RequirementDto.Description">Describe other requirements</label>
+                            <input type="text" asp-for="RequirementDto.Description" class="form-control">
+                            <span asp-validation-for="RequirementDto.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <div class="loading"></div>
+                        <div class="error-message"></div>
+                        <div class="sent-message"></div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary form-control">Submit</button>
+                        <p></p>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary form-control">Edit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-2"></div>
+
+        </div>
+
+    </div>
+</section><!-- End Contact Section -->

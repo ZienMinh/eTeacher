@@ -2,6 +2,8 @@
 using DataAccess;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Repositories;
 
 namespace SWP391_eTeacherSystem.Controllers
 {
@@ -10,31 +12,42 @@ namespace SWP391_eTeacherSystem.Controllers
     public class UsersController : ControllerBase
     {
         private readonly AddDbContext _context;
+        private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UsersController(AddDbContext context)
+        public UsersController(AddDbContext context, IUserService userService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
-
+            _userService = userService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        public IActionResult GetAllUser()
+        public async Task<IActionResult> GetAll([FromQuery] UserDto userDto)
         {
-            var dsUsers = _context.Users.ToList();
-            return Ok(dsUsers);
+            var dsUser = await _context.Users.ToListAsync();
+
+            var response = new UserServiceResponseDto
+            {
+                Users = dsUser
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetUserById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var users = _context.Users.SingleOrDefault(lo => lo.Id == id);
-            if (users != null)
+            var userDto = new UserDto();
+            var response = await _userService.GetByIdAsync(id);
+
+            if (response.IsSucceed)
             {
-                return Ok(users);
+                return Ok(response.Users);
             }
             else
             {
-                return NotFound();
+                return NotFound(response.Message);
             }
         }
 

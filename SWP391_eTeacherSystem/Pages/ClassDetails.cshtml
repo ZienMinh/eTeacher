@@ -1,0 +1,110 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ClassDetailsModel
+@{
+    var classes = Model.ClassHour;
+}
+@if (classes == null)
+{
+    <h2>Class not found</h2>
+}
+else
+{
+    <!-- ======= Class Detail Section ======= -->
+    <section id="Req" class="contact ctaa">
+        <div class="container " data-aos="fade-up">
+            <div class="row">
+                <form method="post" role="form" class="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row board col-lg-8">
+                        <div class=" col-lg-6">
+                            <h3>Class details @classes.Class_id</h3>
+                            <p>Subject: @classes.Subject_name - Grade: @classes.Grade</p>
+                            <p>Tuition fee: @classes.Price.ToString() VNĐ/lesson - Number of session: @classes.Number_of_session lesson/course</p>
+                            <p>Start date: @classes.Start_date - To: @classes.End_date</p>
+                            <p>Start time: @classes.Start_time - To: @classes.End_time</p>
+                            <p>Address: @classes.Address</p>
+                        </div>
+
+                        <div class="row">
+                            <input type="hidden" asp-for="ClassId" />
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Tutor_id" class="form-control" value="@classes.User_id">
+                                <span asp-validation-for="ClassDto.Tutor_id" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Class_id" class="form-control">
+                                <span asp-validation-for="ClassDto.Class_id" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Student_id" class="form-control">
+                                <span asp-validation-for="ClassDto.Student_id" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Type_class" class="form-control" value="2">
+                                <span asp-validation-for="ClassDto.Type_class" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Subject_name" class="form-control" value="@classes.Subject_name">
+                                <span asp-validation-for="ClassDto.Subject_name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Address" class="form-control" value="@classes.Address">
+                                <span asp-validation-for="ClassDto.Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Start_date" class="form-control" value="@classes.Start_date">
+                                <span asp-validation-for="ClassDto.Start_date" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.End_date" class="form-control" value="@classes.End_date">
+                                <span asp-validation-for="ClassDto.End_date" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Start_time" class="form-control" value="@classes.Start_time">
+                                <span asp-validation-for="ClassDto.Start_time" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.End_time" class="form-control" value="@classes.End_time">
+                                <span asp-validation-for="ClassDto.End_time" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Grade" class="form-control" value="@classes.Grade">
+                                <span asp-validation-for="ClassDto.Grade" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Price" class="form-control" value="@classes.Price">
+                                <span asp-validation-for="ClassDto.Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="ClassDto.Number_of_session" class="form-control" value="@classes.Number_of_session">
+                            <span asp-validation-for="ClassDto.Number_of_session" class="text-danger"></span>
+                        </div>
+
+                        <div class="my-3">
+                            <div class="loading"></div>
+                            <div class="error-message"></div>
+                            <div class="sent-message"></div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary form-control">Register for class</button>
+                            <p></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- ======= End Class Detail Section ======= -->
+}

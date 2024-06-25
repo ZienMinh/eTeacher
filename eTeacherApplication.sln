@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWP391_eTeacherSystem", "SWP391_eTeacherSystem\SWP391_eTeacherSystem.csproj", "{1453AF8E-FF00-4B5A-8E28-2E3C98573557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWP391_eTeacherSystem", "SWP391_eTeacherSystem\SWP391_eTeacherSystem.csproj", "{1453AF8E-FF00-4B5A-8E28-2E3C98573557}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "eTeacher.Services\Services.csproj", "{2635E3AA-515A-4257-865D-D5C855DE5ACC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "eTeacher.Services\Services.csproj", "{2635E3AA-515A-4257-865D-D5C855DE5ACC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessObject", "eTeacher.Repositories\BusinessObject.csproj", "{952A9169-7699-48D1-AF9A-FE5BABF3ECEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "eTeacher.Repositories\BusinessObject.csproj", "{952A9169-7699-48D1-AF9A-FE5BABF3ECEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{13C7FE5E-6902-4DA3-AD25-2D021BE756A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{13C7FE5E-6902-4DA3-AD25-2D021BE756A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{E9E9E89F-15E5-4254-8878-CC9EB8E6D8FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{E9E9E89F-15E5-4254-8878-CC9EB8E6D8FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
