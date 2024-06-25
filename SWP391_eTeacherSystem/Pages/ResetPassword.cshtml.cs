@@ -2,7 +2,6 @@ using BusinessObject.Models;
 using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Repositories;
 
 namespace SWP391_eTeacherSystem.Pages
@@ -20,20 +19,16 @@ namespace SWP391_eTeacherSystem.Pages
             _logger = logger;
         }
 
-
         [BindProperty]
-        public ResetPasswordDto ResetPasswordDto { get; set; }
-
-        [BindProperty]
-        public UserDto UserDto { get; set; }
+        public string userName { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
-                _logger.LogInformation($"Attempting to reset password for user: {ResetPasswordDto.UserName}");
+                _logger.LogInformation($"Attempting to reset password for user: {userName}");
 
-                var check = await _authService.ResetPasswordByEmailAsync(ResetPasswordDto);
+                var check = await _authService.ResetPasswordByEmailAsync(userName);
                 if (check.IsSucceed)
                 {
                     _logger.LogInformation("Password reset succeeded, redirecting to index page.");
@@ -47,8 +42,5 @@ namespace SWP391_eTeacherSystem.Pages
             }
             return Page();
         }
-
     }
-
-
 }

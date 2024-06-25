@@ -45,5 +45,7 @@ namespace BusinessObject.Models
         public ICollection<Order> Orders { get; set; }
         public ICollection<Qualification> Qualifications { get; set; }
         public ICollection<Report> Reports { get; set; }
+
+        
     }
 }

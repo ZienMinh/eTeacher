@@ -125,74 +125,74 @@ namespace eTeacher.Services
 			return role?.NormalizedName;
 		}
 
-		public async Task<AuthServiceResponseDto> RegisterAsync(RegisterDto registerDto)
-		{
-			var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
+        public async Task<AuthServiceResponseDto> RegisterAsync(RegisterDto registerDto)
+        {
+            var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
 
-			if (isExistsUser != null)
-			{
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = "UserName Already Exists"
-				};
-			}
+            if (isExistsUser != null)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "UserName Already Exists"
+                };
+            }
 
-			// Lấy giá trị role trực tiếp từ registerDto
-			var role = registerDto.Role;
+            // Lấy giá trị role trực tiếp từ registerDto
+            var role = registerDto.Role;
 
-			User newUser = new User()
-			{
-				First_name = registerDto.FirstName,
-				Last_name = registerDto.LastName,
-				Email = registerDto.Email,
-				UserName = registerDto.UserName,
-				SecurityStamp = Guid.NewGuid().ToString(),
-				Role = role,
-			};
+            User newUser = new User()
+            {
+                First_name = registerDto.FirstName,
+                Last_name = registerDto.LastName,
+                Email = registerDto.Email,
+                UserName = registerDto.UserName,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Role = role,
+            };
 
-			var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
+            var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
 
-			if (!createUserResult.Succeeded)
-			{
-				var errorString = "User Creation Failed Because: ";
-				foreach (var error in createUserResult.Errors)
-				{
-					errorString += " # " + error.Description;
-				}
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = errorString
-				};
-			}
+            if (!createUserResult.Succeeded)
+            {
+                var errorString = "User Creation Failed Because: ";
+                foreach (var error in createUserResult.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
 
-			var roleName = StaticUserRoles.GetRoleName(role);
-			var roleResult = await _userManager.AddToRoleAsync(newUser, roleName);
+            var roleName = StaticUserRoles.GetRoleName(role);
+            var roleResult = await _userManager.AddToRoleAsync(newUser, roleName);
 
-			if (!roleResult.Succeeded)
-			{
-				var errorString = "Role Assignment Failed Because: ";
-				foreach (var error in roleResult.Errors)
-				{
-					errorString += " # " + error.Description;
-				}
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = errorString
-				};
-			}
+            if (!roleResult.Succeeded)
+            {
+                var errorString = "Role Assignment Failed Because: ";
+                foreach (var error in roleResult.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
 
-			return new AuthServiceResponseDto()
-			{
-				IsSucceed = true,
-				Message = "User Created Successfully"
-			};
-		}
+            return new AuthServiceResponseDto()
+            {
+                IsSucceed = true,
+                Message = "User Created Successfully"
+            };
+        }
 
 
-		public async Task<AuthServiceResponseDto> SeedRolesAsync()
+        public async Task<AuthServiceResponseDto> SeedRolesAsync()
 		{
 			bool isOwnerRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.OWNER));
 			bool isAdminRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.ADMIN));
@@ -233,14 +233,14 @@ namespace eTeacher.Services
 			return token;
 		}
 
-        public async Task<AuthServiceResponseDto> ResetPasswordByEmailAsync(ResetPasswordDto resetPasswordDto)
+        public async Task<AuthServiceResponseDto> ResetPasswordByEmailAsync(string userName)
         {
             _logger.LogInformation("ResetPasswordByEmailAsync started");
 
-            var user = await _userManager.FindByNameAsync(resetPasswordDto.UserName);
+            var user = await _userManager.FindByNameAsync(userName);
             if (user == null)
             {
-                _logger.LogWarning("User not found: {UserName}", resetPasswordDto.UserName);
+                _logger.LogWarning("User not found: {UserName}", userName);
                 return new AuthServiceResponseDto()
                 {
                     IsSucceed = false,
@@ -270,6 +270,23 @@ namespace eTeacher.Services
                 };
             }
 
+            // Save changes to database (if necessary)
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                var errorString = "Failed to update user in database: ";
+                foreach (var error in result.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                _logger.LogError("Database update failed: {Errors}", errorString);
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
+
             // Send email to user with new password
             var emailSubject = "Your Password Has Been Reset";
             var emailBody = $"Hello {user.UserName},\n\nYour password has been reset. Your new password is: {newPassword}\n\nPlease change it after logging in.";
@@ -283,6 +300,20 @@ namespace eTeacher.Services
             };
         }
 
+        public string GenerateRandomPassword()
+        {
+            const int passwordLength = 9;
+            const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            var random = new Random();
+            var password = new char[passwordLength];
+
+            for (int i = 0; i < passwordLength; i++)
+            {
+                password[i] = allowedChars[random.Next(0, allowedChars.Length)];
+            }
+
+            return new string(password);
+        }
 
 
 
@@ -303,22 +334,6 @@ namespace eTeacher.Services
             var jwtToken = handler.ReadJwtToken(token);
 
             return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
-        }
-
-
-        public string GenerateRandomPassword()
-        {
-            const int passwordLength = 9;
-            const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            var random = new Random();
-            var password = new char[passwordLength];
-
-            for (int i = 0; i < passwordLength; i++)
-            {
-                password[i] = allowedChars[random.Next(0, allowedChars.Length)];
-            }
-
-            return new string(password);
         }
 
 

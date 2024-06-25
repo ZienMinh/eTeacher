@@ -79,7 +79,7 @@ namespace SWP391_eTeacherSystem.Controllers
         }
 
         // Route -> reset-password
-        [HttpPost]
+        /*[HttpPost]
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
@@ -89,6 +89,6 @@ namespace SWP391_eTeacherSystem.Controllers
                 return Ok(resetResult);
 
             return BadRequest(resetResult);
-        }
+        }*/
     }
 }
