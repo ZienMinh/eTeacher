@@ -17,8 +17,10 @@ namespace DataAccess
         [Required]
         [MaxLength(50)]
         public string Last_name { get; set; }
-        public byte Gender { get; set; }
-        [MaxLength(50)]
+
+        [MaxLength(10)]
+        public string Gender { get; set; }
+       
         public string? Address { get; set; }
         [Required]
         [MaxLength(50)]

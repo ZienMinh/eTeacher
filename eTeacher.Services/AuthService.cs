@@ -147,6 +147,7 @@ namespace eTeacher.Services
                 Last_name = registerDto.LastName,
                 Email = registerDto.Email,
                 UserName = registerDto.UserName,
+                Gender = registerDto.Gender,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 Role = role,
             };
@@ -248,10 +249,8 @@ namespace eTeacher.Services
                 };
             }
 
-            // Generate new password
             var newPassword = GenerateRandomPassword();
 
-            // Reset the password
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var passwordChangeResult = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
 
@@ -270,7 +269,6 @@ namespace eTeacher.Services
                 };
             }
 
-            // Save changes to database (if necessary)
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
             {
@@ -315,6 +313,59 @@ namespace eTeacher.Services
             return new string(password);
         }
 
+        public async Task<AuthServiceResponseDto> UpdateUserAsync(UserDto userDto)
+        {
+            var userId = GetCurrentUserId();
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "User Not Logged In"
+                };
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "User Not Found"
+                };
+            }
+
+            user.First_name = userDto.First_name;
+            user.Last_name = userDto.Last_name;
+            user.Email = userDto.Email;
+            user.Gender = userDto.Gender;
+            user.Address = userDto.Address;
+            user.Birth_date = userDto.Birth_date;
+            user.Link_contact = userDto.Link_contact;
+            user.Image = userDto.Image;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
+            {
+                var errorString = "User Update Failed Because: ";
+                foreach (var error in updateResult.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
+
+            return new AuthServiceResponseDto()
+            {
+                IsSucceed = true,
+                Message = "User Updated Successfully"
+            };
+        }
 
 
         public Task RegisterAsyn(RegisterDto registerDto)

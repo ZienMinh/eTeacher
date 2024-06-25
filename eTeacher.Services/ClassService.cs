@@ -90,60 +90,35 @@ namespace Services
             }
         }
 
-        /*public async Task<ClassServiceResponseDto> GetByTypeAsync(ClassDto classDto)
+        public async Task<ClassServiceResponseDto> GetByTutorIdAsync(ClassDto classDto, string id)
         {
-            var classes = await _context.Classes.FirstOrDefaultAsync(c => c.Type_class == 2);
+            _logger.LogInformation($"Fetching classes for tutor with ID: {id}");
+            var classes = await _context.Classes.Where(c => c.Tutor_id == id).ToListAsync();
 
-            if (classes != null)
+            if (classes.Any())
             {
+                _logger.LogInformation($"Found {classes.Count} classes for tutor with ID: {id}");
                 return new ClassServiceResponseDto
                 {
                     IsSucceed = true,
-                    Message = "Class found.",
-                    Classes = new List<Class> { classes }
+                    Message = "Classes found.",
+                    Classes = classes
                 };
             }
             else
             {
+                _logger.LogWarning($"No classes found for tutor with ID: {id}");
                 return new ClassServiceResponseDto
                 {
                     IsSucceed = false,
-                    Message = "No class found for the given ID.",
-                    Classes = null
+                    Message = "No classes found for the given Tutor ID.",
+                    Classes = new List<Class>()
                 };
             }
-        }*/
+        }
 
-        /*public async Task<ClassServiceResponseDto> GetByTypeAsync(ClassDto classDto, byte type)
-        {
-            _logger.LogInformation("Fetching all classes from the database.");
 
-            var response = new ClassServiceResponseDto();
 
-            try
-            {
-                var dsClass = await _context.Classes.ToListAsync();
-                _logger.LogInformation("Fetched {Count} classes.", dsClass.Count);
-
-                if (type == 2)
-                {
-                    response.Classes = dsClass.Where(c => c != null).ToList();
-                }
-                else
-                {
-                    response.Classes = new List<Class>();
-                }
-
-                _logger.LogInformation("Returning response with {Count} classes.", response.Classes.Count);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while fetching classes.");
-                throw;
-            }
-
-            return response;
-        }*/
 
         public async Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId)
         {
@@ -302,9 +277,21 @@ namespace Services
 
         public string GenerateClassId()
         {
-            int currentCount = _context.Classes.Count();
+            var maxClassId = _context.Classes
+                .OrderByDescending(c => c.Class_id)
+                .Select(c => c.Class_id)
+                .FirstOrDefault();
+
+            int currentCount = 0;
+
+            if (maxClassId != null && maxClassId.StartsWith("C") && int.TryParse(maxClassId.Substring(1), out int parsedId))
+            {
+                currentCount = parsedId;
+            }
+
             return "C" + (currentCount + 1).ToString("D9");
         }
+
 
 
         public string GetCurrentUserId()

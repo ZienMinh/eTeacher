@@ -32,7 +32,7 @@ namespace BusinessObject.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     First_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Last_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Gender = table.Column<byte>(type: "tinyint", nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Link_contact = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Rating = table.Column<byte>(type: "tinyint", nullable: false),
