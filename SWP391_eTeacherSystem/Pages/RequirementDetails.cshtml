@@ -1,0 +1,32 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.RequirementDetailsModel
+@{
+    var requirement = Model.Requirement;
+    //var user = Model.CurrentUser;
+}
+@if (requirement == null)
+{
+    <h2>Requirement not found</h2>
+}
+else
+{
+    <!-- ======= Requirement Detail Section ======= -->
+    <h1>Class details @requirement.Requirement_id</h1>
+    <p>@requirement.Subject_name - Grade @requirement.Grade</p>
+    <p>@requirement.Price.ToString("C0")/course, @requirement.Number_of_session sessions/course</p>
+    <p>Date to learn from: @requirement.Start_date - To: @requirement.End_date</p>
+    <p>Time to learn from: @requirement.Start_time - To: @requirement.End_time</p>
+
+    <h2>Student characteristics:</h2>
+
+    <div class="my-3">
+        <div class="loading"></div>
+        <div class="error-message"></div>
+        <div class="sent-message"></div>
+    </div>
+    <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary form-control">Register for class</button>
+        <p></p>
+    </div>
+    <!-- ======= End Requirement Detail Section ======= -->
+}

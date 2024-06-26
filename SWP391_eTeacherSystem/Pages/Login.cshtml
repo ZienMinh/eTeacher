@@ -1,0 +1,52 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.LoginModel
+@{
+}
+<!-- ======= Login ======= -->
+<section id="Login" class="contact ctaa ">
+    <div class="container login" data-aos="fade-up">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div id="login" class="col-lg-5">
+                <form action="" method="post" role="form" class="" style="border-radius: 8px;">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h3>Login</h3>
+                        </div>
+                        <div class="col-12 form-group">
+                            <label asp-for="LoginDto.UserName">User Name</label>
+                            <input type="text" asp-for="LoginDto.UserName" class="form-control" id="name" required>
+                            <span asp-validation-for="LoginDto.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 form-group">
+                            <label asp-for="LoginDto.Password">Password</label>
+                            <input type="password" class="form-control" asp-for="LoginDto.Password" id="password" required>
+                            <span asp-validation-for="LoginDto.Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="remember-me">
+                                <label class="form-check-label text-secondary mx-3" for="remember-me">
+                                    <small>Remember Me</small>
+                                </label>
+                            </div>
+                            <a href="#" class="text-decoration-none text-secondary"><small>Forgot Password?</small></a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary form-control">Login</button>
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            Don't have an account? <a asp-page="Register">Register</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</section>
+<!-- ======= End Login ======= -->

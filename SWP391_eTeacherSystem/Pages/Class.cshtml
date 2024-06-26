@@ -1,0 +1,124 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ClassModel
+@{
+}
+<!-- ======= Class Hour Section ======= -->
+<section id="class-hour" class="class-hour">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Create hourly rental class</h2>
+            <p>For your convenience and to make the most of your free time</p>
+        </div>
+        <div class="row">
+
+            <div class="col-lg-2"></div>
+
+            <div class="col-lg-8">
+                <form method="post" role="form" class="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Tutor_id">Tutor Id</label>
+                            <input type="text" asp-for="ClassDto.Tutor_id" class="form-control" readonly>
+                            <span asp-validation-for="ClassDto.Tutor_id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Class_id">Class Id</label>
+                            <input type="text" asp-for="ClassDto.Class_id" class="form-control" readonly>
+                            <span asp-validation-for="ClassDto.Class_id" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Student_id">Student Id</label>
+                            <input type="text" asp-for="ClassDto.Student_id" class="form-control" value="">
+                            <span asp-validation-for="ClassDto.Student_id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Type_class"></label>
+                            <input type="text" asp-for="ClassDto.Type_class" class="form-control" value="2" readonly>
+                            <span asp-validation-for="ClassDto.Type_class" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Subject_name">Subject Name</label>
+                            <select asp-for="ClassDto.Subject_name" class="form-control" required>
+                                <option value="">Please select a subject</option>
+                                @foreach (var subject in Model.Subjects)
+                                {
+                                    <option value="@subject.Subject_name">@subject.Subject_name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="ClassDto.Subject_name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Address">Address</label>
+                            <input type="text" asp-for="ClassDto.Address" class="form-control" required>
+                            <span asp-validation-for="ClassDto.Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Start_date">From Day</label>
+                            <input type="date" asp-for="ClassDto.Start_date" class="form-control" required>
+                            <span asp-validation-for="ClassDto.Start_date" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.End_date">To</label>
+                            <input type="date" asp-for="ClassDto.End_date" class="form-control" required>
+                            <span asp-validation-for="ClassDto.End_date" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Start_time">Study From</label>
+                            <input type="time" asp-for="ClassDto.Start_time" class="form-control" required>
+                            <span asp-validation-for="ClassDto.Start_time" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.End_time">To Until</label>
+                            <input type="time" asp-for="ClassDto.End_time" class="form-control" required>
+                            <span asp-validation-for="ClassDto.End_time" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Grade">Grade</label>
+                            <input type="number" asp-for="ClassDto.Grade" class="form-control" required>
+                            <span asp-validation-for="ClassDto.Grade" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="ClassDto.Price">Price</label>
+                            <input type="number" asp-for="ClassDto.Price" class="form-control" required>
+                            <span asp-validation-for="ClassDto.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ClassDto.Number_of_session">Number of Sessions</label>
+                        <input type="number" asp-for="ClassDto.Number_of_session" class="form-control" required>
+                        <span asp-validation-for="ClassDto.Number_of_session" class="text-danger"></span>
+                    </div>
+                    <div class="my-3">
+                        <div class="loading"></div>
+                        <div class="error-message"></div>
+                        <div class="sent-message"></div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary form-control">Submit</button>
+                        <p></p>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary form-control">Edit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-2"></div>
+
+        </div>
+
+    </div>
+</section>
+<!-- ======= End Class Hour Section ======= -->

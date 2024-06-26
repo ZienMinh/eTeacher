@@ -1,0 +1,82 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ProfileModel
+@{
+}
+<section id="cta" class="cta">
+    <div class="container" data-aos="zoom-in">
+
+        <div class="row">
+            <div class="col-lg-9 text-center text-lg-start">
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+            </div>
+        </div>
+
+    </div>
+    <!-- </section>End Cta Section -->
+    <!-- ======= Requirements Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Edit Profile</h2>
+                <p>!!!</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-2"></div>
+
+                <div class="col-lg-8 ">
+                    <form action="" method="post" role="form" class="board">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.First_name">First Name</label>
+                                <input type="text" asp-for="UserDto.First_name" class="form-control" required>
+                                <span asp-validation-for="UserDto.First_name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Last_name">Last Name</label>
+                                <input type="text" asp-for="UserDto.Last_name" class="form-control" required>
+                                <span asp-validation-for="UserDto.Last_name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label asp-for="UserDto.Gender">Gender</label>
+                                <input type="text" asp-for="UserDto.Gender" class="form-control" required>
+                                <span asp-validation-for="UserDto.Gender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label asp-for="UserDto.Birth_date">Date of Birth</label>
+                                <input type="date" asp-for="UserDto.Birth_date" class="form-control" required>
+                                <span asp-validation-for="UserDto.Birth_date" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Email">Email</label>
+                                <input type="text" asp-for="UserDto.Email" class="form-control" required>
+                                <span asp-validation-for="UserDto.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Address">Address</label>
+                                <input type="text" asp-for="UserDto.Address" class="form-control" required>
+                                <span asp-validation-for="UserDto.Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="my-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your Requirement has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button type="submit">Submit</button></div>
+                    </form>
+                </div>
+                <div class="col-lg-2"></div>
+
+            </div>
+
+        </div>
+    </section>
