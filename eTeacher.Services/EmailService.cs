@@ -1,6 +1,7 @@
 ﻿using Repositories;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace eTeacher.Core.Services
 {
@@ -9,14 +10,19 @@ namespace eTeacher.Core.Services
         private readonly SmtpClient _smtpClient;
         private readonly string _fromEmail;
 
-        public EmailService(string smtpHost, int smtpPort, string fromEmail, string smtpUser, string smtpPass)
+        public EmailService(IConfiguration configuration)
         {
+            var smtpHost = configuration["Smtp:Host"];
+            var smtpPort = int.Parse(configuration["Smtp:Port"]);
+            var smtpUser = configuration["Smtp:User"];
+            var smtpPass = configuration["Smtp:Pass"];
+            _fromEmail = configuration["Smtp:FromEmail"];
+
             _smtpClient = new SmtpClient(smtpHost, smtpPort)
             {
                 Credentials = new NetworkCredential(smtpUser, smtpPass),
                 EnableSsl = true
             };
-            _fromEmail = fromEmail;
         }
 
         public async Task SendEmailAsync(string to, string subject, string body)
@@ -33,4 +39,7 @@ namespace eTeacher.Core.Services
             await _smtpClient.SendMailAsync(mailMessage);
         }
     }
+
+
+
 }

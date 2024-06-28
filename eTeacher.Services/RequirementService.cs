@@ -46,7 +46,9 @@ namespace Services
                     Grade = requirementDto.Grade,
                     Rank = requirementDto.Rank,
                     Price = requirementDto.Price,
-                    Number_of_session = requirementDto.Number_of_session
+                    Number_of_session = requirementDto.Number_of_session,
+                    Address = requirementDto.Address,
+                    Description = requirementDto.Description
                 };
 
                 _context.Requirements.Add(requirement);
@@ -99,7 +101,29 @@ namespace Services
             }
         }
 
+        public async Task<RequirementServiceResponseDto> DeleteByIdAsync(string id)
+        {
+            var requirement = await _context.Requirements.SingleOrDefaultAsync(lo => lo.Requirement_id == id);
+            if (requirement != null)
+            {
+                _context.Remove(requirement);
+                await _context.SaveChangesAsync();
 
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Requirement deleted successfully."
+                };
+            }
+            else
+            {
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "Requirement not found."
+                };
+            }
+        }
 
 
         public string GenerateRequirementId()

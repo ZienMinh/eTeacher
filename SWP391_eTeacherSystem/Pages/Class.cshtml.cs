@@ -10,20 +10,20 @@ namespace SWP391_eTeacherSystem.Pages
 {
     public class ClassModel : PageModel
     {
-        private readonly IClassService _classService;
+        private readonly IClassHourService _classhourService;
         private readonly IAuthService _authService;
         private readonly AddDbContext _context;
         private readonly ILogger<RequirementModel> _logger;
 
-        public ClassModel(IClassService classService, IAuthService authService, AddDbContext context, ILogger<RequirementModel> logger)
+        public ClassModel(IClassHourService classhourService, IAuthService authService, AddDbContext context, ILogger<RequirementModel> logger)
         {
-            _classService = classService;
+            _classhourService = classhourService;
             _authService = authService;
             _context = context;
             _logger = logger;
         }
         [BindProperty]
-        public ClassDto ClassDto { get; set; }
+        public ClassHourDto ClassHourDto { get; set; }
 
         public List<Subject> Subjects { get; set; }
 
@@ -32,8 +32,8 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                var classId = _classService.GenerateClassId();
-                ClassDto = new ClassDto { Tutor_id = userId, Class_id = classId };
+                var classId = _classhourService.GenerateClassHourId();
+                ClassHourDto = new ClassHourDto {User_id = userId, Class_id = classId };
             }
         }
 
@@ -43,14 +43,13 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { Tutor_id = userId };
+                ClassHourDto = new ClassHourDto { User_id = userId };
             }
             await InitializeClassDtoAsync();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Console.WriteLine("Vi");
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning("ModelState is not valid");
@@ -73,16 +72,16 @@ namespace SWP391_eTeacherSystem.Pages
                 return Page();
             }
 
-            ClassDto.Tutor_id = userId;
+            ClassHourDto.User_id = userId;
 
             try
             {
                 _logger.LogInformation("Attempting to create class hour");
-                var result = await _classService.CreateClassAsync(ClassDto, userId);
+                var result = await _classhourService.CreateClassAsync(ClassHourDto, userId);
                 if (result.IsSucceed)
                 {
                     _logger.LogInformation("Class hour created successfully");
-                    return RedirectToPage("/ClassDetails", new { id = result.CreatedClass.Class_id });
+                    return RedirectToPage("/TutorPage", new { id = result.CreatedClass.Class_id });
                 }
                 else
                 {

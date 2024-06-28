@@ -95,19 +95,16 @@ namespace SWP391_eTeacherSystem.Controllers
 
 
         [HttpDelete("{id}")]
-
-        public IActionResult DeleteRequiment(string id)
+        public async Task<IActionResult> DeleteRequirement(string id)
         {
-            var requirements = _context.Requirements.SingleOrDefault(lo => lo.Requirement_id == id);
-            if (requirements != null)
+            var result = await _requirementService.DeleteByIdAsync(id);
+            if (result.IsSucceed)
             {
-                _context.Remove(requirements);
-                _context.SaveChanges();
                 return NoContent();
             }
             else
             {
-                return NotFound();
+                return NotFound(result.Message);
             }
         }
     }

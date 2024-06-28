@@ -15,15 +15,14 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IClassService _classService;
         private readonly IAuthService _authService;
         private readonly AddDbContext _context;
-        private readonly ILogger<AcceptClassModel> _logger;
 
-        public AcceptClassModel(IRequirementService requirementService, IClassService classService, IAuthService authService, AddDbContext context, ILogger<AcceptClassModel> logger)
+        public AcceptClassModel(IRequirementService requirementService, IClassService classService, 
+            IAuthService authService, AddDbContext context)
         {
             _requirementService = requirementService;
             _classService = classService;
             _authService = authService;
             _context = context;
-            _logger = logger;
         }
 
         [BindProperty]

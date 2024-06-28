@@ -61,7 +61,6 @@ namespace SWP391_eTeacherSystem.Controllers
                 {
                     var users = new User
                     {
-
                         UserName = model.UserName,
                         First_name = model.First_name,
                         Last_name = model.Last_name,

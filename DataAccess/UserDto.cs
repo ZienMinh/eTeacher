@@ -11,17 +11,16 @@ namespace DataAccess
 {
     public class UserDto : IdentityUser
     {
-		
-
-		[Required]
+        [Required]
         [MaxLength(50)]
         public string First_name { get; set; }
         [Required]
         [MaxLength(50)]
         public string Last_name { get; set; }
+
         [MaxLength(10)]
         public string Gender { get; set; }
-        [MaxLength(50)]
+       
         public string? Address { get; set; }
         [Required]
         [MaxLength(50)]

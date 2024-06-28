@@ -26,7 +26,6 @@ namespace SWP391_eTeacherSystem.Controllers
             return Ok(seerRoles);
         }
 
-
         // Route -> Register
         [HttpPost]
         [Route("register")]
@@ -40,7 +39,6 @@ namespace SWP391_eTeacherSystem.Controllers
             return BadRequest(registerResult);
         }
 
-
         // Route -> Login
         [HttpPost]
         [Route("login")]
@@ -53,8 +51,6 @@ namespace SWP391_eTeacherSystem.Controllers
 
             return Unauthorized(loginResult);
         }
-
-
 
         // Route -> make user -> admin
         [HttpPost]
@@ -74,7 +70,7 @@ namespace SWP391_eTeacherSystem.Controllers
         [Route("make-owner")]
         public async Task<IActionResult> MakeOwner([FromBody] UpdatePermissionDto updatePermissionDto)
         {
-            var operationResult = await _authService.MakeOwnerAsync(updatePermissionDto);
+            var operationResult = await _authService.MakeTutorAsync(updatePermissionDto);
 
             if (operationResult.IsSucceed)
                 return Ok(operationResult);
@@ -83,16 +79,16 @@ namespace SWP391_eTeacherSystem.Controllers
         }
 
         // Route -> reset-password
-        [HttpPost]
+        /*[HttpPost]
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
-            var resetResult = await _authService.ResetPasswordAsync(resetPasswordDto);
+            var resetResult = await _authService.ResetPasswordByEmailAsync(resetPasswordDto);
 
             if (resetResult.IsSucceed)
                 return Ok(resetResult);
 
             return BadRequest(resetResult);
-        }
+        }*/
     }
 }

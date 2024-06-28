@@ -13,5 +13,7 @@ namespace DataAccess
         public string Message { get; set; }
 
         public Class CreatedClass { get; set; }
+
+        public List<Class> Classes { get; set;}
     }
 }

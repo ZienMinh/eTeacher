@@ -1,5 +1,4 @@
-﻿using BusinessObject.Models;
-using DataAccess;
+﻿using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +9,10 @@ namespace Repositories
 {
     public interface IUserService
     {
-
-		Task<UserServiceResponseDto> GetAll(UserDto userDto);
+        Task<UserServiceResponseDto> GetAll(UserDto userDto);
 
         Task<UserServiceResponseDto> GetByIdAsync(string id);
 
-		
-
-	}
+        Task<List<UserDto>> SearchTutorAsync(string name, string subjectName);
+    }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Repositories;
 using Services;
 
 namespace SWP391_eTeacherSystem.Pages
@@ -7,12 +8,16 @@ namespace SWP391_eTeacherSystem.Pages
 
     public class AdminModel : PageModel
     {
-        private readonly VisitorCounterService _visitorCounterService = new VisitorCounterService();
+        private readonly IAuthService _authService;
 
-        public int TotalVisitors { get; set; }
-        public void OnGet()
+        public AdminModel(IAuthService authService)
         {
-            TotalVisitors = _visitorCounterService.TotalVisitors;
+            _authService = authService;
+        }
+        public async Task<IActionResult> OnPostLogoutAsync()
+        {
+            await _authService.LogoutAsync();
+            return RedirectToPage("/Index");
         }
     }
 }

@@ -1,0 +1,161 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.TutorPageModel
+@{
+}
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Arsha Bootstrap Template - Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/img/favicon.png" rel="icon">
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/lib/aos/aos.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+</head>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
+        <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="TutorPage"></a>
+
+        <h1 class="logo me-auto"><a asp-page="/TutorPage">eTeacher</a></h1>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" asp-page="/TutorPage">Home</a></li>
+                <li><a class="nav-link scrollto active" href="#about">About</a></li>
+                <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto active" asp-page="Class">Create Class</a></li>
+                <li><a class="nav-link scrollto active" asp-page="AcceptClass">Accept Class</a></li>
+                <li><a class="nav-link scrollto active" asp-page="TuTorClassList">Tutor Class List</a></li>
+                <li>
+                    <form method="post" asp-page-handler="Logout">
+                        <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+                <h1>Better Solutions For Your Education</h1>
+                <h2>We are team of talented tutors training better educators</h2>
+                <div class="d-flex justify-content-center justify-content-lg-start">
+                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                <img src="~/img/pngegg.png" class="img-fluid animated" alt="">
+            </div>
+        </div>
+    </div>
+
+</section><!-- End Hero -->
+<!-- ======= About Us Section ======= -->
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>About Us</h2>
+        </div>
+
+        <div class="row content">
+            <div class="col-lg-6">
+                <p>
+                    <b>eTeacher</b> is a platform that connects students and parents with high-quality, reputable tutors. We understand that each student has unique learning needs and goals, which is why eTeacher offers a personalized tutor-matching service to help you find the perfect educator.
+                </p>
+                <ul>
+                    <li><i class="ri-check-double-line"></i> Quality: We partner only with tutors who have high-level expertise and extensive teaching experience.</li>
+                    <li><i class="ri-check-double-line"></i> Trustworthiness: Every tutor on the eTeacher platform undergoes thorough screening and verification before joining.</li>
+                    <li><i class="ri-check-double-line"></i> Support: Our dedicated support team is always available to assist students and parents with any questions or concerns.</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 pt-4 pt-lg-0">
+                <p>
+                    Our mission at eTeacher is to provide a flexible and effective educational solution that helps students enhance their knowledge and skills, achieving success in their studies and beyond. We are committed to delivering the best learning experience through a curated selection of skilled, enthusiastic, and dedicated tutors.
+                </p>
+                <a href="#" class="btn-learn-more">Learn More</a>
+            </div>
+        </div>
+
+    </div>
+</section><!-- End About Us Section -->
+<!-- ======= Services Section ======= -->
+<section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Services</h2>
+            <p>At <b>eTeacher</b>, we offer on-demand tutor-matching services, making it easy for students and parents to find the perfect tutor. Whether you need help with core subjects, foreign languages, or special skills, eTeacher has you covered. Our tutors are thoroughly screened and verified, ensuring high-quality teaching and peace of mind for you.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-tachometer"></i></div>
+                    <h4><a href="">Class Hour</a></h4>
+                    <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-file"></i></div>
+                    <h4><a href="">Class on requirement</a></h4>
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-tachometer"></i></div>
+                    <h4><a href="">Chat with tutor</a></h4>
+                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-file"></i></div>
+                    <h4><a href="">Feedback</a></h4>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Services Section -->
+<!-- Vendor JS Files -->
+<script src="~/lib/aos/aos.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/glightbox/js/glightbox.min.js"></script>
+<script src="~/lib/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="~/lib/php-email-form/validate.js"></script>
+<script src="~/lib/swiper/swiper-bundle.min.js"></script>
+<script src="~/lib/waypoints/noframework.waypoints.js"></script>
+
+<!-- Template Main JS File -->
+<script src="~/js/main.js"></script>

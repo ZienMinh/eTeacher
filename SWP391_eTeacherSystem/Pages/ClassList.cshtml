@@ -1,0 +1,42 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ClassListModel
+@{
+}
+<!-- ======= Class List Section ======= -->
+<section id="class_list" class="class_list">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Class list</h2>
+            <p>List of classes you are currently taking</p>
+        </div>
+        <div class="row">
+            @foreach (var classes in Model.Classes)
+            {
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">
+                            @classes.Class_id
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@classes.Subject_name - Grade @classes.Grade</h5>
+                            <p class="card-text">
+                                <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
+                                <i class="fa fa-user"></i> Address: @classes.Address
+                            </p>
+                            <form method="get" asp-page="/CancelClass">
+                                <input type="hidden" name="id" value="@classes.Class_id" />
+                                <button type="submit" class="btn btn-success">More details →</button>
+                            </form>
+                            <p></p>
+                            <form method="get" asp-page="/CreateFeedback">
+                                <input type="hidden" name="id" value="@classes.Class_id" />
+                                <button type="submit" class="btn btn-success">Feedback class →</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- ======= End Class List Section ======= -->

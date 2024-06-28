@@ -1,5 +1,6 @@
 ﻿using BusinessObject.Models;
 using DataAccess;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace Repositories
 
 
         Task<RequirementServiceResponseDto> GetByIdAsync(RequirementDto requirementDto, string id);
+
+        Task<RequirementServiceResponseDto> DeleteByIdAsync(string id);
 
         string GenerateRequirementId();
 
