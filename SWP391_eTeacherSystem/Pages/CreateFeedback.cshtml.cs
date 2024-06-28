@@ -9,30 +9,28 @@ using Services;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class CancelClassModel : PageModel
+    public class CreateFeedbackModel : PageModel
     {
-        private readonly AddDbContext _context;
+        private readonly IReportService _reportService;
         private readonly IAuthService _authService;
-        private readonly IUserService _userService;
-        private readonly IClassService _classService;
-        private readonly ILogger<CancelClassModel> _logger;
+        private readonly AddDbContext _context;
+        private readonly ILogger<CreateFeedbackModel> _logger;
 
-        public CancelClassModel(AddDbContext context, IAuthService authService,
-                IUserService userService, IClassService classService, ILogger<CancelClassModel> logger)
+        public CreateFeedbackModel(IReportService reportService, AddDbContext context,
+            ILogger<CreateFeedbackModel> logger, IAuthService authService)
         {
+            _reportService = reportService;
             _context = context;
-            _authService = authService;
-            _userService = userService;
-            _classService = classService;
             _logger = logger;
+            _authService = authService;
         }
-
-        public UserDto UserDto { get; set; }
 
         public Class Class { get; set; }
 
-        [BindProperty]
         public ClassDto ClassDto { get; set; }
+
+        [BindProperty]
+        public ReportDto Feedback { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string ClassId { get; set; }
@@ -40,9 +38,10 @@ namespace SWP391_eTeacherSystem.Pages
         public async Task InitializeClassDtoAsync()
         {
             var userId = _authService.GetCurrentUserId();
-            if (userId == null)
+            if (userId != null)
             {
-                _logger.LogWarning("Login to perform the function.");
+                var reportId = _reportService.GenerateReportId();
+                Feedback = new ReportDto { Student_id = userId, Report_id = reportId };
             }
         }
 
@@ -74,43 +73,70 @@ namespace SWP391_eTeacherSystem.Pages
 
             _logger.LogInformation("OnGetAsync completed successfully.");
             await InitializeClassDtoAsync();
+
+            if (Class != null)
+            {
+                Feedback.Tutor_id = Class.Tutor_id;
+                Feedback.Class_id = ClassId;
+            }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            _logger.LogInformation("OnPostAsync started.");
+
             var userId = _authService.GetCurrentUserId();
-            if (userId == null)
+            if (userId != null)
             {
-                _logger.LogWarning("User is not authenticated");
-                ModelState.AddModelError(string.Empty, "User is not authenticated.");
+                Feedback.Student_id = userId;
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Model state is invalid.");
                 return Page();
             }
 
-            ClassDto.Student_id = userId;
+            // Retrieve the Class entity again to ensure it's not null
+            Class = await _context.Classes.FirstOrDefaultAsync(c => c.Class_id == ClassId);
+
+            if (Class == null)
+            {
+                _logger.LogWarning("Class is null. Unable to set Feedback properties.");
+            }
+            else
+            {
+                Feedback.Class_id = ClassId;
+                Feedback.Tutor_id = Class.Tutor_id;
+            }
 
             try
             {
-                _logger.LogInformation("Deleting class with ID: {ID}", ClassId);
-                var result = await _classService.DeleteClassAsync(ClassId);
+                _logger.LogInformation("Creating report with ID: {ID}", ClassId);
+
+                var result = await _reportService.CreateFeedbackAsync(Feedback);
+
                 if (result.IsSucceed)
                 {
-                    _logger.LogInformation("Class deleted successfully");
+                    _logger.LogInformation("Feedback created successfully.");
                     return RedirectToPage("/StudentPage");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to delete class: " + result.Message);
+                    _logger.LogWarning("Feedback creation failed: {Message}", result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
+                    return Page();
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while saving data: " + ex.Message);
+                _logger.LogError("An error occurred while saving data: {Message}", ex.Message);
                 ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
             }
+
             return Page();
         }
-
     }
 }

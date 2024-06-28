@@ -12,5 +12,7 @@ namespace Repositories
         Task<UserServiceResponseDto> GetAll(UserDto userDto);
 
         Task<UserServiceResponseDto> GetByIdAsync(string id);
+
+        Task<List<UserDto>> SearchTutorAsync(string name, string subjectName);
     }
 }

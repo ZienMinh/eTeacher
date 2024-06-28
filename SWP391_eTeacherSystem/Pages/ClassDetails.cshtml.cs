@@ -118,7 +118,7 @@ namespace SWP391_eTeacherSystem.Pages
                     if (delete.IsSucceed)
                     {
                         _logger.LogInformation("Class created and class hour deleted successfully");
-                        return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
+                        return RedirectToPage("/StudentPage", new { id = result.CreatedClass.Class_id });
                     }
                     else
                     {

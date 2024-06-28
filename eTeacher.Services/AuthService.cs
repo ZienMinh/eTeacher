@@ -35,51 +35,54 @@ namespace eTeacher.Services
             _logger = logger;
         }
 
-		public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
-		{
-			var user = await _userManager.FindByNameAsync(loginDto.UserName);
+        public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
+        {
+            var user = await _userManager.FindByNameAsync(loginDto.UserName);
 
-			if (user == null)
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = "Invalid Credentials"
-				};
+            if (user == null)
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "Invalid Credentials"
+                };
 
-			var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
-			if (!isPasswordCorrect)
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = "Invalid Credentials"
-				};
+            if (!isPasswordCorrect)
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "Invalid Credentials"
+                };
 
-			var userRoles = await _userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
 
-			var authClaims = new List<Claim>
-			{
-				new Claim(ClaimTypes.Name, user.UserName),
-				new Claim(ClaimTypes.NameIdentifier, user.Id),
-				new Claim("JWTID", Guid.NewGuid().ToString()),
-				new Claim("FirstName", user.First_name),
-				new Claim("LastName", user.Last_name),
-			};
+            var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim("JWTID", Guid.NewGuid().ToString()),
+                    new Claim("FirstName", user.First_name),
+                    new Claim("LastName", user.Last_name),
+                };
 
-			foreach (var userRole in userRoles)
-			{
-				authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-			}
+            foreach (var userRole in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
 
-			var token = GenerateNewJsonWebToken(authClaims);
+            var token = GenerateNewJsonWebToken(authClaims);
 
-			return new AuthServiceResponseDto()
-			{
-				IsSucceed = true,
-				Message = token
-			};
-		}
-		public async Task<AuthServiceResponseDto> MakeAdminAsync(UpdatePermissionDto updatePermissionDto)
+            return new AuthServiceResponseDto()
+            {
+                IsSucceed = true,
+                Message = token,
+                Role = user.Role
+            };
+        }
+
+
+        public async Task<AuthServiceResponseDto> MakeAdminAsync(UpdatePermissionDto updatePermissionDto)
 		{
 			var user = await _userManager.FindByNameAsync(updatePermissionDto.UserName);
 
@@ -99,7 +102,7 @@ namespace eTeacher.Services
 			};
 		}
 
-		public async Task<AuthServiceResponseDto> MakeOwnerAsync(UpdatePermissionDto updatePermissionDto)
+		public async Task<AuthServiceResponseDto> MakeTutorAsync(UpdatePermissionDto updatePermissionDto)
 		{
 			var user = await _userManager.FindByNameAsync(updatePermissionDto.UserName);
 
@@ -110,12 +113,12 @@ namespace eTeacher.Services
 					Message = "Invalid User name!"
 				};
 
-			await _userManager.AddToRoleAsync(user, nameof(StaticUserRoles.OWNER));
+			await _userManager.AddToRoleAsync(user, nameof(StaticUserRoles.TUTOR));
 
 			return new AuthServiceResponseDto()
 			{
 				IsSucceed = true,
-				Message = "User is now an OWNER"
+				Message = "User is now an TUTOR"
 			};
 		}
 
@@ -138,7 +141,6 @@ namespace eTeacher.Services
                 };
             }
 
-            // Lấy giá trị role trực tiếp từ registerDto
             var role = registerDto.Role;
 
             User newUser = new User()
@@ -195,11 +197,12 @@ namespace eTeacher.Services
 
         public async Task<AuthServiceResponseDto> SeedRolesAsync()
 		{
-			bool isOwnerRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.OWNER));
+            bool isModeratorRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.MODERATOR));
+            bool isTutorRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.TUTOR));
 			bool isAdminRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.ADMIN));
 			bool isUserRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.USER));
 
-			if (isOwnerRoleExists && isAdminRoleExists && isUserRoleExists)
+			if (isModeratorRoleExists && isTutorRoleExists && isAdminRoleExists && isUserRoleExists)
 				return new AuthServiceResponseDto()
 				{
 					IsSucceed = true,
@@ -208,9 +211,10 @@ namespace eTeacher.Services
 
 			await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.USER)));
 			await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.ADMIN)));
-			await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.OWNER)));
+			await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.TUTOR)));
+            await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.MODERATOR)));
 
-			return new AuthServiceResponseDto()
+            return new AuthServiceResponseDto()
 			{
 				IsSucceed = true,
 				Message = "Role Seeding Done Successfully"
@@ -387,6 +391,16 @@ namespace eTeacher.Services
             return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
+        public async Task<AuthServiceResponseDto> LogoutAsync()
+        {
+            // Xóa token khỏi session hoặc cookie
+            _httpContextAccessor.HttpContext.Session.Remove("AccessToken");
 
+            return new AuthServiceResponseDto
+            {
+                IsSucceed = true,
+                Message = "Logout successful"
+            };
+        }
     }
 }

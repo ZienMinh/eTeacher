@@ -70,7 +70,7 @@ namespace SWP391_eTeacherSystem.Controllers
         [Route("make-owner")]
         public async Task<IActionResult> MakeOwner([FromBody] UpdatePermissionDto updatePermissionDto)
         {
-            var operationResult = await _authService.MakeOwnerAsync(updatePermissionDto);
+            var operationResult = await _authService.MakeTutorAsync(updatePermissionDto);
 
             if (operationResult.IsSucceed)
                 return Ok(operationResult);

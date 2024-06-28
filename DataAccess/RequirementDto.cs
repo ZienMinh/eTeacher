@@ -43,5 +43,7 @@ namespace DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public double? Total { get; set; }
     }
 }

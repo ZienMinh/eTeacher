@@ -81,7 +81,7 @@ namespace SWP391_eTeacherSystem.Pages
                 if (result.IsSucceed)
                 {
                     _logger.LogInformation("Class hour created successfully");
-                    return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
+                    return RedirectToPage("/TutorPage", new { id = result.CreatedClass.Class_id });
                 }
                 else
                 {

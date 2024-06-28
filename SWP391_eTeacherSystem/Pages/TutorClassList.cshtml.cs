@@ -30,15 +30,16 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task OnGetAsync()
         {
+            _logger.LogInformation("OnGetAsync called");
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                _logger.LogInformation($"Fetching classes for tutor with ID: {userId}");
+                _logger.LogInformation($"User ID from GetCurrentUserId: {userId}");
                 var response = await _classService.GetByTutorIdAsync(ClassDto, userId);
                 if (response.IsSucceed)
                 {
                     Classes = response.Classes;
-                    _logger.LogInformation("Classes successfully fetched");
+                    _logger.LogInformation($"Classes successfully fetched, count: {Classes.Count}");
                 }
                 else
                 {
@@ -52,7 +53,6 @@ namespace SWP391_eTeacherSystem.Pages
                 Classes = new List<Class>();
             }
         }
-
 
     }
 }

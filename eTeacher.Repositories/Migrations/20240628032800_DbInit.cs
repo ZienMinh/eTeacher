@@ -222,34 +222,13 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Report",
-                columns: table => new
-                {
-                    Report_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Class_id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(750)", maxLength: 750, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Report", x => x.Report_id);
-                    table.ForeignKey(
-                        name: "FK_Report_AspNetUsers_User_id",
-                        column: x => x.User_id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Classes",
                 columns: table => new
                 {
                     Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Start_date = table.Column<DateOnly>(type: "date", nullable: true),
                     End_date = table.Column<DateOnly>(type: "date", nullable: true),
@@ -259,6 +238,7 @@ namespace BusinessObject.Migrations
                     Type_class = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -305,7 +285,8 @@ namespace BusinessObject.Migrations
                     Type_class = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    Total = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -340,7 +321,8 @@ namespace BusinessObject.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    Total = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -356,6 +338,47 @@ namespace BusinessObject.Migrations
                         column: x => x.Subject_name,
                         principalTable: "Subject",
                         principalColumn: "Subject_name",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Report",
+                columns: table => new
+                {
+                    Report_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Student_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    Tutor_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(750)", maxLength: 750, nullable: false),
+                    Rating = table.Column<byte>(type: "tinyint", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Report", x => x.Report_id);
+                    table.ForeignKey(
+                        name: "FK_Report_AspNetUsers_Student_id",
+                        column: x => x.Student_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Report_AspNetUsers_Tutor_id",
+                        column: x => x.Tutor_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Report_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Report_Classes_Class_id",
+                        column: x => x.Class_id,
+                        principalTable: "Classes",
+                        principalColumn: "Class_id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -439,9 +462,24 @@ namespace BusinessObject.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Report_User_id",
+                name: "IX_Report_Class_id",
                 table: "Report",
-                column: "User_id");
+                column: "Class_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Report_Student_id",
+                table: "Report",
+                column: "Student_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Report_Tutor_id",
+                table: "Report",
+                column: "Tutor_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Report_UserId",
+                table: "Report",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Requirement_Subject_name",
@@ -479,9 +517,6 @@ namespace BusinessObject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Classes");
-
-            migrationBuilder.DropTable(
                 name: "ClassHour");
 
             migrationBuilder.DropTable(
@@ -498,6 +533,9 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Classes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

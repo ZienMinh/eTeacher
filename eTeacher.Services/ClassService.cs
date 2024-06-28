@@ -92,6 +92,30 @@ namespace Services
 
         public async Task<ClassServiceResponseDto> GetByTutorIdAsync(ClassDto classDto, string id)
         {
+            var classes = await _context.Classes.FirstOrDefaultAsync(c => c.Tutor_id == id);
+
+            if (classes != null)
+            {
+                return new ClassServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Class found.",
+                    Classes = new List<Class> { classes }
+                };
+            }
+            else
+            {
+                return new ClassServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "No class found for the given ID.",
+                    Classes = null
+                };
+            }
+        }
+
+        /*public async Task<ClassServiceResponseDto> GetByTutorIdAsync(ClassDto classDto, string id)
+        {
             _logger.LogInformation($"Fetching classes for tutor with ID: {id}");
             var classes = await _context.Classes.Where(c => c.Tutor_id == id).ToListAsync();
 
@@ -115,7 +139,7 @@ namespace Services
                     Classes = new List<Class>()
                 };
             }
-        }
+        }*/
 
 
 
