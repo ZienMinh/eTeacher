@@ -1364,3 +1364,16 @@ section {
     .star-rating input[type="radio"]:checked ~ label {
         color: #FFD700;
     }
+
+/*--------------------------------------------------------------
+# Rating star
+--------------------------------------------------------------*/
+.board {
+    background-color: #fff;
+    border: 5px solid orange;
+    padding: 20px;
+}
+
+.textblack p{
+    color:#000000;
+}

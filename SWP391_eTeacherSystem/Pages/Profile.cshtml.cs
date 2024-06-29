@@ -10,83 +10,66 @@ using System.Security.Claims;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-	public class ProfileModel : PageModel
-	{
-		private readonly AddDbContext _context;
-		private readonly IUserService _userService;
-		private readonly IAuthService _authService;
-		private readonly ILogger<ProfileModel> _logger;
+    public class ProfileModel : PageModel
+    {
+        private readonly IAuthService _authService;
+        private readonly AddDbContext _context;
+        private readonly ILogger<ProfileModel> _logger;
+        private readonly IUserService _userService;
 
-		public ProfileModel(AddDbContext context, IAuthService authService, IUserService userService, ILogger<ProfileModel> logger)
-		{
-			_context = context;
-			_authService = authService;
-			_userService = userService;
-			_logger = logger;
-		}
+        public ProfileModel(IUserService userService, IAuthService authService, AddDbContext context, ILogger<ProfileModel> logger)
+        {
+            _authService = authService;
+            _context = context;
+            _logger = logger;
+            _userService = userService;
+        }
 
-		[BindProperty]
-		public UserDto UserDto { get; set; }
+        [BindProperty]
+        public UserDto UserDto { get; set; }
 
+        public List<User> Users { get; set; }
 
-		public async Task OnGetAsync()
-		{
-			var userId = _authService.GetCurrentUserId();
-			
-		}
-         
-		public async Task<IActionResult> OnPostAsync()
-		{
-			_logger.LogInformation("OnPostAsync started");
+        public async Task OnGetAsync()
+        {
+            var userId = _authService.GetCurrentUserId();
+            if (userId == null)
+            {
+                // Handle the case where the user is not logged in
+                _logger.LogWarning("User not logged in.");
+                return;
+            }
 
-			if (!ModelState.IsValid)
-			{
-				_logger.LogWarning("ModelState is not valid");
-				// Log chi tiết các lỗi trong ModelState
-				foreach (var state in ModelState)
-				{
-					if (state.Value.Errors.Count > 0)
-					{
-						_logger.LogWarning($"Property: {state.Key} - Errors: {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-					}
-				}
-				await OnGetAsync();
-				return Page();
-			}
+            var response = await _userService.GetByIdAsync(userId);
+            if (response != null && response.IsSucceed && response.Users != null)
+            {
+                var user = response.Users.FirstOrDefault();
+                if (user != null)
+                {
+                    UserDto = new UserDto
+                    {
+                        First_name = user.First_name,
+                        Last_name = user.Last_name,
+                        Gender = user.Gender,
+                        Address = user.Address,
+                        Email = user.Email,
+                        Birth_date = user.Birth_date,
+                        Link_contact = user.Link_contact,
+                        Rating = user.Rating,
+                        Image = user.Image,
+                        Role = user.Role
+                    };
+                }
+                else
+                {
+                    _logger.LogWarning("User list is empty.");
+                }
+            }
+            else
+            {
+                _logger.LogWarning(response?.Message ?? $"User with ID {userId} not found.");
+            }
 
-			var userId = _authService.GetCurrentUserId();
-			if (userId == null)
-			{
-				_logger.LogWarning("User is not authenticated");
-				ModelState.AddModelError(string.Empty, "User is not authenticated.");
-				return Page();
-			}
-
-
-
-			try
-			{
-				_logger.LogInformation("Attempting to create requirement");
-				var result = await _authService.UpdateUserAsync(UserDto);
-				if (result.IsSucceed)
-				{
-					_logger.LogInformation("Requirement created successfully");
-					return RedirectToPage("/Index", new {  });
-				}
-				else
-				{
-					_logger.LogWarning("Failed to create requirement: " + result.Message);
-					ModelState.AddModelError(string.Empty, result.Message);
-				}
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError("An error occurred while saving data: " + ex.Message);
-				ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
-			}
-
-			await OnGetAsync();
-			return Page();
-		}
-	}
+        }
+    }
 }

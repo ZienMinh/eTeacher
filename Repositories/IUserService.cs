@@ -14,5 +14,6 @@ namespace Repositories
         Task<UserServiceResponseDto> GetByIdAsync(string id);
 
         Task<List<UserDto>> SearchTutorAsync(string name, string subjectName);
+
     }
 }

@@ -3,18 +3,42 @@
 @{
 }
 <!-- ======= Tutor Class List Section ======= -->
-<section id="tutor_class_list" class="tutor_class_list">
+<header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
+        <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="TutorPage"></a>
+
+        <h1 class="logo me-auto"><a asp-page="/TutorPage">eTeacher</a></h1>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" asp-page="/TutorPage">Home</a></li>
+                <li><a class="nav-link scrollto active" href="#about">About</a></li>
+                <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto active" asp-page="Class">Create Class</a></li>
+                <li><a class="nav-link scrollto active" asp-page="AcceptClass">Accept Class</a></li>
+                <li><a class="nav-link scrollto active" asp-page="TuTorClassList">Tutor Class List</a></li>
+                <li>
+                    <form method="post" asp-page-handler="Logout">
+                        <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
+<section id="tutor_class_list" class="tutor_class_list cta">
     <div class="container" data-aos="fade-up">
         <div class="section-title">
             <h2>Class list</h2>
             <p>List of classes you are currently teaching</p>
         </div>
-        <div class="row">
+        <div class="row ">
             @if (Model.Classes != null && Model.Classes.Any())
             {
                 foreach (var classes in Model.Classes)
                 {
-                    <div class="col-md-3">
+                    <div class="col-md-3 textblack">
                         <div class="card mb-3">
                             <div class="card-header bg-primary text-white">
                                 @classes.Class_id
