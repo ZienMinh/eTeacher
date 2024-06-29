@@ -114,45 +114,6 @@ namespace Services
             }
         }
 
-        /*public async Task<ClassServiceResponseDto> GetByTutorIdAsync(ClassDto classDto, string id)
-        {
-            _logger.LogInformation($"Fetching classes for tutor with ID: {id}");
-            var classes = await _context.Classes.Where(c => c.Tutor_id == id).ToListAsync();
-
-            if (classes.Any())
-            {
-                _logger.LogInformation($"Found {classes.Count} classes for tutor with ID: {id}");
-                return new ClassServiceResponseDto
-                {
-                    IsSucceed = true,
-                    Message = "Classes found.",
-                    Classes = classes
-                };
-                }
-                else
-                {
-                _logger.LogWarning($"No classes found for tutor with ID: {id}");
-                return new ClassServiceResponseDto
-                {
-                    IsSucceed = false,
-                    Message = "No classes found for the given Tutor ID.",
-                    Classes = new List<Class>()
-                };
-                }
-        }*/
-
-
-                _logger.LogInformation("Returning response with {Count} classes.", response.Classes.Count);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while fetching classes.");
-                throw;
-            }
-
-            return response;
-        }*/
-
         public async Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId)
         {
             _logger.LogInformation("Mapping ClassDto to Requirement entity");
