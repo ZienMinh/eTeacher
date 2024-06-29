@@ -1,4 +1,67 @@
-﻿
+﻿@* @page
+@model SWP391_eTeacherSystem.Pages.RegisterModel
+@{
+}
+<!-- ======= Regis ======= -->
+<section id="Regis" class="contact ctaa">
+	<div class="container register" data-aos="fade-up">
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div id="register" class="col-lg-5">
+				<form action="" method="post" role="form" class="" style="border-radius: 8px;" id="registerForm">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="row">
+						<div class="section-title">
+							<h3>Register</h3>
+						</div>
+						<div class="form-group col-md-6">
+							<label asp-for="RegisterDto.FirstName">First Name</label>
+							<input type="text" asp-for="RegisterDto.FirstName" class="form-control" required>
+							<span asp-validation-for="RegisterDto.FirstName" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label asp-for="RegisterDto.LastName">Last Name</label>
+							<input type="text" class="form-control" asp-for="RegisterDto.LastName" required>
+							<span asp-validation-for="RegisterDto.LastName" class="text-danger"></span>
+						</div>
+						<div class="form-group ">
+							<label asp-for="RegisterDto.Email">Your Email</label>
+							<input type="email" class="form-control" asp-for="RegisterDto.Email" id="email" required>
+							<span asp-validation-for="RegisterDto.Email" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label asp-for="RegisterDto.UserName">Username</label>
+						<input type="text" class="form-control" asp-for="RegisterDto.UserName" id=" username" required pattern="^[a-zA-Z0-9]*$" title="Username can only contain letters or digits">
+						<span asp-validation-for="RegisterDto.UserName" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="RegisterDto.Password">Password</label>
+						<input type="password" class="form-control" asp-for="RegisterDto.Password" id="password" required minlength="6">
+						<span asp-validation-for="RegisterDto.Password" class="text-danger"></span>
+					</div>
+					<div>
+						<label asp-for="RegisterDto.Role"></label>
+						<select asp-for="RegisterDto.Role">
+							<option value="USER">User</option>
+							<option value="ADMIN">Admin</option>
+							<option value="OWNER">Owner</option>
+						</select>
+						<span asp-validation-for="RegisterDto.Role"></span>
+					</div>
+					<div class="text-center"><button type="submit" class="btn form-control btn-primary">Register</button></div>
+					<div class="text-center" style="margin-top: 10px;">Already have an account? <a asp-page="Login">Login</a></div>
+				</form>
+			</div>
+			<div class="col-lg-3"></div>
+		</div>
+
+	</div>
+
+	</div>
+</section>
+<!-- ======= End Login-Regis ======= --> *@
+
 @page
 @model SWP391_eTeacherSystem.Pages.RegisterModel
 @{
@@ -48,15 +111,15 @@
                                 <span asp-validation-for="RegisterDto.Gender" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label asp-for="RegisterDto.Role">Role</label>
-                                <select asp-for="RegisterDto.Role" class="form-control" required>
-                                    <option value="1">User</option>
-                                    <option value="2">Admin</option>
+                            <label asp-for="RegisterDto.Role">Role</label>
+                            <select asp-for="RegisterDto.Role" class="form-control" required>
+                                <option value="1">User</option>
+                                <option value="2">Admin</option>
                                     <option value="3">Tutor</option>
                                     <option value="4">Moderator</option>
-                                </select>
-                                <span asp-validation-for="RegisterDto.Role" class="text-danger"></span>
-                            </div>
+                            </select>
+                            <span asp-validation-for="RegisterDto.Role" class="text-danger"></span>
+                        </div>
                         </div>
                         <p></p>
                     </div>

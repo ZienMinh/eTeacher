@@ -38,8 +38,8 @@ namespace SWP391_eTeacherSystem.Pages
                         case 3:
                             return RedirectToPage("/TutorPage");
                         default:
-                            return RedirectToPage("/Index");
-                    }
+                    return RedirectToPage("/Index");
+                }
                 }
                 else
                 {

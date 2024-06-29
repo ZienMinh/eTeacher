@@ -129,6 +129,7 @@ namespace BusinessObject.Models
                 entity.HasKey(e => e.Report_id);
             });
 
+
             // Subject entity configuration
             modelBuilder.Entity<Subject>(entity =>
             {

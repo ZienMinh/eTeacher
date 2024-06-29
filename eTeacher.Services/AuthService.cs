@@ -35,54 +35,54 @@ namespace eTeacher.Services
             _logger = logger;
         }
 
-        public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
-        {
-            var user = await _userManager.FindByNameAsync(loginDto.UserName);
+		public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
+		{
+			var user = await _userManager.FindByNameAsync(loginDto.UserName);
 
-            if (user == null)
-                return new AuthServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = "Invalid Credentials"
-                };
+			if (user == null)
+				return new AuthServiceResponseDto()
+				{
+					IsSucceed = false,
+					Message = "Invalid Credentials"
+				};
 
-            var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+			var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
-            if (!isPasswordCorrect)
-                return new AuthServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = "Invalid Credentials"
-                };
+			if (!isPasswordCorrect)
+				return new AuthServiceResponseDto()
+				{
+					IsSucceed = false,
+					Message = "Invalid Credentials"
+				};
 
-            var userRoles = await _userManager.GetRolesAsync(user);
+			var userRoles = await _userManager.GetRolesAsync(user);
 
-            var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim("JWTID", Guid.NewGuid().ToString()),
-                    new Claim("FirstName", user.First_name),
-                    new Claim("LastName", user.Last_name),
-                };
+			var authClaims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, user.UserName),
+				new Claim(ClaimTypes.NameIdentifier, user.Id),
+				new Claim("JWTID", Guid.NewGuid().ToString()),
+				new Claim("FirstName", user.First_name),
+				new Claim("LastName", user.Last_name),
+			};
 
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
+			foreach (var userRole in userRoles)
+			{
+				authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+			}
 
-            var token = GenerateNewJsonWebToken(authClaims);
+			var token = GenerateNewJsonWebToken(authClaims);
 
-            return new AuthServiceResponseDto()
-            {
-                IsSucceed = true,
+			return new AuthServiceResponseDto()
+			{
+				IsSucceed = true,
                 Message = token,
                 Role = user.Role
-            };
-        }
+			};
+		}
 
 
-        public async Task<AuthServiceResponseDto> MakeAdminAsync(UpdatePermissionDto updatePermissionDto)
+		public async Task<AuthServiceResponseDto> MakeAdminAsync(UpdatePermissionDto updatePermissionDto)
 		{
 			var user = await _userManager.FindByNameAsync(updatePermissionDto.UserName);
 
@@ -128,74 +128,75 @@ namespace eTeacher.Services
 			return role?.NormalizedName;
 		}
 
-        public async Task<AuthServiceResponseDto> RegisterAsync(RegisterDto registerDto)
-        {
-            var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
+		public async Task<AuthServiceResponseDto> RegisterAsync(RegisterDto registerDto)
+		{
+			var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
 
-            if (isExistsUser != null)
-            {
-                return new AuthServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = "UserName Already Exists"
-                };
-            }
+			if (isExistsUser != null)
+			{
+				return new AuthServiceResponseDto()
+				{
+					IsSucceed = false,
+					Message = "UserName Already Exists"
+				};
+			}
 
-            var role = registerDto.Role;
+			// Lấy giá trị role trực tiếp từ registerDto
+			var role = registerDto.Role;
 
-            User newUser = new User()
-            {
-                First_name = registerDto.FirstName,
-                Last_name = registerDto.LastName,
-                Email = registerDto.Email,
-                UserName = registerDto.UserName,
+			User newUser = new User()
+			{
+				First_name = registerDto.FirstName,
+				Last_name = registerDto.LastName,
+				Email = registerDto.Email,
+				UserName = registerDto.UserName,
                 Gender = registerDto.Gender,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                Role = role,
-            };
+				SecurityStamp = Guid.NewGuid().ToString(),
+				Role = role,
+			};
 
-            var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
+			var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
 
-            if (!createUserResult.Succeeded)
-            {
-                var errorString = "User Creation Failed Because: ";
-                foreach (var error in createUserResult.Errors)
-                {
-                    errorString += " # " + error.Description;
-                }
-                return new AuthServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = errorString
-                };
-            }
+			if (!createUserResult.Succeeded)
+			{
+				var errorString = "User Creation Failed Because: ";
+				foreach (var error in createUserResult.Errors)
+				{
+					errorString += " # " + error.Description;
+				}
+				return new AuthServiceResponseDto()
+				{
+					IsSucceed = false,
+					Message = errorString
+				};
+			}
 
-            var roleName = StaticUserRoles.GetRoleName(role);
-            var roleResult = await _userManager.AddToRoleAsync(newUser, roleName);
+			var roleName = StaticUserRoles.GetRoleName(role);
+			var roleResult = await _userManager.AddToRoleAsync(newUser, roleName);
 
-            if (!roleResult.Succeeded)
-            {
-                var errorString = "Role Assignment Failed Because: ";
-                foreach (var error in roleResult.Errors)
-                {
-                    errorString += " # " + error.Description;
-                }
-                return new AuthServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = errorString
-                };
-            }
+			if (!roleResult.Succeeded)
+			{
+				var errorString = "Role Assignment Failed Because: ";
+				foreach (var error in roleResult.Errors)
+				{
+					errorString += " # " + error.Description;
+				}
+				return new AuthServiceResponseDto()
+				{
+					IsSucceed = false,
+					Message = errorString
+				};
+			}
 
-            return new AuthServiceResponseDto()
-            {
-                IsSucceed = true,
-                Message = "User Created Successfully"
-            };
-        }
+			return new AuthServiceResponseDto()
+			{
+				IsSucceed = true,
+				Message = "User Created Successfully"
+			};
+		}
 
 
-        public async Task<AuthServiceResponseDto> SeedRolesAsync()
+		public async Task<AuthServiceResponseDto> SeedRolesAsync()
 		{
             bool isModeratorRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.MODERATOR));
             bool isTutorRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.TUTOR));
@@ -214,7 +215,7 @@ namespace eTeacher.Services
 			await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.TUTOR)));
             await _roleManager.CreateAsync(new IdentityRole(StaticUserRoles.GetRoleName(StaticUserRoles.MODERATOR)));
 
-            return new AuthServiceResponseDto()
+			return new AuthServiceResponseDto()
 			{
 				IsSucceed = true,
 				Message = "Role Seeding Done Successfully"
@@ -253,8 +254,10 @@ namespace eTeacher.Services
                 };
             }
 
+            // Generate new password
             var newPassword = GenerateRandomPassword();
 
+            // Reset the password
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var passwordChangeResult = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
 
@@ -402,5 +405,7 @@ namespace eTeacher.Services
                 Message = "Logout successful"
             };
         }
+
+
     }
 }

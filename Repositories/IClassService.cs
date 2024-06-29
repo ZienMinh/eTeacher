@@ -19,6 +19,8 @@ namespace Repositories
 
         Task<ClassServiceResponseDto> GetByIdAsync(ClassDto classDto, string id);
 
+        //Task<ClassServiceResponseDto> GetByTypeAsync(ClassDto classDto, byte type);
+
         Task<ClassServiceResponseDto> GetByTypeAsync(ClassDto classDto);
 
         Task<ClassServiceResponseDto> UpdateStudentAsync(ClassDto classDto, string userId);

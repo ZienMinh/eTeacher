@@ -2,6 +2,7 @@ using BusinessObject.Models;
 using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Repositories;
 
 namespace SWP391_eTeacherSystem.Pages
@@ -21,6 +22,9 @@ namespace SWP391_eTeacherSystem.Pages
 
         [BindProperty]
         public string userName { get; set; }
+
+        [BindProperty]
+        public UserDto UserDto { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {

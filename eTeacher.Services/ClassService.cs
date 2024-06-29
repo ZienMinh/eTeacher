@@ -128,9 +128,9 @@ namespace Services
                     Message = "Classes found.",
                     Classes = classes
                 };
-            }
-            else
-            {
+                }
+                else
+                {
                 _logger.LogWarning($"No classes found for tutor with ID: {id}");
                 return new ClassServiceResponseDto
                 {
@@ -138,11 +138,20 @@ namespace Services
                     Message = "No classes found for the given Tutor ID.",
                     Classes = new List<Class>()
                 };
-            }
+                }
         }*/
 
 
+                _logger.LogInformation("Returning response with {Count} classes.", response.Classes.Count);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while fetching classes.");
+                throw;
+            }
 
+            return response;
+        }*/
 
         public async Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId)
         {

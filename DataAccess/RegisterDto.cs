@@ -29,7 +29,7 @@ namespace DataAccess
         [Required(ErrorMessage = "Gender is required")]
         public string Gender { get; set; }
 
-        [Required(ErrorMessage = "Role is required")]
+		[Required(ErrorMessage = "Role is required")]
 		public byte Role { get; set; }
 	}
 }
