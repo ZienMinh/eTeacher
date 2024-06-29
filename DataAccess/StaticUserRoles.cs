@@ -8,7 +8,8 @@ namespace DataAccess
 {
 	public static class StaticUserRoles
 	{
-		public const byte OWNER = 3;
+        public const byte MODERATOR = 4;
+        public const byte TUTOR = 3;
 		public const byte ADMIN = 2;
 		public const byte USER = 1;
 
@@ -16,7 +17,8 @@ namespace DataAccess
 		{
 			return role switch
 			{
-				OWNER => nameof(OWNER),
+                MODERATOR => nameof(MODERATOR),
+                TUTOR => nameof(TUTOR),
 				ADMIN => nameof(ADMIN),
 				USER => nameof(USER),
 				_ => nameof(USER),
@@ -27,7 +29,8 @@ namespace DataAccess
 		{
 			return role.ToUpper() switch
 			{
-				nameof(OWNER) => OWNER,
+                nameof(MODERATOR) => MODERATOR,
+                nameof(TUTOR) => TUTOR,
 				nameof(ADMIN) => ADMIN,
 				nameof(USER) => USER,
 				_ => USER,

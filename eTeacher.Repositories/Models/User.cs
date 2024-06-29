@@ -17,7 +17,8 @@ namespace BusinessObject.Models
         [MaxLength(50)]
         public string Last_name { get; set; }
 
-        public byte Gender { get; set; }
+        [MaxLength(10)]
+        public string Gender { get; set; }
 
         [MaxLength(50)]
         public string? Address { get; set; }
@@ -45,5 +46,9 @@ namespace BusinessObject.Models
         public ICollection<Order> Orders { get; set; }
         public ICollection<Qualification> Qualifications { get; set; }
         public ICollection<Report> Reports { get; set; }
+        public ICollection<Report> TutorReports { get; set; }
+        public ICollection<Report> StudentReports { get; set; }
+
+
     }
 }

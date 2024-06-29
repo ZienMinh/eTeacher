@@ -71,7 +71,7 @@ namespace Services
             {
                 try
                 {
-                    var classId = GenerateClassId();
+                    var classId = GenerateClassHourId();
 
                     var classes = new ClassHour
                     {
@@ -145,9 +145,9 @@ namespace Services
         }
 
 
-        public string GenerateClassId()
+        public string GenerateClassHourId()
         {
-            int currentCount = _context.Classes.Count();
+            int currentCount = _context.ClassHours.Count();
             return "H" + (currentCount + 1).ToString("D9");
         }
 

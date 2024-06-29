@@ -17,7 +17,7 @@ namespace Repositories
 
         Task<ClassHourServiceResponseDto> DeleteClassAsync(string id);
 
-        string GenerateClassId();
+        string GenerateClassHourId();
 
         string GetCurrentUserId();
     }

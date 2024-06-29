@@ -62,9 +62,14 @@ namespace BusinessObject.Models
                       .HasForeignKey(q => q.User_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(e => e.Reports)
-                      .WithOne()
-                      .HasForeignKey(r => r.User_id)
+                entity.HasMany(e => e.TutorReports)
+                      .WithOne(c => c.Tutor)
+                      .HasForeignKey(c => c.Tutor_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.StudentReports)
+                      .WithOne(c => c.Student)
+                      .HasForeignKey(c => c.Student_id)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
@@ -99,6 +104,11 @@ namespace BusinessObject.Models
                       .HasForeignKey(e => e.Subject_name)
                       .HasPrincipalKey(s => s.Subject_name)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.Reports)
+                      .WithOne(r => r.Class)
+                      .HasForeignKey(r => r.Class_id)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Order entity configuration
@@ -119,7 +129,6 @@ namespace BusinessObject.Models
                 entity.HasKey(e => e.Report_id);
             });
 
-
             // Subject entity configuration
             modelBuilder.Entity<Subject>(entity =>
             {
@@ -128,5 +137,6 @@ namespace BusinessObject.Models
                       .IsUnique();
             });
         }
+
     }
 }

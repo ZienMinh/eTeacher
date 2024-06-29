@@ -14,13 +14,13 @@ namespace BusinessObject.Models
         public string? Address { get; set; }
 
         [MaxLength(450)]
-        public string Student_id { get; set; }
+        public string? Student_id { get; set; }
 
         [ForeignKey("Student_id")]
         public User Student { get; set; }
 
         [MaxLength(450)]
-        public string Tutor_id { get; set; }
+        public string? Tutor_id { get; set; }
 
         [ForeignKey("Tutor_id")]
         public User Tutor { get; set; }
@@ -45,6 +45,10 @@ namespace BusinessObject.Models
         public double Price { get; set; }
 
         public int Number_of_session { get; set; }
+
+        public double? Total { get; set; }
+
+        public ICollection<Report> Reports { get; set; }
     }
     
 }

@@ -164,20 +164,20 @@ h1, h2, h3, h4, h5, h6 {
   background: #31a9e1;
 }
 
-.navbar .btnLogin-popup{
-
-  width: 110px;
-  height: 40px;
-  background: transparent;
-  border: 2px solid #fff;
-  outline: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.1em;
-  color: #fff;
-  font-weight: 500;
-  transition: .5s;
-}
+    .navbar .btnLogin-popup {
+        width: 110px;
+        height: 40px;
+        background: transparent;
+        border: 2px solid #fff;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #fff;
+        font-weight: 500;
+        transition: .5s;
+      
+    }
 
 .navbar .btnLogin-popup:hover{
   background: #fff;
@@ -1335,3 +1335,32 @@ section {
 }
 
 
+/*--------------------------------------------------------------
+# Rating star
+--------------------------------------------------------------*/
+
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+    .star-rating input[type="radio"] {
+        display: none;
+    }
+
+    .star-rating label {
+        font-size: 2em;
+        color: #ccc;
+        cursor: pointer;
+    }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #FFD700;
+        }
+
+    .star-rating input[type="radio"]:checked ~ label {
+        color: #FFD700;
+    }

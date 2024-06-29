@@ -1,7 +1,6 @@
 using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
-using eTeacher.Core.Services.eTeacher.Core.Services;
 using eTeacher.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -69,22 +68,12 @@ builder.Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
-builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    var emailSettings = configuration.GetSection("EmailSettings");
-    return new EmailService(
-        emailSettings["SmtpHost"],
-        int.Parse(emailSettings["SmtpPort"]),
-        emailSettings["FromEmail"],
-        emailSettings["SmtpUser"],
-        emailSettings["SmtpPass"]
-    );
-});
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -109,7 +98,7 @@ using (var scope = app.Services.CreateScope())
 
 async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 {
-	var roles = new[] { "USER", "ADMIN", "OWNER" };
+	var roles = new[] { "USER", "ADMIN", "TUTOR", "MODERATOR" };
 
 	foreach (var role in roles)
 	{
@@ -137,7 +126,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+//StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseAuthentication();
 app.UseAuthorization();

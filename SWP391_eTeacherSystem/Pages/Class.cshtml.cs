@@ -32,7 +32,7 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                var classId = _classhourService.GenerateClassId();
+                var classId = _classhourService.GenerateClassHourId();
                 ClassHourDto = new ClassHourDto {User_id = userId, Class_id = classId };
             }
         }
@@ -81,7 +81,7 @@ namespace SWP391_eTeacherSystem.Pages
                 if (result.IsSucceed)
                 {
                     _logger.LogInformation("Class hour created successfully");
-                    return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
+                    return RedirectToPage("/TutorPage", new { id = result.CreatedClass.Class_id });
                 }
                 else
                 {

@@ -35,5 +35,7 @@ namespace BusinessObject.Models
         public string? Address { get; set; }
         [MaxLength(450)]
         public string? Description { get; set; }
+
+        public double? Total { get; set; }
     }
 }

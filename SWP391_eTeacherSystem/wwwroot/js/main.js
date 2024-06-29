@@ -255,3 +255,22 @@
   });
 
 })()
+
+
+/**
+   * Rating star
+   */
+document.addEventListener('DOMContentLoaded', function () {
+    const stars = document.querySelectorAll('.star-rating .star');
+    stars.forEach((star, index) => {
+        star.addEventListener('click', () => {
+            stars.forEach((s, i) => {
+                if (i <= index) {
+                    s.style.color = '#FFD700';
+                } else {
+                    s.style.color = '#ccc';
+                }
+            });
+        });
+    });
+});

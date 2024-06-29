@@ -70,7 +70,7 @@ namespace SWP391_eTeacherSystem.Controllers
         [Route("make-owner")]
         public async Task<IActionResult> MakeOwner([FromBody] UpdatePermissionDto updatePermissionDto)
         {
-            var operationResult = await _authService.MakeOwnerAsync(updatePermissionDto);
+            var operationResult = await _authService.MakeTutorAsync(updatePermissionDto);
 
             if (operationResult.IsSucceed)
                 return Ok(operationResult);
@@ -79,7 +79,7 @@ namespace SWP391_eTeacherSystem.Controllers
         }
 
         // Route -> reset-password
-        [HttpPost]
+        /*[HttpPost]
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
@@ -89,6 +89,6 @@ namespace SWP391_eTeacherSystem.Controllers
                 return Ok(resetResult);
 
             return BadRequest(resetResult);
-        }
+        }*/
     }
 }

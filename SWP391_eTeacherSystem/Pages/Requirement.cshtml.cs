@@ -89,7 +89,7 @@ namespace SWP391_eTeacherSystem.Pages
                 if (result.IsSucceed)
                 {
                     _logger.LogInformation("Requirement created successfully");
-                    return RedirectToPage("/RequirementDetails", new { id = result.CreatedRequirement.Requirement_id });
+                    return RedirectToPage("/StudentPage", new { id = result.CreatedRequirement.Requirement_id });
                 }
                 else
                 {

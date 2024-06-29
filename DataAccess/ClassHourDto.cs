@@ -42,5 +42,7 @@ namespace DataAccess
         public int Number_of_session { get; set; }
 
         public string? Description { get; set; }
+
+        public double? Total { get; set; }
     }
 }
