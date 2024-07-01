@@ -44,7 +44,11 @@ namespace SWP391_eTeacherSystem.Pages
             if (userId != null)
             {
                 var classId = _classService.GenerateClassId();
-                ClassDto = new ClassDto { Student_id = userId, Class_id = classId };
+                ClassDto = new ClassDto {
+                    Tutor_id = ClassHour.User_id,
+                    Student_id = userId, 
+                    Class_id = classId 
+                };
             }
         }
 
@@ -71,7 +75,10 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { Student_id = userId };
+                ClassDto = new ClassDto { 
+                    Tutor_id = ClassHour.User_id,
+                    Student_id = userId
+                };
             }
 
             _logger.LogInformation("OnGetAsync completed successfully.");

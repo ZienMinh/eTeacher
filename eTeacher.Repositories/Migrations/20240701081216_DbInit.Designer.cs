@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240628032800_DbInit")]
+    [Migration("20240701081216_DbInit")]
     partial class DbInit
     {
         /// <inheritdoc />
@@ -38,7 +38,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -53,7 +53,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
 
                     b.Property<string>("Student_id")
@@ -108,7 +108,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -123,8 +123,11 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
@@ -133,9 +136,6 @@ namespace BusinessObject.Migrations
 
                     b.Property<double?>("Total")
                         .HasColumnType("float");
-
-                    b.Property<byte>("Type_class")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("User_id")
                         .IsRequired()
@@ -285,7 +285,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -305,8 +305,11 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()

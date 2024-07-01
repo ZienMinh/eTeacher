@@ -23,12 +23,14 @@ else
                             <p>Start date: @classes.Start_date - To: @classes.End_date</p>
                             <p>Start time: @classes.Start_time - To: @classes.End_time</p>
                             <p>Address: @classes.Address</p>
+                            <p>Description of other requirements: @classes.Description</p>
+                            <p>Total tuition for the course: <b>@classes.Total VNĐ</b></p>
                         </div>
 
                         <div class="row">
                             <input type="hidden" asp-for="ClassId" />
                             <div class="form-group col-md-6">
-                                <input type="hidden" asp-for="ClassDto.Tutor_id" class="form-control" value="@classes.User_id">
+                                <input type="hidden" asp-for="ClassDto.Tutor_id" class="form-control">
                                 <span asp-validation-for="ClassDto.Tutor_id" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
@@ -87,11 +89,16 @@ else
                                 <span asp-validation-for="ClassDto.Price" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" asp-for="ClassDto.Number_of_session" class="form-control" value="@classes.Number_of_session">
-                            <span asp-validation-for="ClassDto.Number_of_session" class="text-danger"></span>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Number_of_session" class="form-control" value="@classes.Number_of_session">
+                                <span asp-validation-for="ClassDto.Number_of_session" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Total" class="form-control" value="@classes.Total">
+                                <span asp-validation-for="ClassDto.Total" class="text-danger"></span>
+                            </div>
                         </div>
-
                         <div class="my-3">
                             <div class="loading"></div>
                             <div class="error-message"></div>

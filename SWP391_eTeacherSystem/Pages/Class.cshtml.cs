@@ -15,6 +15,8 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly AddDbContext _context;
         private readonly ILogger<RequirementModel> _logger;
 
+        private const double PricePerHour = 100000;
+
         public ClassModel(IClassHourService classhourService, IAuthService authService, AddDbContext context, ILogger<RequirementModel> logger)
         {
             _classhourService = classhourService;
@@ -33,7 +35,11 @@ namespace SWP391_eTeacherSystem.Pages
             if (userId != null)
             {
                 var classId = _classhourService.GenerateClassHourId();
-                ClassHourDto = new ClassHourDto {User_id = userId, Class_id = classId };
+                ClassHourDto = new ClassHourDto {
+                    User_id = userId, 
+                    Class_id = classId,
+                    Price = PricePerHour
+                };
             }
         }
 
@@ -73,6 +79,12 @@ namespace SWP391_eTeacherSystem.Pages
             }
 
             ClassHourDto.User_id = userId;
+
+            ClassHourDto.Price = PricePerHour;
+            var startTime = ClassHourDto.Start_time.Value;
+            var endTime = ClassHourDto.End_time.Value;
+            var duration = (endTime - startTime).TotalHours;
+            ClassHourDto.Total = ClassHourDto.Number_of_session * duration * PricePerHour;
 
             try
             {

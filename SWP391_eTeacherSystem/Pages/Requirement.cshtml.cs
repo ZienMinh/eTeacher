@@ -17,6 +17,8 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IAuthService _authService;
         private readonly ILogger<RequirementModel> _logger;
 
+        private const double PricePerHour = 100000;
+
         public RequirementModel(AddDbContext context, IAuthService authService, IRequirementService requirementService, ILogger<RequirementModel> logger)
         {
             _context = context;
@@ -37,9 +39,15 @@ namespace SWP391_eTeacherSystem.Pages
             if (userId != null)
             {
                 var requirementId = _requirementService.GenerateRequirementId();
-                RequirementDto = new RequirementDto { User_id = userId, Requirement_id = requirementId };
+                RequirementDto = new RequirementDto
+                {
+                    User_id = userId,
+                    Requirement_id = requirementId,
+                    Price = PricePerHour
+                };
             }
         }
+
 
         public async Task OnGetAsync()
         {
@@ -80,6 +88,13 @@ namespace SWP391_eTeacherSystem.Pages
             }
 
             RequirementDto.User_id = userId;
+
+            // Tính toán Price và Total
+            RequirementDto.Price = PricePerHour;
+            var startTime = RequirementDto.Start_time.Value;
+            var endTime = RequirementDto.End_time.Value;
+            var duration = (endTime - startTime).TotalHours;
+            RequirementDto.Total = RequirementDto.Number_of_session * duration * PricePerHour;
 
 
             try

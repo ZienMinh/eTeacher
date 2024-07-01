@@ -84,10 +84,11 @@ namespace Services
                         Start_time = model.Start_time,
                         End_time = model.End_time,
                         Grade = model.Grade,
-                        Type_class = model.Type_class,
                         Price = model.Price,
                         Number_of_session = model.Number_of_session,
-                        Description = model.Description
+                        Description = model.Description,
+                        Total = model.Total,
+                        Status = model.Status,
                     };
 
                     await _context.AddAsync(classes);

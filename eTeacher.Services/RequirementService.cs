@@ -48,7 +48,10 @@ namespace Services
                     Price = requirementDto.Price,
                     Number_of_session = requirementDto.Number_of_session,
                     Address = requirementDto.Address,
-                    Description = requirementDto.Description
+                    Description = requirementDto.Description,
+                    Total = requirementDto.Total,
+                    Status = requirementDto.Status,
+
                 };
 
                 _context.Requirements.Add(requirement);

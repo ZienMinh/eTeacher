@@ -114,35 +114,6 @@ namespace Services
             }
         }
 
-        /*public async Task<ClassServiceResponseDto> GetByTutorIdAsync(ClassDto classDto, string id)
-        {
-            _logger.LogInformation($"Fetching classes for tutor with ID: {id}");
-            var classes = await _context.Classes.Where(c => c.Tutor_id == id).ToListAsync();
-
-            if (classes.Any())
-            {
-                _logger.LogInformation($"Found {classes.Count} classes for tutor with ID: {id}");
-                return new ClassServiceResponseDto
-                {
-                    IsSucceed = true,
-                    Message = "Classes found.",
-                    Classes = classes
-                };
-            }
-            else
-            {
-                _logger.LogWarning($"No classes found for tutor with ID: {id}");
-                return new ClassServiceResponseDto
-                {
-                    IsSucceed = false,
-                    Message = "No classes found for the given Tutor ID.",
-                    Classes = new List<Class>()
-                };
-            }
-        }*/
-
-
-
 
         public async Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId)
         {
@@ -178,7 +149,7 @@ namespace Services
                         Class_id = classId,
                         Address = model.Address,
                         Student_id = model.Student_id,
-                        Tutor_id = userId,
+                        Tutor_id = model.Tutor_id,
                         Subject_name = model.Subject_name,
                         Start_date = model.Start_date,
                         End_date = model.End_date,
@@ -187,7 +158,8 @@ namespace Services
                         Grade = model.Grade,
                         Type_class = model.Type_class,
                         Price = model.Price,
-                        Number_of_session = model.Number_of_session
+                        Number_of_session = model.Number_of_session,
+                        Total = model.Total,
                     };
 
                     await _context.AddAsync(classes);
