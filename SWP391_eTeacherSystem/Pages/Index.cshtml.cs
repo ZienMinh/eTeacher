@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SWP391_eTeacherSystem.Pages
@@ -17,7 +17,5 @@ namespace SWP391_eTeacherSystem.Pages
         {
 
         }
-
-      
     }
 }

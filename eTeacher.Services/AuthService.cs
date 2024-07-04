@@ -192,7 +192,6 @@ namespace eTeacher.Services
 			};
 		}
 
-
 		public async Task<AuthServiceResponseDto> SeedRolesAsync()
 		{
 			bool isOwnerRoleExists = await _roleManager.RoleExistsAsync(StaticUserRoles.GetRoleName(StaticUserRoles.OWNER));
@@ -284,14 +283,6 @@ namespace eTeacher.Services
             };
         }
 
-
-
-
-        public Task RegisterAsyn(RegisterDto registerDto)
-        {
-            throw new NotImplementedException();
-        }
-
         public string GetCurrentUserId()
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("AccessToken");
@@ -306,7 +297,6 @@ namespace eTeacher.Services
             return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
 
-
         public string GenerateRandomPassword()
         {
             const int passwordLength = 9;
@@ -319,9 +309,7 @@ namespace eTeacher.Services
                 password[i] = allowedChars[random.Next(0, allowedChars.Length)];
             }
 
-		public Task RegisterAsyn(RegisterDto registerDto)
-		{
-			throw new NotImplementedException();
-		}
-	}
+            return new string(password);
+        }
+    }
 }

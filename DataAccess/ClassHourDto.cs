@@ -19,7 +19,7 @@ namespace DataAccess
 
         [Required(ErrorMessage = "Subject name is required")]
         public string Subject_name { get; set; }
-
+            
         public DateOnly? Start_date { get; set; }
 
         public DateOnly? End_date { get; set; }
@@ -42,5 +42,6 @@ namespace DataAccess
         public int Number_of_session { get; set; }
 
         public string? Description { get; set; }
-    }
+		
+	}
 }

@@ -13,7 +13,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
+using Repositories.IRepository;
 using Services;
+using Services.Interfaces;
+using Stripe;
+using SWP391_eTeacherSystem.Helpers;
 using System;
 using System.Text;
 
@@ -45,6 +49,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 // Add register VnPay Singleton() 
 builder.Services.AddSingleton<IVNPayServices, VnPayService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add Authentication and JwtBearer
 builder.Services
@@ -74,7 +79,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
-
+builder.Services.AddTransient<SessionHelper>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
 {

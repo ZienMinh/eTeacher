@@ -45,6 +45,8 @@ namespace BusinessObject.Models
         public double Price { get; set; }
 
         public int Number_of_session { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
     
 }

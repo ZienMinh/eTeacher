@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240623091319_DbInit")]
-    partial class DbInit
+    [Migration("20240704060828_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -150,8 +150,11 @@ namespace BusinessObject.Migrations
             modelBuilder.Entity("BusinessObject.Models.Order", b =>
                 {
                     b.Property<string>("Order_id")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<string>("Class_id")
                         .IsRequired()
@@ -164,12 +167,22 @@ namespace BusinessObject.Migrations
                     b.Property<byte>("Order_type")
                         .HasColumnType("tinyint");
 
+                    b.Property<byte>("Payment_status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Transaction_id")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("User_id")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Order_id");
+
+                    b.HasIndex("Class_id");
 
                     b.HasIndex("User_id");
 
@@ -609,11 +622,21 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Order", b =>
                 {
-                    b.HasOne("BusinessObject.Models.User", null)
+                    b.HasOne("BusinessObject.Models.Class", "Class")
+                        .WithMany("Orders")
+                        .HasForeignKey("Class_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObject.Models.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Qualification", b =>
@@ -701,6 +724,11 @@ namespace BusinessObject.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BusinessObject.Models.Class", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Subject", b =>

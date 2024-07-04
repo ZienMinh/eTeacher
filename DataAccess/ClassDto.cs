@@ -33,10 +33,17 @@ namespace DataAccess
         [Range(1, 100, ErrorMessage = "Number of sessions must be between 1 and 100")]
         public int Number_of_session { get; set; }
 
-        public double GetTotalPrice()
-        {
-            var duration = (End_time - Start_time).TotalHours;
-            return duration * Price;
-        }
-    }
+		public double GetTotalPrice()
+		{
+			if (Start_time.HasValue && End_time.HasValue && Price > 0)
+			{
+				var duration = (End_time.Value.ToTimeSpan() - Start_time.Value.ToTimeSpan()).TotalHours;
+				if (duration > 0)
+				{
+					return duration * Price;
+				}
+			}
+			return 0;
+		}
+	}
 }

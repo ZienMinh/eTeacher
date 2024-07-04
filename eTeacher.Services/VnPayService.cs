@@ -61,6 +61,7 @@ namespace Services
             var vnp_SecureHash = collections.FirstOrDefault(p => p.Key == "vnp_SecureHash").Value;
             var vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
             var vnp_OrderInfo = vnpay.GetResponseData("vnp_OrderInfo");
+            double amount = double.Parse(vnpay.GetResponseData("vnp_Amount")) / 100;
 
             bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, _config["VnPay:HashSecret"]);
             if (!checkSignature)
@@ -78,7 +79,8 @@ namespace Services
                 PaymentId = vnp_transactionId.ToString(),
                 TransactionId = vnp_transactionId.ToString(),
                 Token = vnp_SecureHash,
-                VnPayResponseCode = vnp_ResponseCode
+                VnPayResponseCode = vnp_ResponseCode,
+                Amount = amount
             };
         }
     }

@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 namespace BusinessObject.Models
 {
     public partial class AddDbContext : IdentityDbContext<User>
-	{
-        
+    {
+
         public AddDbContext(DbContextOptions<AddDbContext> options) : base(options) { }
 
         public AddDbContext() { }
@@ -105,6 +105,16 @@ namespace BusinessObject.Models
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.HasKey(e => e.Order_id);
+
+                entity.HasOne(e => e.User)
+                      .WithMany(u => u.Orders)
+                      .HasForeignKey(e => e.User_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.Class)
+                      .WithMany(c => c.Orders)
+                      .HasForeignKey(e => e.Class_id)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Qualification entity configuration
@@ -127,6 +137,8 @@ namespace BusinessObject.Models
                 entity.HasIndex(e => e.Subject_name)
                       .IsUnique();
             });
+
+
         }
     }
 }

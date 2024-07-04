@@ -12,15 +12,34 @@ namespace BusinessObject.Models
     public partial class Order
     {
         [Key]
-        [MaxLength(10)]
+        [MaxLength(50)]
         public string Order_id { get; set; }
+
         [Required]
         public DateTime Order_time { get; set; }
+
         [MaxLength(450)]
         public string User_id { get; set; }
+
         [MaxLength(10)]
         public string Class_id { get; set; }
+
         [Required]
         public byte Order_type { get; set; }
+
+        [Required]
+        public byte Payment_status { get; set; }
+
+        [MaxLength(20)]
+        public string Transaction_id { get; set; }
+
+        [Required]
+        public double Amount { get; set; }
+
+        [ForeignKey("User_id")]
+        public User User { get; set; }
+
+        [ForeignKey("Class_id")]
+        public Class Class { get; set; }
     }
 }

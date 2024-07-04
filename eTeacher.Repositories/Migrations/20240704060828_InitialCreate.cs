@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BusinessObject.Migrations
 {
     /// <inheritdoc />
-    public partial class DbInit : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -178,27 +178,6 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Order_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Order_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Order_type = table.Column<byte>(type: "tinyint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Order_id);
-                    table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_User_id",
-                        column: x => x.User_id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Qualification",
                 columns: table => new
                 {
@@ -359,6 +338,36 @@ namespace BusinessObject.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Order_id = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Order_time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Order_type = table.Column<byte>(type: "tinyint", nullable: false),
+                    Payment_status = table.Column<byte>(type: "tinyint", nullable: false),
+                    Transaction_id = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Amount = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Order_id);
+                    table.ForeignKey(
+                        name: "FK_Order_AspNetUsers_User_id",
+                        column: x => x.User_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Order_Classes_Class_id",
+                        column: x => x.Class_id,
+                        principalTable: "Classes",
+                        principalColumn: "Class_id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -429,6 +438,11 @@ namespace BusinessObject.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order_Class_id",
+                table: "Order",
+                column: "Class_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_User_id",
                 table: "Order",
                 column: "User_id");
@@ -479,9 +493,6 @@ namespace BusinessObject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Classes");
-
-            migrationBuilder.DropTable(
                 name: "ClassHour");
 
             migrationBuilder.DropTable(
@@ -498,6 +509,9 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Classes");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

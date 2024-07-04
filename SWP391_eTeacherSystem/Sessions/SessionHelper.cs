@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SWP391_eTeacherSystem.Helpers
 {
     public class SessionHelper
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string ClassSessionKey = "ClassList";
 
         public SessionHelper(IHttpContextAccessor httpContextAccessor)
         {
@@ -19,16 +21,15 @@ namespace SWP391_eTeacherSystem.Helpers
 
         public void AddClassToSession(ClassDto classDto)
         {
-            var session = _httpContextAccessor.HttpContext.Session;
-            var classList = session.Get<List<ClassDto>>("ClassList") ?? new List<ClassDto>();
+            var classList = GetClassListFromSession();
             classList.Add(classDto);
-            session.Set("ClassList", classList);
+            _httpContextAccessor.HttpContext.Session.SetString(ClassSessionKey, JsonSerializer.Serialize(classList));
         }
 
         public List<ClassDto> GetClassListFromSession()
         {
-            var session = _httpContextAccessor.HttpContext.Session;
-            return session.Get<List<ClassDto>>("ClassList") ?? new List<ClassDto>();
+            var sessionData = _httpContextAccessor.HttpContext.Session.GetString(ClassSessionKey);
+            return sessionData == null ? new List<ClassDto>() : JsonSerializer.Deserialize<List<ClassDto>>(sessionData);
         }
     }
 }
