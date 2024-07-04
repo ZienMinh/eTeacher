@@ -34,5 +34,9 @@ namespace DataAccess
         public int Number_of_session { get; set; }
 
         public double? Total { get; set; }
+
+        public byte? Status { get; set; }
+
+        public string? Link_meet { get; set; }
     }
 }

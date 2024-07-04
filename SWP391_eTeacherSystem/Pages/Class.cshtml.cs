@@ -13,16 +13,13 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IClassHourService _classhourService;
         private readonly IAuthService _authService;
         private readonly AddDbContext _context;
-        private readonly ILogger<RequirementModel> _logger;
-
         private const double PricePerHour = 100000;
 
-        public ClassModel(IClassHourService classhourService, IAuthService authService, AddDbContext context, ILogger<RequirementModel> logger)
+        public ClassModel(IClassHourService classhourService, IAuthService authService, AddDbContext context)
         {
             _classhourService = classhourService;
             _authService = authService;
             _context = context;
-            _logger = logger;
         }
         [BindProperty]
         public ClassHourDto ClassHourDto { get; set; }
@@ -56,24 +53,9 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("ModelState is not valid");
-                foreach (var state in ModelState)
-                {
-                    if (state.Value.Errors.Count > 0)
-                    {
-                        _logger.LogWarning($"Property: {state.Key} - Errors: {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-                    }
-                }
-                await OnGetAsync();
-                return Page();
-            }
-
             var userId = _authService.GetCurrentUserId();
             if (userId == null)
             {
-                _logger.LogWarning("User is not authenticated");
                 ModelState.AddModelError(string.Empty, "User is not authenticated.");
                 return Page();
             }
@@ -88,22 +70,18 @@ namespace SWP391_eTeacherSystem.Pages
 
             try
             {
-                _logger.LogInformation("Attempting to create class hour");
                 var result = await _classhourService.CreateClassAsync(ClassHourDto, userId);
                 if (result.IsSucceed)
                 {
-                    _logger.LogInformation("Class hour created successfully");
                     return RedirectToPage("/TutorPage", new { id = result.CreatedClass.Class_id });
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to create class hour: " + result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while saving data: " + ex.Message);
                 ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
             }
 

@@ -1,25 +1,23 @@
 using BusinessObject.Models;
 using DataAccess;
-using eTeacher.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
-using Services;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class CreateFeedbackModel : PageModel
+    public class CreateReportModel : PageModel
     {
         private readonly IReportService _reportService;
         private readonly IAuthService _authService;
         private readonly AddDbContext _context;
 
-        public CreateFeedbackModel(IReportService reportService, AddDbContext context, IAuthService authService)
+        public CreateReportModel(IReportService reportService, IAuthService authService, AddDbContext context)
         {
             _reportService = reportService;
-            _context = context;
             _authService = authService;
+            _context = context;
         }
 
         public Class Class { get; set; }

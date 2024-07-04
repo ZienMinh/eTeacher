@@ -23,20 +23,31 @@
                                 <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
                                 <i class="fa fa-user"></i> Address: @classes.Address
                             </p>
-                            <form method="get" asp-page="/CancelClass">
-                                <input type="hidden" name="id" value="@classes.Class_id" />
-                                <button type="submit" class="btn btn-success">More details →</button>
-                            </form>
-                            <p></p>
-                            <form method="get" asp-page="/CreateFeedback">
-                                <input type="hidden" name="id" value="@classes.Class_id" />
-                                <button type="submit" class="btn btn-success">Feedback class →</button>
-                            </form>
+                            @if (classes.Status == 2)
+                            {
+                                <p class="text-danger">Cancelled</p>
+                                <!--
+                                <button class="btn btn-secondary" disabled>More details →</button>
+                                <button class="btn btn-secondary" disabled>Feedback class →</button>
+                                -->
+                            }
+                            else
+                            {
+                                <form method="get" asp-page="/CancelClass">
+                                    <input type="hidden" name="id" value="@classes.Class_id" />
+                                    <button type="submit" class="btn btn-success">More details →</button>
+                                </form>
+                                <p></p>
+                                <form method="get" asp-page="/CreateFeedback">
+                                    <input type="hidden" name="id" value="@classes.Class_id" />
+                                    <button type="submit" class="btn btn-success">Feedback class →</button>
+                                </form>
+                            }
                         </div>
                     </div>
                 </div>
             }
         </div>
-    </div> 
+    </div>
 </section>
 <!-- ======= End Class List Section ======= -->

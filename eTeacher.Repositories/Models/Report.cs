@@ -33,6 +33,10 @@ namespace BusinessObject.Models
         [MaxLength(750)]
         public string Content { get; set; }
 
-        public byte Rating { get; set; }
+        public byte? Rating { get; set; }
+
+        public byte? Processing {  get; set; }
+
+        public byte Type { get; set; }
     }
 }

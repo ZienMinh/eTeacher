@@ -48,6 +48,10 @@ namespace BusinessObject.Models
 
         public double? Total { get; set; }
 
+        public byte? Status { get; set; }
+
+        public string? Link_meet { get; set; }
+
         public ICollection<Report> Reports { get; set; }
     }
     

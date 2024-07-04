@@ -15,16 +15,14 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IClassService _classService;
-        private readonly ILogger<CancelClassModel> _logger;
 
         public CancelClassModel(AddDbContext context, IAuthService authService,
-                IUserService userService, IClassService classService, ILogger<CancelClassModel> logger)
+                IUserService userService, IClassService classService)
         {
             _context = context;
             _authService = authService;
             _userService = userService;
             _classService = classService;
-            _logger = logger;
         }
 
         public UserDto UserDto { get; set; }
@@ -40,19 +38,13 @@ namespace SWP391_eTeacherSystem.Pages
         public async Task InitializeClassDtoAsync()
         {
             var userId = _authService.GetCurrentUserId();
-            if (userId == null)
-            {
-                _logger.LogWarning("Login to perform the function.");
-            }
         }
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            _logger.LogInformation("OnGetAsync started with ID: {ID}", id);
 
             if (string.IsNullOrEmpty(id))
             {
-                _logger.LogWarning("Class ID is not provided.");
                 return NotFound("Class ID is not provided.");
             }
 
@@ -62,17 +54,10 @@ namespace SWP391_eTeacherSystem.Pages
 
             if (Class == null)
             {
-                _logger.LogWarning("Class not found.");
                 return NotFound();
             }
 
             var userId = _authService.GetCurrentUserId();
-            if (userId == null)
-            {
-                _logger.LogWarning("Login to perform the function.");
-            }
-
-            _logger.LogInformation("OnGetAsync completed successfully.");
             await InitializeClassDtoAsync();
             return Page();
         }
@@ -82,7 +67,6 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId == null)
             {
-                _logger.LogWarning("User is not authenticated");
                 ModelState.AddModelError(string.Empty, "User is not authenticated.");
                 return Page();
             }
@@ -91,22 +75,24 @@ namespace SWP391_eTeacherSystem.Pages
 
             try
             {
-                _logger.LogInformation("Deleting class with ID: {ID}", ClassId);
-                var result = await _classService.DeleteClassAsync(ClassId);
+                var classDto = new ClassDto
+                {
+                    Class_id = ClassId,
+                    Status = 2
+                };
+
+                var result = await _classService.UpdateClassAsync(classDto);
                 if (result.IsSucceed)
                 {
-                    _logger.LogInformation("Class deleted successfully");
                     return RedirectToPage("/StudentPage");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to delete class: " + result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while saving data: " + ex.Message);
                 ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
             }
             return Page();

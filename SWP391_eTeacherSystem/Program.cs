@@ -31,6 +31,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AddDbContext>()
     .AddDefaultTokenProviders();
 
+
 // Config Identity
 builder.Services.Configure<IdentityOptions>(options =>
 {

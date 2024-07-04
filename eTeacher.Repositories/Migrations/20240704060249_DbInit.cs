@@ -239,6 +239,8 @@ namespace BusinessObject.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<double>(type: "float", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true),
+                    Link_meet = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -352,7 +354,9 @@ namespace BusinessObject.Migrations
                     Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(750)", maxLength: 750, nullable: false),
-                    Rating = table.Column<byte>(type: "tinyint", nullable: false),
+                    Rating = table.Column<byte>(type: "tinyint", nullable: true),
+                    Processing = table.Column<byte>(type: "tinyint", nullable: true),
+                    Type = table.Column<byte>(type: "tinyint", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>

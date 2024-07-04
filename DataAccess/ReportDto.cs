@@ -20,6 +20,8 @@ namespace DataAccess
         [Required(ErrorMessage = "Content name is required")]
         public string Content { get; set; }
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
-        public byte Rating { get; set; }
+        public byte? Rating { get; set; }
+        public byte? Processing { get; set; }
+        public byte Type { get; set; }
     }
 }

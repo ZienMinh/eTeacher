@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240701081216_DbInit")]
+    [Migration("20240704060249_DbInit")]
     partial class DbInit
     {
         /// <inheritdoc />
@@ -44,6 +44,9 @@ namespace BusinessObject.Migrations
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("Link_meet")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Number_of_session")
                         .HasColumnType("int");
 
@@ -55,6 +58,9 @@ namespace BusinessObject.Migrations
 
                     b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Student_id")
                         .HasMaxLength(450)
@@ -236,7 +242,10 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(750)
                         .HasColumnType("nvarchar(750)");
 
-                    b.Property<byte>("Rating")
+                    b.Property<byte?>("Processing")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("Rating")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Student_id")
@@ -251,6 +260,9 @@ namespace BusinessObject.Migrations
                     b.Property<string>("Tutor_id")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
