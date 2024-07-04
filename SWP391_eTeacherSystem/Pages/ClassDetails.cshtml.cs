@@ -1,44 +1,42 @@
-﻿using DataAccess;
+using BusinessObject.Models;
+using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using BusinessObject.Models;
 using Repositories;
 using Services;
-using NuGet.Protocol;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class RequirementDetailsModel : PageModel
+    public class ClassDetailsModel : PageModel
     {
         private readonly AddDbContext _context;
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IClassService _classService;
-        private readonly IRequirementService _requirementService;
-        private readonly ILogger<RequirementDetailsModel> _logger;
+        private readonly IClassHourService _classHourService;
+        private readonly ILogger<ClassDetailsModel> _logger;
 
-        public Requirement Requirement { get; set; }
-        public UserDto UserDto { get; set; }
-
-        [BindProperty]
-        public ClassDto ClassDto { get; set; }
-
-        [BindProperty(SupportsGet = true)]
-        public string RequirementId { get; set; }
-
-        public RequirementDetailsModel(AddDbContext context, IAuthService authService, IUserService userService, IClassService classService, IRequirementService requirementService, ILogger<RequirementDetailsModel> logger)
+        public ClassDetailsModel(AddDbContext context, IAuthService authService, 
+            IUserService userService, IClassService classService, ILogger<ClassDetailsModel> logger, IClassHourService classHourService)
         {
             _context = context;
             _authService = authService;
             _userService = userService;
             _classService = classService;
-            _requirementService = requirementService;
             _logger = logger;
+            _classHourService = classHourService;
         }
+
+        public UserDto UserDto { get; set; }
+
+        public ClassHour ClassHour { get; set; }
+
+        [BindProperty]
+        public ClassDto ClassDto { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string ClassId { get; set; }
 
         public async Task InitializeClassDtoAsync()
         {
@@ -46,7 +44,7 @@ namespace SWP391_eTeacherSystem.Pages
             if (userId != null)
             {
                 var classId = _classService.GenerateClassId();
-                ClassDto = new ClassDto { Tutor_id = userId, Class_id = classId };
+                ClassDto = new ClassDto { Student_id = userId, Class_id = classId };
             }
         }
 
@@ -56,25 +54,24 @@ namespace SWP391_eTeacherSystem.Pages
 
             if (string.IsNullOrEmpty(id))
             {
-                _logger.LogWarning("Requirement ID is not provided.");
-                return NotFound("Requirement ID is not provided.");
+                _logger.LogWarning("Class ID is not provided.");
+                return NotFound("Class ID is not provided.");
             }
 
-            RequirementId = id;
+            ClassId = id;
 
-            Requirement = await _context.Requirements
-                .FirstOrDefaultAsync(r => r.Requirement_id == id);
+            ClassHour = await _context.ClassHours.FirstOrDefaultAsync(c => c.Class_id == id);
 
-            if (Requirement == null)
+            if (ClassHour == null)
             {
-                _logger.LogWarning("Requirement not found.");
+                _logger.LogWarning("Class not found.");
                 return NotFound();
             }
 
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { Tutor_id = userId };
+                ClassDto = new ClassDto { Student_id = userId };
             }
 
             _logger.LogInformation("OnGetAsync completed successfully.");
@@ -84,7 +81,7 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            ModelState.Remove("RequirementId");
+            ModelState.Remove("ClassId");
 
             if (!ModelState.IsValid)
             {
@@ -107,21 +104,20 @@ namespace SWP391_eTeacherSystem.Pages
                 return Page();
             }
 
-            ClassDto.Tutor_id = userId;
+            ClassDto.Student_id = userId;
 
             try
             {
-                _logger.LogInformation("Attempting to create class and delete requirement");
+                _logger.LogInformation("Attempting to create class and delete class hour");
                 var result = await _classService.CreateClassAsync(ClassDto, userId);
                 if (result.IsSucceed)
                 {
-                    // Log the ID to ensure it's being passed correctly
-                    _logger.LogInformation("Deleting requirement with ID: {ID}", RequirementId);
+                    _logger.LogInformation("Deleting requirement with ID: {ID}", ClassId);
 
-                    var delete = await _requirementService.DeleteByIdAsync(RequirementId); // Use the stored ID
+                    var delete = await _classHourService.DeleteClassAsync(ClassId);
                     if (delete.IsSucceed)
                     {
-                        _logger.LogInformation("Class created and requirement deleted successfully");
+                        _logger.LogInformation("Class created and class hour deleted successfully");
                         return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
                     }
                     else

@@ -5,30 +5,35 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http;
 using Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace eTeacher.Services
 {
-	public class AuthService : IAuthService
-	{
-		private readonly UserManager<User> _userManager;
-		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly IConfiguration _configuration;
-		private readonly AddDbContext _context;
-		private readonly IEmailService _emailService;
+    public class AuthService : IAuthService
+    {
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
+        private readonly AddDbContext _context;
+        private readonly IEmailService _emailService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, AddDbContext context, IEmailService emailService, IHttpContextAccessor httpContextAccessor)
-		{
-			_userManager = userManager;
-			_roleManager = roleManager;
-			_configuration = configuration;
-			_context = context;
-			_emailService = emailService;
+        public AuthService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, 
+            AddDbContext context, IEmailService emailService, IHttpContextAccessor httpContextAccessor, ILogger<AuthService> logger)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _configuration = configuration;
+            _context = context;
+            _emailService = emailService;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
 		public async Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto)
@@ -229,84 +234,63 @@ namespace eTeacher.Services
 			return token;
 		}
 
-		public async Task<AuthServiceResponseDto> ResetPasswordAsync(ResetPasswordDto resetPasswordDto)
-		{
-			var user = await _userManager.FindByNameAsync(resetPasswordDto.UserName);
+        public async Task<AuthServiceResponseDto> ResetPasswordByEmailAsync(ResetPasswordDto resetPasswordDto)
+        {
+            _logger.LogInformation("ResetPasswordByEmailAsync started");
 
-			if (user == null)
-			{
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = "User not found"
-				};
-			}
+            var user = await _userManager.FindByNameAsync(resetPasswordDto.UserName);
+            if (user == null)
+            {
+                _logger.LogWarning("User not found: {UserName}", resetPasswordDto.UserName);
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "User not found"
+                };
+            }
 
-			var isOtpValid = await VerifyOtpAsync(user, resetPasswordDto.Otp);
-			if (!isOtpValid)
-			{
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = "Invalid OTP"
-				};
-			}
+            // Generate new password
+            var newPassword = GenerateRandomPassword();
 
-			var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-			var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetPasswordToken, resetPasswordDto.NewPassword);
+            // Reset the password
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordChangeResult = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
 
-			if (!resetPasswordResult.Succeeded)
-			{
-				var errorString = "Password Reset Failed Because: ";
-				foreach (var error in resetPasswordResult.Errors)
-				{
-					errorString += " # " + error.Description;
-				}
-				return new AuthServiceResponseDto()
-				{
-					IsSucceed = false,
-					Message = errorString
-				};
-			}
+            if (!passwordChangeResult.Succeeded)
+            {
+                var errorString = "Password update failed because: ";
+                foreach (var error in passwordChangeResult.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                _logger.LogError("Password update failed: {Errors}", errorString);
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
 
-			return new AuthServiceResponseDto()
-			{
-				IsSucceed = true,
-				Message = "Password Reset Successfully"
-			};
-		}
+            // Send email to user with new password
+            var emailSubject = "Your Password Has Been Reset";
+            var emailBody = $"Hello {user.UserName},\n\nYour password has been reset. Your new password is: {newPassword}\n\nPlease change it after logging in.";
+            await _emailService.SendEmailAsync(user.Email, emailSubject, emailBody);
 
-		private async Task<bool> VerifyOtpAsync(User user, string otp)
-		{
-			var otpRecord = await _context.Otps
-				.Where(o => o.User_id == user.Id && o.Otp_code == otp && o.Expiry_time > DateTime.Now)
-				.FirstOrDefaultAsync();
+            _logger.LogInformation("Password reset successfully and email sent to {Email}", user.Email);
+            return new AuthServiceResponseDto()
+            {
+                IsSucceed = true,
+                Message = "Password reset successfully and email sent"
+            };
+        }
 
-			if (otpRecord != null)
-			{
-				// Mark OTP as used
-				otpRecord.Expiry_time = DateTime.Now;
-				_context.Otps.Update(otpRecord);
-				await _context.SaveChangesAsync();
-				return true;
-			}
-			return false;
-		}
 
-		Task<bool> IAuthService.VerifyOtpAsync(User user, string otp)
-		{
-			throw new NotImplementedException();
-		}
 
-		public Task SendOtpAsync(User user)
-		{
-			throw new NotImplementedException();
-		}
 
-		public Task RegisterAsyn(RegisterDto registerDto)
-		{
-			throw new NotImplementedException();
-		}
+        public Task RegisterAsyn(RegisterDto registerDto)
+        {
+            throw new NotImplementedException();
+        }
 
         public string GetCurrentUserId()
         {
@@ -321,5 +305,23 @@ namespace eTeacher.Services
 
             return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
-    }
+
+
+        public string GenerateRandomPassword()
+        {
+            const int passwordLength = 9;
+            const string allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            var random = new Random();
+            var password = new char[passwordLength];
+
+            for (int i = 0; i < passwordLength; i++)
+            {
+                password[i] = allowedChars[random.Next(0, allowedChars.Length)];
+            }
+
+		public Task RegisterAsyn(RegisterDto registerDto)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

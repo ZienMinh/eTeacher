@@ -3,6 +3,7 @@ using DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories;
 using System.Security.Claims;
 
 namespace SWP391_eTeacherSystem.Controllers
@@ -12,11 +13,12 @@ namespace SWP391_eTeacherSystem.Controllers
     public class ClassController : ControllerBase
     {
         private readonly AddDbContext _context;
+        private readonly IClassService _classService;
 
-        public ClassController(AddDbContext context)
+        public ClassController(AddDbContext context, IClassService classService)
         {
             _context = context;
-
+            _classService = classService;
         }
 
         [HttpGet]
@@ -68,63 +70,11 @@ namespace SWP391_eTeacherSystem.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Accept")]
-        public IActionResult AcceptClass(ClassDto model)
+        [HttpPost("Getbytype")]
+        public async Task<ActionResult<ClassServiceResponseDto>> GetByTypeAsync(ClassDto classDto, byte type)
         {
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                try
-                {
-                    var userId = GetCurrentUserId();
-                    if (userId == null)
-                    {
-                        return BadRequest("User is not authenticated.");
-                    }
-
-                    var subject = _context.Subjects.SingleOrDefault(s => s.Subject_name == model.Subject_name);
-                    if (subject == null)
-                    {
-                        return BadRequest("Invalid Subject_name.");
-                    }
-
-                    var requirement = _context.Requirements.SingleOrDefault(r => r.User_id == model.Student_id);
-                    if (requirement == null)
-                    {
-                        return BadRequest("Invalid Student_id.");
-                    }
-
-                    var classId = GenerateClassId();
-
-                    var classes = new Class
-                    {
-                        Class_id = classId,
-                        Address = model.Address,
-                        Student_id = requirement.User_id,
-                        Tutor_id = userId,
-                        Subject_name = requirement.Subject_name,
-                        Start_date = requirement.Start_date,
-                        End_date = requirement.End_date,
-                        Start_time = requirement.Start_time,
-                        End_time = requirement.End_time,
-                        Type_class = 1,
-                        Price = requirement.Price,
-                        Number_of_session = requirement.Number_of_session
-                    };
-
-                    _context.Add(classes);
-
-                    _context.SaveChanges();
-                    transaction.Commit();
-
-                    return Ok(classes);
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    return BadRequest(ex.Message);
-                }
-            }
+            var response = await _classService.GetByTypeAsync(classDto);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -178,6 +128,22 @@ namespace SWP391_eTeacherSystem.Controllers
                     return BadRequest(ex.Message);
                 }
             }
+        }
+
+        [HttpPost("updateStudent")]
+        public async Task<ActionResult<ClassServiceResponseDto>> UpdateStudentAsync([FromBody] ClassDto classDto, [FromQuery] string userId)
+        {
+            if (classDto == null || string.IsNullOrEmpty(classDto.Class_id) || string.IsNullOrEmpty(classDto.Student_id) || string.IsNullOrEmpty(userId))
+            {
+                return BadRequest(new ClassServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "Invalid request."
+                });
+            }
+
+            var response = await _classService.UpdateStudentAsync(classDto, userId);
+            return Ok(response);
         }
 
         private string GetCurrentUserId()

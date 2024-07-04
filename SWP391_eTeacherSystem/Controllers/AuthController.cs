@@ -83,7 +83,7 @@ namespace SWP391_eTeacherSystem.Controllers
         [Route("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
         {
-            var resetResult = await _authService.ResetPasswordAsync(resetPasswordDto);
+            var resetResult = await _authService.ResetPasswordByEmailAsync(resetPasswordDto);
 
             if (resetResult.IsSucceed)
                 return Ok(resetResult);

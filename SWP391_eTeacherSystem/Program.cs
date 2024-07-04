@@ -1,6 +1,7 @@
 using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
+using eTeacher.Core.Services.eTeacher.Core.Services;
 using eTeacher.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
 using Services;
-using Stripe;
 using System;
 using System.Text;
 
@@ -70,16 +70,22 @@ builder.Services
 
 //Inject app Dependencies (Dependency Injection)
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IClassHourService, ClassHourService>();
+builder.Services.AddScoped<IRequirementService, RequirementService>();
 
-builder.Services.AddScoped<IEmailService>(provider =>
+
+builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
+    var emailSettings = configuration.GetSection("EmailSettings");
     return new EmailService(
-        smtpHost: configuration["EmailSettings:SmtpHost"],
-        smtpPort: int.Parse(configuration["EmailSettings:SmtpPort"]),
-        fromEmail: configuration["EmailSettings:FromEmail"],
-        smtpUser: configuration["EmailSettings:SmtpUser"],
-        smtpPass: configuration["EmailSettings:SmtpPass"]
+        emailSettings["SmtpHost"],
+        int.Parse(emailSettings["SmtpPort"]),
+        emailSettings["FromEmail"],
+        emailSettings["SmtpUser"],
+        emailSettings["SmtpPass"]
     );
 });
 
@@ -118,6 +124,9 @@ async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 	}
 }
 
+// Configure logging
+//builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
@@ -125,6 +134,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

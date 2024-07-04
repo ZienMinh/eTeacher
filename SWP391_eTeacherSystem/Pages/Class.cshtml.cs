@@ -13,6 +13,7 @@ namespace SWP391_eTeacherSystem.Pages
 {
     public class ClassModel : PageModel
     {
+        private readonly IClassHourService _classhourService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IClassService _classService;
         private readonly IAuthService _authService;
@@ -22,7 +23,7 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly UserManager<User> _userManager;
         public ClassModel(IClassService classService, IAuthService authService, AddDbContext context, ILogger<RequirementModel> logger, IVNPayServices vnPayService, IHttpContextAccessor httpContextAccessor)
         {
-            _classService = classService;
+            _classhourService = classhourService;
             _authService = authService;
             _context = context;
             _logger = logger;
@@ -30,6 +31,7 @@ namespace SWP391_eTeacherSystem.Pages
             _httpContextAccessor = httpContextAccessor;
         }
         [BindProperty]
+        public ClassHourDto ClassHourDto { get; set; }
         public ClassDto ClassDto { get; set; }
 
         public UserDto UserDto { get; set; }
@@ -40,8 +42,8 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                var classId = _classService.GenerateClassId();
-                ClassDto = new ClassDto { Tutor_id = userId, Class_id = classId };
+                var classId = _classhourService.GenerateClassId();
+                ClassHourDto = new ClassHourDto {User_id = userId, Class_id = classId };
             }
         }
 
@@ -51,7 +53,7 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { Tutor_id = userId };
+                ClassHourDto = new ClassHourDto { User_id = userId };
             }
             await InitializeClassDtoAsync();
         }
@@ -80,16 +82,16 @@ namespace SWP391_eTeacherSystem.Pages
                 return Page();
             }
 
-            ClassDto.Tutor_id = userId;
+            ClassHourDto.User_id = userId;
 
             try
             {
                 _logger.LogInformation("Attempting to create class hour");
-                var result = await _classService.CreateClassAsync(ClassDto, userId);
+                var result = await _classhourService.CreateClassAsync(ClassHourDto, userId);
                 if (result.IsSucceed)
                 {
                     _logger.LogInformation("Class hour created successfully");
-                    return RedirectToPage("/ClassDetails", new { id = result.CreatedClass.Class_id });
+                    return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
                 }
                 else
                 {
