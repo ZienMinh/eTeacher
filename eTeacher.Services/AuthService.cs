@@ -351,6 +351,24 @@ namespace eTeacher.Services
             user.Link_contact = userDto.Link_contact;
             user.Image = userDto.Image;
 
+            // Cập nhật thông tin qualification
+            var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.User_id == userId);
+            if (qualification == null)
+            {
+                qualification = new Qualification
+                {
+                    User_id = userId,
+                    Qualification_id = Guid.NewGuid().ToString()
+                };
+                _context.Qualifications.Add(qualification);
+            }
+
+            qualification.Graduation_year = userDto.Qualification.Graduation_year;
+            qualification.Specialize = userDto.Qualification.Specialize;
+            qualification.Classification = userDto.Qualification.Classification;
+            qualification.Training_facility = userDto.Qualification.Training_facility;
+            qualification.Image = userDto.Qualification.Image;
+
             var updateResult = await _userManager.UpdateAsync(user);
 
             if (!updateResult.Succeeded)
@@ -364,6 +382,19 @@ namespace eTeacher.Services
                 {
                     IsSucceed = false,
                     Message = errorString
+                };
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "Qualification Update Failed: " + ex.Message
                 };
             }
 

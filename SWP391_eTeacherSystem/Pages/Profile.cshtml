@@ -40,8 +40,40 @@
                             <p><strong>Link Contact:</strong> @Model.UserDto.Link_contact</p>
                             <p><strong>Rating:</strong> @Model.UserDto.Rating</p>
                             <p><strong>Image:</strong> @Model.UserDto.Image</p>
-                            <p><strong>Role:</strong> @Model.UserDto.Role</p>
                             <div class="text-center"><button class="btn btn-primary form-control" asp-page="EditProfile">Edit</button></div>
+                    </form>
+                </div>
+                <div class="col-lg-2"></div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-2"></div>
+
+                <div class="col-lg-8 textblack">
+                    <form action="" method="post" role="form" class="board">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            @if (Model.UserDto.Qualification != null)
+                            {
+                                <p><strong>Qualification ID:</strong> @Model.UserDto.Qualification.Qualification_id</p>
+                                <p><strong>Graduation Year:</strong> @Model.UserDto.Qualification.Graduation_year</p>
+                                <p><strong>Specialize:</strong> @Model.UserDto.Qualification.Specialize</p>
+                                <p><strong>Classification:</strong> @Model.UserDto.Qualification.Classification</p>
+                                <p><strong>Training Facility:</strong> @Model.UserDto.Qualification.Training_facility</p>
+                                <p>
+                                    <strong>Qualification Image:</strong>
+                                    @if (!string.IsNullOrEmpty(Model.UserDto.Qualification.Image))
+                                    {
+                                        <img src="@Model.UserDto.Qualification.Image" alt="Qualification Image" class="img-thumbnail mt-2" style="max-width: 100%;">
+                                    }
+                                </p>
+                            }
+                            else
+                            {
+                                <p>No qualification information available.</p>
+                            }
+                            <div class="text-center"><button class="btn btn-primary form-control" asp-page="EditQualification">Edit</button></div>
                     </form>
                 </div>
                 <div class="col-lg-2"></div>

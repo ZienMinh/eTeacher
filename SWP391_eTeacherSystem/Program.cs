@@ -73,20 +73,21 @@ builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IVisitorCounterService, VisitorCounterService>();
 
 
-builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    var emailSettings = configuration.GetSection("EmailSettings");
-    return new EmailService(
-        emailSettings["SmtpHost"],
-        int.Parse(emailSettings["SmtpPort"]),
-        emailSettings["FromEmail"],
-        emailSettings["SmtpUser"],
-        emailSettings["SmtpPass"]
-    );
-});
+//builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
+//{
+//    var configuration = provider.GetRequiredService<IConfiguration>();
+//    var emailSettings = configuration.GetSection("EmailSettings");
+//    return new EmailService(
+//        emailSettings["SmtpHost"],
+//        int.Parse(emailSettings["SmtpPort"]),
+//        emailSettings["FromEmail"],
+//        emailSettings["SmtpUser"],
+//        emailSettings["SmtpPass"]
+//    );
+//});
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>

@@ -16,7 +16,7 @@ namespace eTeacher.Core.Services
             private readonly SmtpClient _smtpClient;
             private readonly string _fromEmail;
 
-        public EmailService(IConfiguration configuration)
+            public EmailService(IConfiguration configuration)
             {
             var smtpHost = configuration["Smtp:Host"];
             var smtpPort = int.Parse(configuration["Smtp:Port"]);
@@ -29,7 +29,7 @@ namespace eTeacher.Core.Services
                     Credentials = new NetworkCredential(smtpUser, smtpPass),
                     EnableSsl = true
                 };
-                _fromEmail = fromEmail;
+                _fromEmail = _fromEmail;
             }
 
             public async Task SendEmailAsync(string to, string subject, string body)

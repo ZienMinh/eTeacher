@@ -24,6 +24,7 @@ namespace BusinessObject.Models
         public DbSet<ClassHour> ClassHours { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
