@@ -53,6 +53,8 @@ namespace BusinessObject.Models
         public string? Link_meet { get; set; }
 
         public ICollection<Report> Reports { get; set; }
+
+        public ICollection<Attendance> Attendances { get; set; }
     }
     
 }

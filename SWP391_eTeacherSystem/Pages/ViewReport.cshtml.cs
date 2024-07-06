@@ -41,15 +41,5 @@ namespace SWP391_eTeacherSystem.Pages
             return Page();
         }
 
-        public string GetProcessingClass(byte? processing)
-        {
-            return processing switch
-            {
-                1 => "bg-warning-light",
-                2 => "bg-success-light",
-                3 => "bg-danger-light",
-                _ => ""
-            };
-        }
     }
 }

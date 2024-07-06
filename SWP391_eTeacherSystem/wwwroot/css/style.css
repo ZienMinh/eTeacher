@@ -1364,18 +1364,3 @@ section {
     .star-rating input[type="radio"]:checked ~ label {
         color: #FFD700;
     }
-
-/*--------------------------------------------------------------
-# Processing highlight
---------------------------------------------------------------*/
-.bg-warning-light {
-    background-color: #fff3cd; /* Vàng nhạt */
-}
-
-.bg-success-light {
-    background-color: #d4edda; /* Xanh lá nhạt */
-}
-
-.bg-danger-light {
-    background-color: #f8d7da; /* Đỏ nhạt */
-}

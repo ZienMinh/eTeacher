@@ -23,7 +23,6 @@ namespace Repositories
 
 
         string GenerateClassId();
-
         string GetCurrentUserId();
     }
 }

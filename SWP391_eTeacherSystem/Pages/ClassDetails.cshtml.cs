@@ -16,7 +16,7 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IClassService _classService;
         private readonly IClassHourService _classHourService;
 
-        public ClassDetailsModel(AddDbContext context, IAuthService authService, 
+        public ClassDetailsModel(AddDbContext context, IAuthService authService,
             IUserService userService, IClassService classService, IClassHourService classHourService)
         {
             _context = context;
@@ -42,10 +42,11 @@ namespace SWP391_eTeacherSystem.Pages
             if (userId != null)
             {
                 var classId = _classService.GenerateClassId();
-                ClassDto = new ClassDto {
+                ClassDto = new ClassDto
+                {
                     Tutor_id = ClassHour.User_id,
-                    Student_id = userId, 
-                    Class_id = classId 
+                    Student_id = userId,
+                    Class_id = classId
                 };
             }
         }
@@ -70,7 +71,8 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { 
+                ClassDto = new ClassDto
+                {
                     Tutor_id = ClassHour.User_id,
                     Student_id = userId
                 };

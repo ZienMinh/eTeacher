@@ -25,18 +25,18 @@
                 <tr>
                     <td>@report.Title</td>
                     <td>@report.Content</td>
-                    <td class="@(Model.GetProcessingClass(report.Processing))">
+                    <td>
                         @if (report.Processing == 1)
                         {
-                            <span>Pending</span>
+                            <span class="reportbg-warning-light">Pending</span>
                         }
                         else if (report.Processing == 2)
                         {
-                            <span>Approved</span>
+                            <span class="reportbg-success-light">Approved</span>
                         }
                         else if (report.Processing == 3)
                         {
-                            <span>Reject</span>
+                            <span class="reportbg-danger-light">Reject</span>
                         }
                     </td>
                 </tr>
