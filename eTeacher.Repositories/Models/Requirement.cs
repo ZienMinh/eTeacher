@@ -21,8 +21,8 @@ namespace BusinessObject.Models
         public Subject Subject { get; set; }
         public DateOnly? Start_date { get; set; }
         public DateOnly? End_date { get; set; }
-        public TimeOnly? Start_time { get; set; }
-        public TimeOnly? End_time { get; set; }
+        public TimeSpan? Start_time { get; set; }
+        public TimeSpan? End_time { get; set; }
         [Required]
         public byte Grade { get; set; }
         [MaxLength(10)]
@@ -30,10 +30,11 @@ namespace BusinessObject.Models
         [Required]
         public double Price { get; set; }
         public int Number_of_session { get; set; }
-
         [MaxLength(50)]
         public string? Address { get; set; }
         [MaxLength(450)]
         public string? Description { get; set; }
+        public double? Total { get; set; }
+        public byte? Status { get; set; }
     }
 }

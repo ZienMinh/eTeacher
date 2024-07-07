@@ -1,0 +1,32 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.UploadVideoModel
+@{
+    ViewData["Title"] = "Upload Academic Video";
+}
+
+<div class="container-fluid contact py-5">
+    <div class="container form-container">
+        <div class="p-5 bg-light rounded">
+            <h1 class="text-primary">Upload Academic Video</h1>
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="Title" />
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="Description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="videoFile" class="form-label">VideoFile</label>
+                    <input type="file" class="form-control" id="videoFile" name="VideoFile" />
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

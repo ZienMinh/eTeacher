@@ -22,6 +22,38 @@ namespace BusinessObject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
+                {
+                    b.Property<Guid?>("VideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Tutor_id")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VideoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VideoId");
+
+                    b.HasIndex("Tutor_id");
+
+                    b.ToTable("AcademicVideos");
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
                     b.Property<string>("Class_id")
@@ -35,11 +67,14 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
+
+                    b.Property<string>("Link_meet")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Number_of_session")
                         .HasColumnType("int");
@@ -50,11 +85,13 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
 
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("Student_id")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -63,8 +100,10 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<double?>("Total")
+                        .HasColumnType("float");
+
                     b.Property<string>("Tutor_id")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -104,7 +143,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -119,16 +158,19 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<byte>("Type_class")
-                        .HasColumnType("tinyint");
+                    b.Property<double?>("Total")
+                        .HasColumnType("float");
 
                     b.Property<string>("User_id")
                         .IsRequired()
@@ -158,6 +200,9 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int>("CompletedSessions")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Order_time")
                         .HasColumnType("datetime2");
 
@@ -166,6 +211,12 @@ namespace BusinessObject.Migrations
 
                     b.Property<byte>("Payment_status")
                         .HasColumnType("tinyint");
+
+                    b.Property<double>("Price_per_session")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RefundAmount")
+                        .HasColumnType("float");
 
                     b.Property<string>("Transaction_id")
                         .IsRequired()
@@ -234,28 +285,48 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Class_id")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(750)
                         .HasColumnType("nvarchar(750)");
 
+                    b.Property<byte?>("Processing")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("Rating")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Student_id")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("User_id")
-                        .IsRequired()
+                    b.Property<string>("Tutor_id")
                         .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Report_id");
 
-                    b.HasIndex("User_id");
+                    b.HasIndex("Class_id");
+
+                    b.HasIndex("Student_id");
+
+                    b.HasIndex("Tutor_id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Report");
                 });
@@ -277,7 +348,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -297,13 +368,19 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<double?>("Total")
+                        .HasColumnType("float");
 
                     b.Property<string>("User_id")
                         .IsRequired()
@@ -366,8 +443,10 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte>("Gender")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Image")
                         .HasMaxLength(100)
@@ -567,13 +646,23 @@ namespace BusinessObject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
+                {
+                    b.HasOne("BusinessObject.Models.User", "Tutor")
+                        .WithMany("AcademicVideos")
+                        .HasForeignKey("Tutor_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tutor");
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
                     b.HasOne("BusinessObject.Models.User", "Student")
                         .WithMany("StudentClasses")
                         .HasForeignKey("Student_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BusinessObject.Models.Subject", "Subject")
                         .WithMany("Classes")
@@ -585,8 +674,7 @@ namespace BusinessObject.Migrations
                     b.HasOne("BusinessObject.Models.User", "Tutor")
                         .WithMany("TutorClasses")
                         .HasForeignKey("Tutor_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BusinessObject.Models.User", null)
                         .WithMany("Classes")
@@ -647,11 +735,30 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Report", b =>
                 {
+                    b.HasOne("BusinessObject.Models.Class", "Class")
+                        .WithMany("Reports")
+                        .HasForeignKey("Class_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BusinessObject.Models.User", "Student")
+                        .WithMany("StudentReports")
+                        .HasForeignKey("Student_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BusinessObject.Models.User", "Tutor")
+                        .WithMany("TutorReports")
+                        .HasForeignKey("Tutor_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("BusinessObject.Models.User", null)
                         .WithMany("Reports")
-                        .HasForeignKey("User_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Tutor");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Requirement", b =>
@@ -726,6 +833,8 @@ namespace BusinessObject.Migrations
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Subject", b =>
@@ -739,6 +848,8 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.User", b =>
                 {
+                    b.Navigation("AcademicVideos");
+
                     b.Navigation("ClassHours");
 
                     b.Navigation("Classes");
@@ -753,7 +864,11 @@ namespace BusinessObject.Migrations
 
                     b.Navigation("StudentClasses");
 
+                    b.Navigation("StudentReports");
+
                     b.Navigation("TutorClasses");
+
+                    b.Navigation("TutorReports");
                 });
 #pragma warning restore 612, 618
         }

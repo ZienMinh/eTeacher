@@ -1,7 +1,6 @@
 using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
-using eTeacher.Core.Services.eTeacher.Core.Services;
 using eTeacher.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +34,7 @@ builder.Services.AddDbContext<AddDbContext>(options =>
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AddDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Config Identity
 builder.Services.Configure<IdentityOptions>(options =>
@@ -77,24 +77,17 @@ builder.Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
+builder.Services.AddScoped<IAcademicVideoRepository, AcademicVideoRepository>();
+builder.Services.AddScoped<IAcademicVideoService, AcademicVideoService>();
 builder.Services.AddTransient<SessionHelper>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
-builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
-{
-    var configuration = provider.GetRequiredService<IConfiguration>();
-    var emailSettings = configuration.GetSection("EmailSettings");
-    return new EmailService(
-        emailSettings["SmtpHost"],
-        int.Parse(emailSettings["SmtpPort"]),
-        emailSettings["FromEmail"],
-        emailSettings["SmtpUser"],
-        emailSettings["SmtpPass"]
-    );
-});
+
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -120,7 +113,7 @@ using (var scope = app.Services.CreateScope())
 
 async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 {
-	var roles = new[] { "USER", "ADMIN", "OWNER" };
+	var roles = new[] { "USER", "ADMIN", "TUTOR", "MODERATOR" };
 
 	foreach (var role in roles)
 	{

@@ -36,7 +36,16 @@ namespace BusinessObject.Models
         [Required]
         public double Amount { get; set; }
 
-        [ForeignKey("User_id")]
+		[Required]
+		public int CompletedSessions { get; set; }
+
+		[Required]
+		public double Price_per_session { get; set; }
+
+		[Required]
+		public double RefundAmount { get; set; }
+
+		[ForeignKey("User_id")]
         public User User { get; set; }
 
         [ForeignKey("Class_id")]

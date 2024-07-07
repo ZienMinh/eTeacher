@@ -30,13 +30,11 @@ namespace BusinessObject.Models
 
         public DateOnly? End_date { get; set; }
 
-        public TimeOnly? Start_time { get; set; }
+        public TimeSpan? Start_time { get; set; }
 
-        public TimeOnly? End_time { get; set; }
+        public TimeSpan? End_time { get; set; }
 
         public byte Grade { get; set; }
-
-        public byte Type_class { get; set; }
 
         public double Price { get; set; }
 
@@ -44,5 +42,9 @@ namespace BusinessObject.Models
 
         [MaxLength(450)]
         public string? Description { get; set; }
+
+        public double? Total { get; set; }
+
+        public byte? Status { get; set; }
     }
 }

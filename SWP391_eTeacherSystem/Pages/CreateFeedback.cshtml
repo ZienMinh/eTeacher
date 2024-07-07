@@ -1,0 +1,116 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.CreateFeedbackModel
+@{
+    ViewData["Title"] = "Create Feedback";
+}
+<!-- ======= Create Feedback ======= -->
+<section id="Feedback" class="contact ctaa">
+    <div class="container " data-aos="fade-up">
+        <div class="row">
+            <form method="post" role="form" class="">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <h2>Create Feedback</h2>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Report_id" class="form-control">
+                        <span asp-validation-for="Feedback.Report_id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="ClassId" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Student_id" class="form-control">
+                        <span asp-validation-for="Feedback.Student_id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Tutor_id" class="form-control">
+                        <span asp-validation-for="Feedback.Tutor_id" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Feedback.Title">Title</label>
+                    <input type="text" asp-for="Feedback.Title" class="form-control">
+                    <span asp-validation-for="Feedback.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Feedback.Content">Content</label>
+                    <input type="text" asp-for="Feedback.Content" class="form-control">
+                    <span asp-validation-for="Feedback.Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Feedback.Rating">Rating</label>
+                    <div class="star-rating">
+                        @for (int i = 5; i >= 1; i--)
+                        {
+                            <input type="radio" asp-for="Feedback.Rating" id="star-@i" name="Feedback.Rating" value="@i" class="d-none" />
+                            <label for="star-@i" class="star">&#9733;</label>
+                        }
+                    </div>
+                    <span asp-validation-for="Feedback.Rating" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Type" class="form-control" value="1">
+                        <span asp-validation-for="Feedback.Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Processing" class="form-control" value="0">
+                        <span asp-validation-for="Feedback.Processing" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary form-control">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.star-rating .star');
+        const radioButtons = document.querySelectorAll('.star-rating input[type="radio"]');
+
+        function updateStars() {
+            const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
+            if (checkedStar) {
+                const checkedIndex = parseInt(checkedStar.value);
+                stars.forEach((star, index) => {
+                    if (index < checkedIndex) {
+                        star.style.color = '#FFD700';
+                    } else {
+                        star.style.color = '#ccc';
+                    }
+                });
+            } else {
+                stars.forEach((star) => {
+                    star.style.color = '#ccc';
+                });
+            }
+        }
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                radioButtons[index].checked = true;
+                updateStars();
+            });
+
+            star.addEventListener('mouseover', () => {
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.style.color = '#FFD700';
+                    } else {
+                        s.style.color = '#ccc';
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', updateStars);
+        });
+
+        updateStars();
+    });
+</script>
+<!-- ======= End Create Feedback ======= -->

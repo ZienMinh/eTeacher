@@ -14,9 +14,12 @@ namespace Repositories
         Task<AuthServiceResponseDto> RegisterAsync(RegisterDto registerDto);
         Task<AuthServiceResponseDto> LoginAsync(LoginDto loginDto);
         Task<AuthServiceResponseDto> MakeAdminAsync(UpdatePermissionDto updatePermissionDto);
-        Task<AuthServiceResponseDto> MakeOwnerAsync(UpdatePermissionDto updatePermissionDto);
-        Task<AuthServiceResponseDto> ResetPasswordByEmailAsync(ResetPasswordDto resetPasswordDto);
+        Task<AuthServiceResponseDto> MakeTutorAsync(UpdatePermissionDto updatePermissionDto);
+        Task<AuthServiceResponseDto> ResetPasswordByEmailAsync(string userName);
+        Task RegisterAsyn(RegisterDto registerDto);
+        Task<AuthServiceResponseDto> UpdateUserAsync(UserDto userDto);
         string GetCurrentUserId();
         string GenerateRandomPassword();
+        Task<AuthServiceResponseDto> LogoutAsync();
     }
 }

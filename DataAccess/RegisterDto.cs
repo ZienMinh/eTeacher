@@ -26,7 +26,10 @@ namespace DataAccess
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters long")]
         public string Password { get; set; }
 
-		[Required(ErrorMessage = "Role is required")]
+        [Required(ErrorMessage = "Gender is required")]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Role is required")]
 		public byte Role { get; set; }
 	}
 }

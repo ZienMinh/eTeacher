@@ -21,14 +21,13 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IVNPayServices _vnPayService;
 
 
-        public ClassDetailsModel(AddDbContext context, IAuthService authService,
+		public ClassDetailsModel(AddDbContext context, IAuthService authService,
             IUserService userService, IClassService classService, ILogger<ClassDetailsModel> logger, IClassHourService classHourService, IHttpContextAccessor httpContextAccessor, IVNPayServices vnPayService)
         {
             _context = context;
             _authService = authService;
             _userService = userService;
             _classService = classService;
-            _logger = logger;
             _classHourService = classHourService;
             _httpContextAccessor = httpContextAccessor;
             _vnPayService = vnPayService;
@@ -39,11 +38,11 @@ namespace SWP391_eTeacherSystem.Pages
         [BindProperty]
         public ClassDto ClassDto { get; set; }
         public ClassHourDto ClassHourDto { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public string ClassId { get; set; }
+		private const double PricePerHour = 100000;
 
-        public async Task InitializeClassDtoAsync()
+		public async Task InitializeClassDtoAsync()
         {
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
@@ -60,11 +59,9 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            _logger.LogInformation("OnGetAsync started with ID: {ID}", id);
 
             if (string.IsNullOrEmpty(id))
             {
-                _logger.LogWarning("Class ID is not provided.");
                 return NotFound("Class ID is not provided.");
             }
 
@@ -74,17 +71,18 @@ namespace SWP391_eTeacherSystem.Pages
 
             if (ClassHour == null)
             {
-                _logger.LogWarning("Class not found.");
                 return NotFound();
             }
 
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { Student_id = userId };
+                ClassDto = new ClassDto { 
+                    Tutor_id = ClassHour.User_id,
+                    Student_id = userId
+                };
             }
 
-            _logger.LogInformation("OnGetAsync completed successfully.");
             await InitializeClassDtoAsync();
             return Page();
         }
@@ -93,23 +91,10 @@ namespace SWP391_eTeacherSystem.Pages
         {
             ModelState.Remove("ClassId");
 
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("ModelState is not valid");
-                foreach (var state in ModelState)
-                {
-                    if (state.Value.Errors.Count > 0)
-                    {
-                        _logger.LogWarning($"Property: {state.Key} - Errors: {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-                    }
-                }
-                return Page();
-            }
 
             var userId = _authService.GetCurrentUserId();
             if (userId == null)
             {
-                _logger.LogWarning("User is not authenticated");
                 ModelState.AddModelError(string.Empty, "User is not authenticated.");
                 return Page();
             }
@@ -118,83 +103,106 @@ namespace SWP391_eTeacherSystem.Pages
 
             try
             {
-                _logger.LogInformation("Attempting to create class and delete class hour");
+
                 var result = await _classService.CreateClassAsync(ClassDto, userId);
                 if (result.IsSucceed)
                 {
-                    _logger.LogInformation("Deleting requirement with ID: {ID}", ClassId);
 
-                    var delete = await _classHourService.DeleteClassAsync(ClassId);
-                    if (delete.IsSucceed)
+                    var classHourDto = new ClassHourDto
                     {
-                        _logger.LogInformation("Class created and class hour deleted successfully");
-                        return RedirectToPage("/Index", new { id = result.CreatedClass.Class_id });
+                        Class_id = ClassId,
+                        Status = 2
+                    };
+
+                    var updateResult = await _classHourService.UpdateClassHourAsync(classHourDto);
+
+                    if (updateResult.IsSucceed)
+                    {
+                        return RedirectToPage("/StudentPage", new { id = result.CreatedClass.Class_id });
                     }
                     else
                     {
-                        _logger.LogWarning("Failed to delete requirement: " + delete.Message);
-                        ModelState.AddModelError(string.Empty, delete.Message);
+                        ModelState.AddModelError(string.Empty, updateResult.Message);
                     }
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to create class: " + result.Message);
                     ModelState.AddModelError(string.Empty, result.Message);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while saving data: " + ex.Message);
                 ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostCheckoutPaymentAsync(string payment)
-        {
-            if (ModelState.IsValid)
-            {
-                if (payment == "Thanh Toán VNPay")
-                {
-                    // Tạo class_id và gán các giá trị từ ClassHourDto vào ClassDto
-                    var classId = _classService.GenerateClassId();
-                    ClassDto.Class_id = classId;
+		public async Task<IActionResult> OnPostCheckoutPaymentAsync(string payment)
+		{
+			if (ModelState.IsValid)
+			{
+				if (payment == "Thanh Toán VNPay")
+				{
+					var userId = _authService.GetCurrentUserId();
+					if (userId == null)
+					{
+						ModelState.AddModelError(string.Empty, "User is not authenticated.");
+						return Page();
+					}
 
-                    // Lưu lớp học vào cơ sở dữ liệu trước khi thanh toán
-                    var userId = _authService.GetCurrentUserId();
-                    var response = await _classService.CreateClassAsync(ClassDto, userId);
+                    //Automatic generation class
+					var classId = _classService.GenerateClassId();
+					ClassDto.Class_id = classId;
+					ClassDto.Student_id = userId;
 
-                    if (!response.IsSucceed)
-                    {
-                        TempData["Error"] = response.Message;
-                        TempData["PaymentStatus"] = "2";
-                        return Page();
-                    }
+					ClassHour = await _context.ClassHours.FirstOrDefaultAsync(c => c.Class_id == ClassId);
+					if (ClassHour == null)
+					{
+						ModelState.AddModelError(string.Empty, "ClassHour not found.");
+						return Page();
+					}
 
-                    var totalAmount = ClassDto.Price * ClassDto.Number_of_session;
-                    var orderType = ClassDto.Type_class == 1 ? 1 : 2;
+                    //Calculate time for payment
+					var startTime = ClassHour.Start_time.Value;
+					var endTime = ClassHour.End_time.Value;
+					var duration = (endTime - startTime).TotalHours;
+					var totalAmount = ClassHour.Number_of_session * duration * ClassHour.Price;
 
-                    var vnPayModel = new VnPaymentRequestModel
-                    {
-                        Amount = totalAmount,
-                        CreatedDate = DateTime.Now,
-                        Description = "Thanh toán lớp học thuê theo giờ",
-                        FullName = userId, // Sử dụng userId thay vì ClassDto.Student_id
-                        OrderId = classId
-                    };
+					ClassDto.Price = ClassHour.Price;
+					ClassDto.Number_of_session = ClassHour.Number_of_session;
 
-                    // Lưu class_id vào TempData để sử dụng trong PaymentCallback
-                    TempData["ClassId"] = classId;
-                    TempData["OrderType"] = orderType.ToString();
-                    TempData["PaymentStatus"] = "1";
+					var response = await _classService.CreateClassAsync(ClassDto, userId);
 
-                    var paymentUrl = _vnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
-                    return Redirect(paymentUrl);
-                }
-            }
+					if (!response.IsSucceed)
+					{
+						TempData["Error"] = response.Message;
+						TempData["PaymentStatus"] = "2";
+						return Page();
+					}
 
-            return Page();
-        }
-    }
+                    // 1: for Class, 2: for ClassHour
+					var orderType = ClassDto.Type_class == 1 ? 1 : 2;
+
+					var vnPayModel = new VnPaymentRequestModel
+					{
+						Amount = totalAmount,
+						CreatedDate = DateTime.Now,
+						Description = "Thanh toán lớp học thuê theo giờ",
+						FullName = userId,
+						OrderId = classId
+					};
+
+					TempData["ClassId"] = classId;
+					TempData["OrderType"] = orderType.ToString();
+					TempData["PaymentStatus"] = "1";
+
+					var paymentUrl = _vnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
+					return Redirect(paymentUrl);
+				}
+			}
+
+			return Page();
+		}
+	}
 }

@@ -1,0 +1,36 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ViewFeedbackModel
+@{
+    ViewData["Title"] = "View Feedback";
+}
+<!-- ======= View Feedback Section ======= -->
+
+<h1>View Feedback</h1>
+
+@if (Model.Reports != null && Model.Reports.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Rating (star)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model.Reports)
+            {
+                <tr>
+                    <td>@report.Title</td>
+                    <td>@report.Content</td>
+                    <td>@report.Rating</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No feedbacks found for this class.</p>
+}
+<!-- ======= End View Feedback Section ======= -->

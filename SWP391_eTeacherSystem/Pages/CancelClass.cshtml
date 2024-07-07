@@ -23,6 +23,7 @@ else
                             <p>Start date: @classes.Start_date - To: @classes.End_date</p>
                             <p>Start time: @classes.Start_time - To: @classes.End_time</p>
                             <p>Address: @classes.Address</p>
+                            <p>Total tuition for the course: <b>@classes.Total VNĐ</b></p>
                             <input type="hidden" asp-for="ClassId" />
                         </div>
                         <div class="my-3">
@@ -30,12 +31,31 @@ else
                             <div class="error-message"></div>
                             <div class="sent-message"></div>
                         </div>
-                        <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary form-control">Cancel class</button>
-                            <p></p>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary form-control">Cancel class</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
+                <p></p>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <form method="get" asp-page="/CreateReport">
+                            <input type="hidden" name="id" value="@classes.Class_id" />
+                            <button type="submit" class="btn btn-success">Report class →</button>
+                        </form>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <form method="get" asp-page="/ViewReport">
+                            <input type="hidden" name="id" value="@classes.Class_id" />
+                            <button type="submit" class="btn btn-success">View Report →</button>
+                        </form>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </section>

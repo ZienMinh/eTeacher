@@ -13,14 +13,14 @@ namespace DataAccess
         public string Class_id { get; set; }
         public string? Address { get; set; }
         public string? Student_id { get; set; }
-        public string Tutor_id { get; set; }
+        public string? Tutor_id { get; set; }
 
         [Required(ErrorMessage = "Subject name is required")]
         public string Subject_name { get; set; }
         public DateOnly? Start_date { get; set; }
         public DateOnly? End_date { get; set; }
-        public TimeOnly? Start_time { get; set; }
-        public TimeOnly? End_time { get; set; }
+        public TimeSpan? Start_time { get; set; }
+        public TimeSpan? End_time { get; set; }
         [Required(ErrorMessage = "Grade is required")]
         [Range(1, 12, ErrorMessage = "Grade must be between 1 and 12")]
         public byte Grade { get; set; }
@@ -33,17 +33,10 @@ namespace DataAccess
         [Range(1, 100, ErrorMessage = "Number of sessions must be between 1 and 100")]
         public int Number_of_session { get; set; }
 
-		public double GetTotalPrice()
-		{
-			if (Start_time.HasValue && End_time.HasValue && Price > 0)
-			{
-				var duration = (End_time.Value.ToTimeSpan() - Start_time.Value.ToTimeSpan()).TotalHours;
-				if (duration > 0)
-				{
-					return duration * Price;
-				}
-			}
-			return 0;
-		}
-	}
+        public double? Total { get; set; }
+
+        public byte? Status { get; set; }
+
+        public string? Link_meet { get; set; }
+    }
 }

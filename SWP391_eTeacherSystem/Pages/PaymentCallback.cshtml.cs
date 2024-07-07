@@ -37,7 +37,7 @@ namespace SWP391_eTeacherSystem.Pages
 
             if (string.IsNullOrEmpty(classId) || string.IsNullOrEmpty(orderTypeString) || string.IsNullOrEmpty(paymentStatusString))
             {
-                TempData["Message"] = "Không có lớp học nào trong phiên hoặc thông tin không đầy đủ.";
+                TempData["Message"] = "Không có lớp học nào hoặc thông tin không đầy đủ.";
                 return RedirectToPage("/PaymentFail");
             }
 

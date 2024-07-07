@@ -14,13 +14,13 @@ namespace BusinessObject.Models
         public string? Address { get; set; }
 
         [MaxLength(450)]
-        public string Student_id { get; set; }
+        public string? Student_id { get; set; }
 
         [ForeignKey("Student_id")]
         public User Student { get; set; }
 
         [MaxLength(450)]
-        public string Tutor_id { get; set; }
+        public string? Tutor_id { get; set; }
 
         [ForeignKey("Tutor_id")]
         public User Tutor { get; set; }
@@ -34,9 +34,9 @@ namespace BusinessObject.Models
 
         public DateOnly? End_date { get; set; }
 
-        public TimeOnly? Start_time { get; set; }
+        public TimeSpan? Start_time { get; set; }
 
-        public TimeOnly? End_time { get; set; }
+        public TimeSpan? End_time { get; set; }
 
         public byte Grade { get; set; }
 
@@ -46,7 +46,17 @@ namespace BusinessObject.Models
 
         public int Number_of_session { get; set; }
 
+        public double? Total { get; set; }
+
+        public byte? Status { get; set; }
+
+        public string? Link_meet { get; set; }
+
+        public ICollection<Report> Reports { get; set; }
+
         public ICollection<Order> Orders { get; set; }
+
+        public ICollection<Schedule> Schedules { get; set; }
     }
     
 }
