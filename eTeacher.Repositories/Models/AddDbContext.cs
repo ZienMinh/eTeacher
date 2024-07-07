@@ -26,6 +26,15 @@ namespace BusinessObject.Models
 		public DbSet<Subject> Subjects { get; set; }
 		public DbSet<AcademicVideo> AcademicVideos { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Requirement> Requirements { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<Qualification> Qualifications { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ClassHour> ClassHours { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -116,6 +125,12 @@ namespace BusinessObject.Models
                       .WithOne(s => s.Class)
                       .HasForeignKey(s => s.ClassId)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.Attendances)
+                      .WithOne(r => r.Class)
+                      .HasForeignKey(r => r.Class_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             // Order entity configuration
@@ -177,6 +192,19 @@ namespace BusinessObject.Models
                       .WithMany()
                       .HasForeignKey(e => e.StudentId)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+            // Subject entity configuration
+            modelBuilder.Entity<Subject>(entity =>
+            {
+                entity.HasKey(e => e.Subject_id);
+                entity.HasIndex(e => e.Subject_name)
+                      .IsUnique();
+            });
+
+            // Attendance entity configuration
+            modelBuilder.Entity<Attendance>(entity =>
+            {
+                entity.HasKey(e => e.Attendance_id);
             });
         }
 	}

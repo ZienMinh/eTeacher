@@ -1,0 +1,17 @@
+﻿body {
+}
+/*--------------------------------------------------------------
+# Processing highlight
+--------------------------------------------------------------*/
+.reportbg-warning-light {
+    background-color: #fff3cd; /* Vàng nhạt */
+}
+
+.reportbg-success-light {
+    background-color: #d4edda; /* Xanh lá nhạt */
+}
+
+.reportbg-danger-light {
+    background-color: #f8d7da; /* Đỏ nhạt */
+}
+

@@ -26,6 +26,7 @@
     <link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
     <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
     <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="~/css/report.css" rel="stylesheet">
     <link href="~/css/style.css" rel="stylesheet">
 </head>
 
@@ -96,24 +97,28 @@
                                 <td>@report.Report_id</td>
                                 <td>@report.Class_id</td>
                                 <td>@report.Title</td>
-                                <td class="@(Model.GetProcessingClass(report.Processing))">
+                                <td>
                                     @if (report.Processing == 1)
                                     {
                                         <div class="row">
-                                        <span>Pending</span>
-                                        <form method="get" asp-page="/ManageReport">
-                                            <input type="hidden" name="id" value="@report.Report_id" />
-                                            <button type="submit" class="btn btn-success">Manage Report →</button>
-                                        </form>
+                                            <div class="col-lg-3">
+                                                <span class="reportbg-warning-light">Pending</span>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <form method="get" asp-page="/ManageReport">
+                                                    <input type="hidden" name="id" value="@report.Report_id" />
+                                                    <button type="submit" class="btn btn-success">Manage Report →</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     }
                                     else if (report.Processing == 2)
                                     {
-                                        <span>Approved</span>
+                                        <span class="reportbg-success-light">Approved</span>
                                     }
                                     else if (report.Processing == 3)
                                     {
-                                        <span>Reject</span>
+                                        <span class="reportbg-danger-light">Reject</span>
                                     }
                                 </td>
                             </tr>

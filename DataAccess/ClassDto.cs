@@ -38,5 +38,7 @@ namespace DataAccess
         public byte? Status { get; set; }
 
         public string? Link_meet { get; set; }
+
+        public string? Attendance_id { get; set; }
     }
 }

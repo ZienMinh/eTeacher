@@ -22,6 +22,7 @@ namespace BusinessObject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+<<<<<<< HEAD
             modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
                 {
                     b.Property<Guid?>("VideoId")
@@ -52,6 +53,32 @@ namespace BusinessObject.Migrations
                     b.HasIndex("Tutor_id");
 
                     b.ToTable("AcademicVideos");
+=======
+            modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
+                {
+                    b.Property<string>("Attendance_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Class_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Slot")
+                        .HasColumnType("int");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Attendance_id");
+
+                    b.HasIndex("Class_id");
+
+                    b.ToTable("Attendance");
+>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -646,6 +673,7 @@ namespace BusinessObject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
                 {
                     b.HasOne("BusinessObject.Models.User", "Tutor")
@@ -655,6 +683,16 @@ namespace BusinessObject.Migrations
                         .IsRequired();
 
                     b.Navigation("Tutor");
+=======
+            modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
+                {
+                    b.HasOne("BusinessObject.Models.Class", "Class")
+                        .WithMany("Attendances")
+                        .HasForeignKey("Class_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Class");
+>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -832,7 +870,11 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
+<<<<<<< HEAD
                     b.Navigation("Orders");
+=======
+                    b.Navigation("Attendances");
+>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c
 
                     b.Navigation("Reports");
                 });

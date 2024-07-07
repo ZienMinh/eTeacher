@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BusinessObject.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.cs
     public partial class InitialCreate : Migration
+========
+    public partial class DbInt : Migration
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -345,6 +349,7 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.cs
                 name: "Order",
                 columns: table => new
                 {
@@ -371,6 +376,22 @@ namespace BusinessObject.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_Classes_Class_id",
+========
+                name: "Attendance",
+                columns: table => new
+                {
+                    Attendance_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Slot = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendance", x => x.Attendance_id);
+                    table.ForeignKey(
+                        name: "FK_Attendance_Classes_Class_id",
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.cs
                         column: x => x.Class_id,
                         principalTable: "Classes",
                         principalColumn: "Class_id",
@@ -463,6 +484,11 @@ namespace BusinessObject.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Class_id",
+                table: "Attendance",
+                column: "Class_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Classes_Student_id",
@@ -566,6 +592,9 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Attendance");
 
             migrationBuilder.DropTable(
                 name: "ClassHour");

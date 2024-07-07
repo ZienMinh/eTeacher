@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BusinessObject.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.cs
     public partial class InitialCreate : Migration
+========
+    public partial class DbInt : Migration
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -345,6 +349,7 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.cs
                 name: "Order",
                 columns: table => new
                 {
@@ -371,6 +376,22 @@ namespace BusinessObject.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Order_Classes_Class_id",
+========
+                name: "Attendance",
+                columns: table => new
+                {
+                    Attendance_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Slot = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendance", x => x.Attendance_id);
+                    table.ForeignKey(
+                        name: "FK_Attendance_Classes_Class_id",
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.cs
                         column: x => x.Class_id,
                         principalTable: "Classes",
                         principalColumn: "Class_id",
@@ -420,35 +441,6 @@ namespace BusinessObject.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Schedules",
-                columns: table => new
-                {
-                    ScheduleId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClassId = table.Column<string>(type: "nvarchar(10)", nullable: false),
-                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReminderSent = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Schedules", x => x.ScheduleId);
-                    table.ForeignKey(
-                        name: "FK_Schedules_AspNetUsers_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Schedules_Classes_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Classes",
-                        principalColumn: "Class_id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AcademicVideos_Tutor_id",
                 table: "AcademicVideos",
@@ -492,6 +484,11 @@ namespace BusinessObject.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Class_id",
+                table: "Attendance",
+                column: "Class_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Classes_Student_id",
@@ -569,16 +566,6 @@ namespace BusinessObject.Migrations
                 column: "User_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_ClassId",
-                table: "Schedules",
-                column: "ClassId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Schedules_StudentId",
-                table: "Schedules",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Subject_Subject_name",
                 table: "Subject",
                 column: "Subject_name",
@@ -607,6 +594,9 @@ namespace BusinessObject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Attendance");
+
+            migrationBuilder.DropTable(
                 name: "ClassHour");
 
             migrationBuilder.DropTable(
@@ -620,9 +610,6 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Requirement");
-
-            migrationBuilder.DropTable(
-                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

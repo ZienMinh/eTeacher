@@ -1,0 +1,53 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.RescindClassModel
+@{
+    var classes = Model.Class;
+}
+@if (classes == null)
+{
+    <h2>Class not found</h2>
+}
+else
+{
+    <!-- ======= Rescind Class Section ======= -->
+    <section id="Cancel" class="contact ctaa">
+        <div class="container " data-aos="fade-up">
+            <div class="row">
+                <form method="post" role="form" class="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row board col-lg-8">
+                        <div class=" col-lg-6">
+                            <h3>Class details @classes.Class_id</h3>
+                            <p>Subject: @classes.Subject_name - Grade: @classes.Grade</p>
+                            <p>Tuition fee: @classes.Price.ToString() VNĐ/lesson - Number of session: @classes.Number_of_session lesson/course</p>
+                            <p>Start date: @classes.Start_date - To: @classes.End_date</p>
+                            <p>Start time: @classes.Start_time - To: @classes.End_time</p>
+                            <p>Address: @classes.Address</p>
+                            <p>Total tuition for the course: <b>@classes.Total VNĐ</b></p>
+                            <input type="hidden" asp-for="ClassId" />
+                        </div>
+                        <div class="my-3">
+                            <div class="loading"></div>
+                            <div class="error-message"></div>
+                            <div class="sent-message"></div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <button type="submit" name="action" value="presence" class="btn btn-primary form-control">Presence</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="submit" name="action" value="absence" class="btn btn-primary form-control">Absence</button>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="col-12 text-center">
+                                    <button type="submit" formaction="/RescindClass" class="btn btn-danger form-control">Cancel class</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- ======= End Rescind Class Section ======= -->
+}

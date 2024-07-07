@@ -29,7 +29,7 @@ namespace SWP391_eTeacherSystem.Pages
         [BindProperty(SupportsGet = true)]
         public string RequirementId { get; set; }
 
-        public RequirementDetailsModel(AddDbContext context, IAuthService authService, IUserService userService, 
+        public RequirementDetailsModel(AddDbContext context, IAuthService authService, IUserService userService,
             IClassService classService, IRequirementService requirementService)
         {
             _context = context;

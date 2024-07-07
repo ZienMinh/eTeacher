@@ -77,7 +77,8 @@ namespace SWP391_eTeacherSystem.Pages
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
             {
-                ClassDto = new ClassDto { 
+                ClassDto = new ClassDto
+                {
                     Tutor_id = ClassHour.User_id,
                     Student_id = userId
                 };
@@ -142,7 +143,7 @@ namespace SWP391_eTeacherSystem.Pages
 		{
 			if (ModelState.IsValid)
 			{
-				if (payment == "Thanh Toán VNPay")
+				if (payment == "Thanh To�n VNPay")
 				{
 					var userId = _authService.GetCurrentUserId();
 					if (userId == null)

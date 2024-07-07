@@ -86,7 +86,7 @@ builder.Services.AddTransient<SessionHelper>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
 
 builder.Services.AddDistributedMemoryCache();

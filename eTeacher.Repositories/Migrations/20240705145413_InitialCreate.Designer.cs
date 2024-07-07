@@ -12,8 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.Designer.cs
     [Migration("20240705145413_InitialCreate")]
     partial class InitialCreate
+========
+    [Migration("20240706083542_DbInt")]
+    partial class DbInt
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +30,7 @@ namespace BusinessObject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.Designer.cs
             modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
                 {
                     b.Property<Guid?>("VideoId")
@@ -55,6 +61,32 @@ namespace BusinessObject.Migrations
                     b.HasIndex("Tutor_id");
 
                     b.ToTable("AcademicVideos");
+========
+            modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
+                {
+                    b.Property<string>("Attendance_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Class_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Slot")
+                        .HasColumnType("int");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Attendance_id");
+
+                    b.HasIndex("Class_id");
+
+                    b.ToTable("Attendance");
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.Designer.cs
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -649,6 +681,7 @@ namespace BusinessObject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.Designer.cs
             modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
                 {
                     b.HasOne("BusinessObject.Models.User", "Tutor")
@@ -658,6 +691,16 @@ namespace BusinessObject.Migrations
                         .IsRequired();
 
                     b.Navigation("Tutor");
+========
+            modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
+                {
+                    b.HasOne("BusinessObject.Models.Class", "Class")
+                        .WithMany("Attendances")
+                        .HasForeignKey("Class_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Class");
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.Designer.cs
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -835,7 +878,11 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
+<<<<<<<< HEAD:eTeacher.Repositories/Migrations/20240705145413_InitialCreate.Designer.cs
                     b.Navigation("Orders");
+========
+                    b.Navigation("Attendances");
+>>>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c:eTeacher.Repositories/Migrations/20240706083542_DbInt.Designer.cs
 
                     b.Navigation("Reports");
                 });
