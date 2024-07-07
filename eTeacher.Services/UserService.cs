@@ -22,12 +22,13 @@ namespace Services
             _logger = logger;
         }
 
-        public async Task<UserServiceResponseDto> GetAll(UserDto userDto)
+        public async Task<UserServiceResponseDto> GetAllAsync()
         {
             var dsUser = await _context.Users.ToListAsync();
 
             var response = new UserServiceResponseDto
             {
+                IsSucceed = true,
                 Users = dsUser
             };
 
@@ -90,6 +91,35 @@ namespace Services
             }).ToListAsync();
 
             return tutors;
+        }
+
+        public async Task<UserServiceResponseDto> DeleteUserAsync(string id)
+        {
+            var response = new UserServiceResponseDto();
+
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+                if (user == null)
+                {
+                    response.IsSucceed = false;
+                    response.Message = "User not found.";
+                    return response;
+                }
+
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+
+                response.IsSucceed = true;
+                response.Message = "User deleted successfully.";
+            }
+            catch (Exception ex)
+            {
+                response.IsSucceed = false;
+                response.Message = $"An error occurred: {ex.Message}";
+            }
+
+            return response;
         }
     }
 }

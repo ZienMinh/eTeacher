@@ -9,11 +9,13 @@ namespace Repositories
 {
     public interface IUserService
     {
-        Task<UserServiceResponseDto> GetAll(UserDto userDto);
+        Task<UserServiceResponseDto> GetAllAsync();
 
         Task<UserServiceResponseDto> GetByIdAsync(string id);
 
         Task<List<UserDto>> SearchTutorAsync(string name, string subjectName);
+
+        Task<UserServiceResponseDto> DeleteUserAsync(string id);
 
     }
 }

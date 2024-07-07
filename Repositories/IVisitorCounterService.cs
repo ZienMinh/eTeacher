@@ -14,5 +14,9 @@ namespace Repositories
         int GetVisitorCount();
 
         int GetRegisteredUserCount();
+
+        int GetRequirementCount();
+
+        public int GetReportCount();
     }
 }

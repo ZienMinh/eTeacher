@@ -59,19 +59,6 @@ namespace SWP391_eTeacherSystem.Pages
                         Image = user.Image,
                         Role = user.Role,
 
-                        // Load qualification information
-                        Qualification = await _context.Qualifications
-                        .Where(q => q.User_id == userId)
-                        .Select(q => new QualificationDto
-                        {
-                            Qualification_id = q.Qualification_id,
-                            Graduation_year = q.Graduation_year,
-                            Specialize = q.Specialize,
-                            Classification = q.Classification,
-                            Training_facility = q.Training_facility,
-                            Image = q.Image
-                        })
-                        .FirstOrDefaultAsync()
                     };
                 }
                 else

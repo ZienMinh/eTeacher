@@ -26,12 +26,12 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>@Model.RequirementCount</h3>
 
-                <p>Bounce Rate</p>
+                <p>Requirements</p>
             </div>
             <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="ion ion-document-text"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -56,12 +56,12 @@
         <!-- small box -->
         <div class="small-box bg-danger">
             <div class="inner">
-                <h3>65</h3>
+                <h3>@Model.ReportCount</h3>
 
-                <p>Unique Visitors</p>
+                <p>Reports</p>
             </div>
             <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-stats-bars"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
@@ -97,7 +97,7 @@
                     <!-- /.d-flex -->
 
                     <div class="position-relative mb-4">
-                        <canvas id="sales-chart" height="200"></canvas>
+                        <canvas id="platform-fee" height="200"></canvas>
                     </div>
 
                     <div class="d-flex flex-row justify-content-end">
@@ -138,7 +138,7 @@
                     <!-- /.d-flex -->
 
                     <div class="position-relative mb-4">
-                        <canvas id="visitors-chart" height="200"></canvas>
+                        <canvas id="turnover" height="200"></canvas>
                     </div>
 
                     <div class="d-flex flex-row justify-content-end">

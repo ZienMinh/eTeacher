@@ -15,9 +15,9 @@ namespace SWP391_eTeacherSystem.Pages
 		private readonly AddDbContext _context;
 		private readonly IUserService _userService;
 		private readonly IAuthService _authService;
-		private readonly ILogger<ProfileModel> _logger;
+		private readonly ILogger<EditQualificationModel> _logger;
 
-		public EditQualificationModel(AddDbContext context, IAuthService authService, IUserService userService, ILogger<ProfileModel> logger)
+		public EditQualificationModel(AddDbContext context, IAuthService authService, IUserService userService, ILogger<EditQualificationModel> logger)
 		{
 			_context = context;
 			_authService = authService;

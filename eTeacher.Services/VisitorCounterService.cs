@@ -37,6 +37,16 @@ namespace Services
         {
             return _context.Users.Count();
         }
+
+        public int GetRequirementCount()
+        {
+            return _context.Requirements.Count();
+        }
+
+        public int GetReportCount()
+        {
+            return _context.Reports.Count();
+        }
     }
 
 }
