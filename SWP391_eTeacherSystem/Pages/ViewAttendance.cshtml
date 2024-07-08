@@ -1,0 +1,57 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ViewAttendanceModel
+@{
+    ViewData["Title"] = "Attendance";
+}
+
+<!-- ======= View Attendance Section ======= -->
+<link href="~/css/report.css" rel="stylesheet">
+<h2>Attendance for Class @Model.ClassId</h2>
+<input type="hidden" asp-for="ClassId" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Attendance ID</th>
+            <th>Class ID</th>
+            <th>Date</th>
+            <th>Slot</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Attendances != null && Model.Attendances.Any())
+        {
+            foreach (var attendance in Model.Attendances)
+            {
+                <tr>
+                    <td>@attendance.Attendance_id</td>
+                    <td>@attendance.Class_id</td>
+                    <td>@attendance.Date</td>
+                    <td>@attendance.Slot</td>
+                    <td>
+                        @if (attendance.Status == 1)
+                        {
+                            <span class="reportbg-warning-light">Not yet</span>
+                        }
+                        else if (attendance.Status == 2)
+                        {
+                            <span class="reportbg-success-light">Present</span>
+                        }
+                        else if (attendance.Status == 3)
+                        {
+                            <span class="reportbg-danger-light">Absent</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No attendance records found for this class.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- ======= End View Attendance Section ======= -->

@@ -46,6 +46,13 @@ else
                         </div>
                     </div>
                 </form>
+                <p></p>
+                <div class="form-group col-md-6">
+                    <form method="get" asp-page="/ViewAttendance">
+                        <input type="hidden" name="id" value="@classes.Class_id" />
+                        <button type="submit" class="btn btn-success">View Attendance →</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
