@@ -48,7 +48,10 @@ namespace Services
                     Price = requirementDto.Price,
                     Number_of_session = requirementDto.Number_of_session,
                     Address = requirementDto.Address,
-                    Description = requirementDto.Description
+                    Description = requirementDto.Description,
+                    Total = requirementDto.Total,
+                    Status = requirementDto.Status,
+
                 };
 
                 _context.Requirements.Add(requirement);
@@ -100,6 +103,63 @@ namespace Services
                 };
             }
         }
+
+        public async Task<RequirementServiceResponseDto> UpdateRequirementAsync(RequirementDto requirementDto)
+        {
+            var response = new RequirementServiceResponseDto();
+
+            try
+            {
+                _logger.LogInformation("Retrieving requirement from database");
+
+                // Lấy requirement từ database
+                var requirement = await _context.Requirements.FindAsync(requirementDto.Requirement_id);
+
+                if (requirement == null)
+                {
+                    _logger.LogWarning($"Requirement with id {requirementDto.Requirement_id} not found");
+                    response.IsSucceed = false;
+                    response.Message = "Requirement not found";
+                    return response;
+                }
+
+                // Cập nhật các thuộc tính của requirement nếu có giá trị mới
+                _logger.LogInformation("Updating requirement entity");
+
+                requirement.Subject_name = requirementDto.Subject_name ?? requirement.Subject_name;
+                requirement.Start_date = requirementDto.Start_date ?? requirement.Start_date;
+                requirement.End_date = requirementDto.End_date ?? requirement.End_date;
+                requirement.Start_time = requirementDto.Start_time ?? requirement.Start_time;
+                requirement.End_time = requirementDto.End_time ?? requirement.End_time;
+                requirement.Grade = requirementDto.Grade != default(byte) ? requirementDto.Grade : requirement.Grade;
+                requirement.Rank = requirementDto.Rank ?? requirement.Rank;
+                requirement.Price = requirementDto.Price != default(double) ? requirementDto.Price : requirement.Price;
+                requirement.Number_of_session = requirementDto.Number_of_session != default(int) ? requirementDto.Number_of_session : requirement.Number_of_session;
+                requirement.Address = requirementDto.Address ?? requirement.Address;
+                requirement.Description = requirementDto.Description ?? requirement.Description;
+                requirement.Total = requirementDto.Total != null ? requirementDto.Total : requirement.Total;
+                requirement.Status = requirementDto.Status != null ? requirementDto.Status : requirement.Status;
+
+                // Lưu thay đổi vào database
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Requirement updated successfully");
+                response.IsSucceed = true;
+                response.Message = "Requirement updated successfully";
+                response.CreatedRequirement = requirement;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while updating the requirement: " + ex.Message);
+                response.IsSucceed = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+
+
 
         public async Task<RequirementServiceResponseDto> DeleteByIdAsync(string id)
         {

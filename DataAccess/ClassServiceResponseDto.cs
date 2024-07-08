@@ -15,5 +15,6 @@ namespace DataAccess
         public Class CreatedClass { get; set; }
 
         public List<Class> Classes { get; set;}
+
     }
 }

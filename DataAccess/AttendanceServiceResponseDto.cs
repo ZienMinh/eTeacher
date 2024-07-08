@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class ReportServiceResponseDto
+    public class AttendanceServiceResponseDto
     {
         public bool IsSucceed { get; set; }
         public string Message { get; set; }
 
-        public List<ReportDto> Reports { get; set; }
+        public List<AttendanceDto> Data { get; set; }
 
-        public Report CreateReport {  get; set; }
     }
 }

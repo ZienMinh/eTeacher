@@ -15,6 +15,8 @@ namespace Repositories
 
         Task<ClassHourServiceResponseDto> GetByIdAsync(ClassHourDto classHourDto, string id);
 
+        Task<ClassHourServiceResponseDto> UpdateClassHourAsync(ClassHourDto classHourDto);
+
         Task<ClassHourServiceResponseDto> DeleteClassAsync(string id);
 
         string GenerateClassHourId();

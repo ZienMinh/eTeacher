@@ -79,7 +79,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label asp-for="RequirementDto.Price">Price</label>
-                            <input type="number" asp-for="RequirementDto.Price" class="form-control" required>
+                            <input type="number" asp-for="RequirementDto.Price" class="form-control" readonly>
                             <span asp-validation-for="RequirementDto.Price" class="text-danger"></span>
                         </div>
                     </div>
@@ -101,12 +101,21 @@
                             <input type="text" asp-for="RequirementDto.Description" class="form-control">
                             <span asp-validation-for="RequirementDto.Description" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="RequirementDto.Status" class="form-control" value="1">
+                            <span asp-validation-for="RequirementDto.Status" class="text-danger"></span>
+                        </div>
                     </div>
                     <div class="my-3">
                         <div class="loading"></div>
                         <div class="error-message"></div>
                         <div class="sent-message"></div>
                     </div>
+                    <div class="form-group">
+                        <label>Total Price</label>
+                        <input type="text" id="totalPrice" class="form-control" readonly>
+                    </div>
+                    <p></p>
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary form-control">Submit</button>
                         <p></p>
@@ -122,3 +131,36 @@
 
     </div>
 </section><!-- End Contact Section -->
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const startTimeInput = document.querySelector('input[name="RequirementDto.Start_time"]');
+            const endTimeInput = document.querySelector('input[name="RequirementDto.End_time"]');
+            const numberOfSessionsInput = document.querySelector('input[name="RequirementDto.Number_of_session"]');
+            const priceInput = document.querySelector('input[name="RequirementDto.Price"]');
+            const totalPriceInput = document.getElementById('totalPrice');
+
+            function calculateTotalPrice() {
+                const startTime = startTimeInput.value;
+                const endTime = endTimeInput.value;
+                const numberOfSessions = numberOfSessionsInput.value;
+                const price = priceInput.value;
+
+                if (startTime && endTime && numberOfSessions && price) {
+                    const start = new Date(`1970-01-01T${startTime}:00`);
+                    const end = new Date(`1970-01-01T${endTime}:00`);
+                    const duration = (end - start) / 3600000; // convert milliseconds to hours
+                    const total = duration * numberOfSessions * price;
+                    totalPriceInput.value = total.toFixed(2);
+                }
+            }
+
+            startTimeInput.addEventListener('input', calculateTotalPrice);
+            endTimeInput.addEventListener('input', calculateTotalPrice);
+            numberOfSessionsInput.addEventListener('input', calculateTotalPrice);
+            priceInput.addEventListener('input', calculateTotalPrice);
+
+            calculateTotalPrice(); // Initial calculation
+        });
+    </script>
+}

@@ -35,7 +35,7 @@ namespace SWP391_eTeacherSystem.Pages
             try
             {
                 var response = await _classHourService.GetAll(new ClassHourDto());
-                Classes = response.Classes;
+                Classes = response.Classes.OrderBy(c => c.Status).ToList();
                 var userId = _authService.GetCurrentUserId();
                 if (userId != null)
                 {

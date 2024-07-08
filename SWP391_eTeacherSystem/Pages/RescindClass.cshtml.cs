@@ -1,33 +1,34 @@
 using BusinessObject.Models;
 using DataAccess;
-using eTeacher.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Services;
+using System;
+using System.Threading.Tasks;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class CancelClassModel : PageModel
+    public class RescindClassModel : PageModel
     {
         private readonly AddDbContext _context;
         private readonly IAuthService _authService;
-        private readonly IUserService _userService;
         private readonly IClassService _classService;
+        private readonly IAttendanceService _attendanceService;
 
-        public CancelClassModel(AddDbContext context, IAuthService authService,
-                IUserService userService, IClassService classService)
+        public RescindClassModel(AddDbContext context, IAuthService authService, IClassService classService, IAttendanceService attendanceService)
         {
             _context = context;
             _authService = authService;
-            _userService = userService;
             _classService = classService;
+            _attendanceService = attendanceService;
         }
 
-        public UserDto UserDto { get; set; }
-
         public Class Class { get; set; }
+
+        [BindProperty]
+        public AttendanceDto AttendanceDto { get; set; }
 
         [BindProperty]
         public ClassDto ClassDto { get; set; }
@@ -35,14 +36,8 @@ namespace SWP391_eTeacherSystem.Pages
         [BindProperty(SupportsGet = true)]
         public string ClassId { get; set; }
 
-        public async Task InitializeClassDtoAsync()
-        {
-            var userId = _authService.GetCurrentUserId();
-        }
-
         public async Task<IActionResult> OnGetAsync(string id)
         {
-
             if (string.IsNullOrEmpty(id))
             {
                 return NotFound("Class ID is not provided.");
@@ -57,12 +52,15 @@ namespace SWP391_eTeacherSystem.Pages
                 return NotFound();
             }
 
-            var userId = _authService.GetCurrentUserId();
-            await InitializeClassDtoAsync();
+            AttendanceDto = new AttendanceDto
+            {
+                Class_id = ClassId
+            };
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostCancelAsync()
         {
             var userId = _authService.GetCurrentUserId();
             if (userId == null)
@@ -98,5 +96,40 @@ namespace SWP391_eTeacherSystem.Pages
             return Page();
         }
 
+        public async Task<IActionResult> OnPostAsync(string action)
+        {
+            var userId = _authService.GetCurrentUserId();
+            if (userId == null)
+            {
+                ModelState.AddModelError(string.Empty, "User is not authenticated.");
+                return Page();
+            }
+
+            AttendanceDto.Class_id = ClassId; // Ensure Class_id is set
+
+            switch (action)
+            {
+                case "presence":
+                    AttendanceDto.Status = 2;
+                    break;
+                case "absence":
+                    AttendanceDto.Status = 3;
+                    break;
+                default:
+                    AttendanceDto.Status = 1; // Default status
+                    break;
+            }
+
+            var response = await _attendanceService.CreateAttendanceAsync(AttendanceDto);
+
+            if (!response.IsSucceed)
+            {
+                ModelState.AddModelError(string.Empty, response.Message);
+                Class = await _context.Classes.FirstOrDefaultAsync(c => c.Class_id == ClassId);
+                return Page();
+            }
+
+            return RedirectToPage(new { id = ClassId });
+        }
     }
 }

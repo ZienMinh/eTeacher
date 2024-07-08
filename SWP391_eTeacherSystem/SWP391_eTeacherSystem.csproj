@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\TutorClassList.cshtml" />
     <Content Remove="wwwroot\css\site.css" />
   </ItemGroup>
 
@@ -18,7 +17,6 @@
     <None Include="Pages\Register.cshtml" />
     <None Include="Pages\Shared\_Layout.cshtml" />
     <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Pages\TutorClassList.cshtml" />
     <None Include="Pages\_ViewImports.cshtml" />
     <None Include="Pages\_ViewStart.cshtml" />
     <None Include="wwwroot\lib\aos\aos.js" />
@@ -109,13 +107,5 @@
 	  <Content Update="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <UpToDateCheckInput Remove="Pages\TutorClassList.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <_ContentIncludedByDefault Remove="Pages\TutorClassList.cshtml" />
 	</ItemGroup>
 </Project>

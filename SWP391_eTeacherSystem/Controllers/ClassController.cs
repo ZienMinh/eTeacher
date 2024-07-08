@@ -68,13 +68,13 @@ namespace SWP391_eTeacherSystem.Controllers
                 return NotFound();
             }
         }
-
+        /*
         [HttpPost("Getbytype")]
         public async Task<ActionResult<ClassServiceResponseDto>> GetByTypeAsync(ClassDto classDto, byte type)
         {
             var response = await _classService.GetByTypeAsync(classDto);
             return Ok(response);
-        }
+        }*/
 
         [HttpPost]
         [Route("Create")]
@@ -129,7 +129,7 @@ namespace SWP391_eTeacherSystem.Controllers
             }
         }
 
-        [HttpPost("updateStudent")]
+        /*[HttpPost("updateStudent")]
         public async Task<ActionResult<ClassServiceResponseDto>> UpdateStudentAsync([FromBody] ClassDto classDto, [FromQuery] string userId)
         {
             if (classDto == null || string.IsNullOrEmpty(classDto.Class_id) || string.IsNullOrEmpty(classDto.Student_id) || string.IsNullOrEmpty(userId))
@@ -143,7 +143,7 @@ namespace SWP391_eTeacherSystem.Controllers
 
             var response = await _classService.UpdateStudentAsync(classDto, userId);
             return Ok(response);
-        }
+        }*/
 
         private string GetCurrentUserId()
         {

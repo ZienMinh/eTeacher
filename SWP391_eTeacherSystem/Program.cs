@@ -31,6 +31,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AddDbContext>()
     .AddDefaultTokenProviders();
 
+
 // Config Identity
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -72,7 +73,7 @@ builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
 
 builder.Services.AddDistributedMemoryCache();

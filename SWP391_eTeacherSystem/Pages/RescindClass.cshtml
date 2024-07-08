@@ -1,5 +1,5 @@
 ﻿@page
-@model SWP391_eTeacherSystem.Pages.CancelClassModel
+@model SWP391_eTeacherSystem.Pages.RescindClassModel
 @{
     var classes = Model.Class;
 }
@@ -9,7 +9,7 @@
 }
 else
 {
-    <!-- ======= Cancel Class Section ======= -->
+    <!-- ======= Rescind Class Section ======= -->
     <section id="Cancel" class="contact ctaa">
         <div class="container " data-aos="fade-up">
             <div class="row">
@@ -32,37 +32,29 @@ else
                             <div class="sent-message"></div>
                         </div>
                         <div class="row">
+                            <div class="form-group col-md-3">
+                                <button type="submit" name="action" value="presence" class="btn btn-primary form-control">Presence</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <button type="submit" name="action" value="absence" class="btn btn-primary form-control">Absence</button>
+                            </div>
                             <div class="form-group col-md-6">
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary form-control">Cancel class</button>
+                                    <button type="submit" formaction="/RescindClass" class="btn btn-danger form-control">Cancel class</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <p></p>
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <form method="get" asp-page="/CreateReport">
-                            <input type="hidden" name="id" value="@classes.Class_id" />
-                            <button type="submit" class="btn btn-success">Report class →</button>
-                        </form>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <form method="get" asp-page="/ViewReport">
-                            <input type="hidden" name="id" value="@classes.Class_id" />
-                            <button type="submit" class="btn btn-success">View Report →</button>
-                        </form>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <form method="get" asp-page="/ViewAttendance">
-                            <input type="hidden" name="id" value="@classes.Class_id" />
-                            <button type="submit" class="btn btn-success">View Attendance →</button>
-                        </form>
-                    </div>
+                <div class="form-group col-md-6">
+                    <form method="get" asp-page="/ViewAttendance">
+                        <input type="hidden" name="id" value="@classes.Class_id" />
+                        <button type="submit" class="btn btn-success">View Attendance →</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ======= End Cancel Class Section ======= -->
+    <!-- ======= End Rescind Class Section ======= -->
 }

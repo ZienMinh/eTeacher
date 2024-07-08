@@ -11,6 +11,18 @@ namespace Repositories
     {
         Task<ReportServiceResponseDto> CreateFeedbackAsync(ReportDto reportDto);
 
+        Task<ReportServiceResponseDto> GetFeedbackAsync(string classId);
+
+        Task<ReportServiceResponseDto> GetReportAsync(string classId);
+
+        Task<ReportServiceResponseDto> GetReportByIdAsync(string reportId);
+
+        Task<ReportServiceResponseDto> GetAllReportAsync(ReportDto reportDto);
+
+        Task<ReportServiceResponseDto> UpdateReportAsync(ReportDto reportDto);
+
+        Task<ReportServiceResponseDto> SendEmailAsync(string userId, string subject, string message);
+
         string GenerateReportId();
     }
 }

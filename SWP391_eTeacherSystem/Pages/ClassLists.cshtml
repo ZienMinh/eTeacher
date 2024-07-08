@@ -1,13 +1,13 @@
 ﻿@page
-@model SWP391_eTeacherSystem.Pages.ClassListModel
+@model SWP391_eTeacherSystem.Pages.ClassListsModel
 @{
 }
-<!-- ======= Class List Section ======= -->
+<!-- ======= Class Lists Section ======= -->
 <section id="class_list" class="class_list">
     <div class="container" data-aos="fade-up">
         <div class="section-title">
             <h2>Class list</h2>
-            <p>List of classes you are currently taking</p>
+            <p>List of classes you are currently teaching</p>
         </div>
         <div class="row">
             @foreach (var classes in Model.Classes)
@@ -29,14 +29,14 @@
                             }
                             else
                             {
-                                <form method="get" asp-page="/CancelClass">
+                                <form method="get" asp-page="/RescindClass">
                                     <input type="hidden" name="id" value="@classes.Class_id" />
                                     <button type="submit" class="btn btn-success">More details →</button>
                                 </form>
                                 <p></p>
-                                <form method="get" asp-page="/CreateFeedback">
+                                <form method="get" asp-page="/ViewFeedback">
                                     <input type="hidden" name="id" value="@classes.Class_id" />
-                                    <button type="submit" class="btn btn-success">Feedback class →</button>
+                                    <button type="submit" class="btn btn-success">View Feedback →</button>
                                 </form>
                             }
                         </div>
@@ -46,4 +46,4 @@
         </div>
     </div>
 </section>
-<!-- ======= End Class List Section ======= -->
+<!-- ======= End Class Lists Section ======= -->

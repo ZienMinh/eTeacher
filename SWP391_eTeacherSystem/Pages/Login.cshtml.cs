@@ -37,6 +37,8 @@ namespace SWP391_eTeacherSystem.Pages
                             return RedirectToPage("/AdminPage");
                         case 3:
                             return RedirectToPage("/TutorPage");
+                        case 4:
+                            return RedirectToPage("/ModeratorPage");
                         default:
                             return RedirectToPage("/Index");
                     }
