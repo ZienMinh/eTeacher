@@ -28,13 +28,21 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task OnGetAsync()
         {
-            var userId = _authService.GetCurrentUserId();
-            var response = await _classService.GetByStudentIdAsync(ClassDto, userId);
-            Classes = response.Classes;
-            if (userId == null)
+            try
             {
-                ClassDto = new ClassDto { Student_id = userId };
+                var userId = _authService.GetCurrentUserId();
+                var response = await _classService.GetByStudentIdAsync(ClassDto, userId);
+                Classes = response.Classes;
+                if (userId == null)
+                {
+                    ClassDto = new ClassDto { Student_id = userId };
+                }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching classes in OnGetAsync");
+            }
+            
         }
     }
 }
