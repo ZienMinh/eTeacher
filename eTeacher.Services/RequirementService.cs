@@ -104,6 +104,31 @@ namespace Services
             }
         }
 
+        public async Task<RequirementServiceResponseDto> GetByUserIdAsync(RequirementDto requirementDto, string id)
+        {
+            var requirement = await _context.Requirements
+                                            .FirstOrDefaultAsync(r => r.User_id == id);
+
+            if (requirement != null)
+            {
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Requirement found.",
+                    Requirements = new List<Requirement> { requirement }
+                };
+            }
+            else
+            {
+                return new RequirementServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "No requirement found for the given ID.",
+                    Requirements = null
+                };
+            }
+        }
+
         public async Task<RequirementServiceResponseDto> UpdateRequirementAsync(RequirementDto requirementDto)
         {
             var response = new RequirementServiceResponseDto();

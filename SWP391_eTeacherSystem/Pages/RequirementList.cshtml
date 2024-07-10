@@ -1,0 +1,46 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.RequirementListModel
+@{
+}
+<!-- ======= Requirement List Section ======= -->
+<section id="accept_class" class="accept_class">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>List of requirements</h2>
+            <p>List of requirements you have created</p>
+        </div>
+        <div class="row">
+            @foreach (var requirement in Model.Requirements)
+            {
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">
+                            @requirement.Requirement_id
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@requirement.Subject_name - Grade @requirement.Grade</h5>
+                            <p class="card-text">
+                                <i class="fa fa-dollar-sign"></i> @requirement.Price VNĐ/lesson, @requirement.Number_of_session sessions/course<br />
+                                <i class="fa fa-user"></i> Address: @requirement.Address
+                            </p>
+                            @if (requirement.Status == 1)
+                            {
+                                <p class="text-success">Available</p>
+                                <form method="post" role="form" class="">
+                                    <input type="hidden" asp-for="requirementDto.Requirement_id" class="form-control" value="@requirement.Requirement_id" />
+                                    <button type="submit" class="btn btn-success">Delete Requirement →</button>
+                                </form>
+                            }
+                            else if (requirement.Status == 2)
+                            {
+                                <p class="text-danger">Not Available</p>
+                                <button type="button" class="btn btn-secondary" disabled>Delete Requirement →</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- ======= End Requirement List Section ======= -->
