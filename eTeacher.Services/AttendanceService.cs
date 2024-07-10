@@ -20,6 +20,52 @@ namespace Services
             _logger = logger;
         }
 
+        public async Task<AttendanceServiceResponseDto> GetAttendanceAsync(string classId)
+        {
+            _logger.LogInformation("Get attendance for class ID: {ClassID}", classId);
+            try
+            {
+                var attendances = await _context.Attendances
+                    .Where(a => a.Class_id == classId)
+                    .ToListAsync();
+
+                if (attendances == null || !attendances.Any())
+                {
+                    _logger.LogWarning("No attendance found for class ID: {ClassID}", classId);
+                    return new AttendanceServiceResponseDto
+                    {
+                        IsSucceed = false,
+                        Message = "No attendance records found for the specified class ID."
+                    };
+                }
+
+                _logger.LogInformation("Attendance records retrieved successfully for class ID: {ClassID}", classId);
+                return new AttendanceServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Attendance records retrieved successfully.",
+                    Data = attendances.Select(a => new AttendanceDto
+                    {
+                        Attendance_id = a.Attendance_id,
+                        Class_id = a.Class_id,
+                        Date = a.Date,
+                        Slot = a.Slot,
+                        Status = a.Status
+                    }).ToList()
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error retrieving attendance: {Error}", ex.Message);
+                return new AttendanceServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = $"An error occurred: {ex.Message}"
+                };
+            }
+        }
+
+
         public async Task<AttendanceServiceResponseDto> CreateAttendanceAsync(AttendanceDto attendanceDto)
         {
             _logger.LogInformation("Create attendance");

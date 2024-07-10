@@ -59,21 +59,14 @@ namespace Services
             }
         }
 
-        public async Task<List<UserDto>> SearchTutorAsync(string name, string subjectName)
+        public async Task<List<UserDto>> SearchTutorAsync(string name)
         {
             var query = _context.Users
-                .Include(u => u.Requirements)
-                .ThenInclude(r => r.Subject)
                 .Where(u => u.Role == 3);
 
             if (!string.IsNullOrEmpty(name))
             {
                 query = query.Where(u => u.First_name.Contains(name) || u.Last_name.Contains(name));
-            }
-
-            if (!string.IsNullOrEmpty(subjectName))
-            {
-                query = query.Where(u => u.Requirements.Any(r => r.Subject.Subject_name.Contains(subjectName)));
             }
 
             var tutors = await query.Select(u => new UserDto
