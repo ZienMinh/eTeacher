@@ -22,7 +22,6 @@ namespace BusinessObject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-<<<<<<< HEAD
             modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
                 {
                     b.Property<Guid?>("VideoId")
@@ -53,7 +52,8 @@ namespace BusinessObject.Migrations
                     b.HasIndex("Tutor_id");
 
                     b.ToTable("AcademicVideos");
-=======
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
                 {
                     b.Property<string>("Attendance_id")
@@ -78,7 +78,6 @@ namespace BusinessObject.Migrations
                     b.HasIndex("Class_id");
 
                     b.ToTable("Attendance");
->>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -239,7 +238,7 @@ namespace BusinessObject.Migrations
                     b.Property<byte>("Payment_status")
                         .HasColumnType("tinyint");
 
-                    b.Property<double>("Price_per_session")
+                    b.Property<double>("PlatformEarnings")
                         .HasColumnType("float");
 
                     b.Property<double>("RefundAmount")
@@ -421,6 +420,43 @@ namespace BusinessObject.Migrations
                     b.HasIndex("User_id");
 
                     b.ToTable("Requirement");
+                });
+
+            modelBuilder.Entity("BusinessObject.Models.Schedule", b =>
+                {
+                    b.Property<int>("ScheduleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ScheduleId"));
+
+                    b.Property<string>("Class_id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ReminderSent")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Student_id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ScheduleId");
+
+                    b.HasIndex("Class_id");
+
+                    b.HasIndex("Student_id");
+
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Subject", b =>
@@ -673,7 +709,6 @@ namespace BusinessObject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("BusinessObject.Models.AcademicVideo", b =>
                 {
                     b.HasOne("BusinessObject.Models.User", "Tutor")
@@ -683,7 +718,8 @@ namespace BusinessObject.Migrations
                         .IsRequired();
 
                     b.Navigation("Tutor");
-=======
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
                 {
                     b.HasOne("BusinessObject.Models.Class", "Class")
@@ -692,7 +728,6 @@ namespace BusinessObject.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Class");
->>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -817,6 +852,25 @@ namespace BusinessObject.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("BusinessObject.Models.Schedule", b =>
+                {
+                    b.HasOne("BusinessObject.Models.Class", "Class")
+                        .WithMany("Schedules")
+                        .HasForeignKey("Class_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BusinessObject.Models.User", "Student")
+                        .WithMany()
+                        .HasForeignKey("Student_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -870,13 +924,13 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
-<<<<<<< HEAD
-                    b.Navigation("Orders");
-=======
                     b.Navigation("Attendances");
->>>>>>> 9de743e31b3d0ab53bbac59427d9b16cea7c537c
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Reports");
+
+                    b.Navigation("Schedules");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Subject", b =>

@@ -23,7 +23,6 @@ namespace Repositories
         {
             var directoryPath = Path.Combine("wwwroot", "videos");
 
-            // Ensure the directory exists
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
@@ -35,7 +34,7 @@ namespace Repositories
                 await videoFile.CopyToAsync(stream);
             }
 
-            return filePath.Substring("wwwroot".Length); // Removing "wwwroot" from the path
+            return filePath.Substring("wwwroot".Length); 
         }
 
         public async Task<AcademicVideo> AddVideoAsync(AcademicVideo video)

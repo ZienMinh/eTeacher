@@ -1419,3 +1419,7 @@ section {
     width: 100%;
     margin-bottom: 1rem;
 }
+
+.custom-button {
+    width: 100px; 
+}

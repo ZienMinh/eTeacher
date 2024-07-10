@@ -14,15 +14,15 @@ namespace BusinessObject.Models
         public int ScheduleId { get; set; }
 
         [Required]
-        public string ClassId { get; set; }
+        public string Class_id { get; set; }
 
-        [ForeignKey("ClassId")]
+        [ForeignKey("Class_id")]
         public Class Class { get; set; }
 
         [Required]
-        public string StudentId { get; set; }
+        public string? Student_id { get; set; }
 
-        [ForeignKey("StudentId")]
+        [ForeignKey("Student_id")]
         public User Student { get; set; }
 
         [Required]
@@ -32,5 +32,7 @@ namespace BusinessObject.Models
         public DateTime EndTime { get; set; }
 
         public bool ReminderSent { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

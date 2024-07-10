@@ -1,4 +1,4 @@
-using BusinessObject.Models;
+﻿using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
 using eTeacher.Services;
@@ -87,7 +87,10 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
-
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+// Cấu hình Hosted Service
+builder.Services.AddHostedService<ReminderHostedService>();
 
 builder.Services.AddDistributedMemoryCache();
 

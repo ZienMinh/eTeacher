@@ -16,13 +16,12 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IUserService _userService;
         private readonly IClassService _classService;
         private readonly IClassHourService _classHourService;
-        private readonly ILogger<ClassDetailsModel> _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IVNPayServices _vnPayService;
 
 
-		public ClassDetailsModel(AddDbContext context, IAuthService authService,
-            IUserService userService, IClassService classService, ILogger<ClassDetailsModel> logger, IClassHourService classHourService, IHttpContextAccessor httpContextAccessor, IVNPayServices vnPayService)
+        public ClassDetailsModel(AddDbContext context, IAuthService authService,
+            IUserService userService, IClassService classService, IClassHourService classHourService, IHttpContextAccessor httpContextAccessor, IVNPayServices vnPayService)
         {
             _context = context;
             _authService = authService;
@@ -40,9 +39,9 @@ namespace SWP391_eTeacherSystem.Pages
         public ClassHourDto ClassHourDto { get; set; }
         [BindProperty(SupportsGet = true)]
         public string ClassId { get; set; }
-		private const double PricePerHour = 100000;
+        private const double PricePerHour = 100000;
 
-		public async Task InitializeClassDtoAsync()
+        public async Task InitializeClassDtoAsync()
         {
             var userId = _authService.GetCurrentUserId();
             if (userId != null)
@@ -139,71 +138,71 @@ namespace SWP391_eTeacherSystem.Pages
             return Page();
         }
 
-		public async Task<IActionResult> OnPostCheckoutPaymentAsync(string payment)
-		{
-			if (ModelState.IsValid)
-			{
-				if (payment == "Thanh To�n VNPay")
-				{
-					var userId = _authService.GetCurrentUserId();
-					if (userId == null)
-					{
-						ModelState.AddModelError(string.Empty, "User is not authenticated.");
-						return Page();
-					}
+        public async Task<IActionResult> OnPostCheckoutPaymentAsync(string payment)
+        {
+            if (ModelState.IsValid)
+            {
+                if (payment == "VNPay")
+                {
+                    var userId = _authService.GetCurrentUserId();
+                    if (userId == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "User is not authenticated.");
+                        return Page();
+                    }
 
                     //Automatic generation class
-					var classId = _classService.GenerateClassId();
-					ClassDto.Class_id = classId;
-					ClassDto.Student_id = userId;
+                    var classId = _classService.GenerateClassId();
+                    ClassDto.Class_id = classId;
+                    ClassDto.Student_id = userId;
 
-					ClassHour = await _context.ClassHours.FirstOrDefaultAsync(c => c.Class_id == ClassId);
-					if (ClassHour == null)
-					{
-						ModelState.AddModelError(string.Empty, "ClassHour not found.");
-						return Page();
-					}
+                    ClassHour = await _context.ClassHours.FirstOrDefaultAsync(c => c.Class_id == ClassId);
+                    if (ClassHour == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "ClassHour not found.");
+                        return Page();
+                    }
 
                     //Calculate time for payment
-					var startTime = ClassHour.Start_time.Value;
-					var endTime = ClassHour.End_time.Value;
-					var duration = (endTime - startTime).TotalHours;
-					var totalAmount = ClassHour.Number_of_session * duration * ClassHour.Price;
+                    var startTime = ClassHour.Start_time.Value;
+                    var endTime = ClassHour.End_time.Value;
+                    var duration = (endTime - startTime).TotalHours;
+                    var totalAmount = ClassHour.Number_of_session * duration * ClassHour.Price;
 
-					ClassDto.Price = ClassHour.Price;
-					ClassDto.Number_of_session = ClassHour.Number_of_session;
+                    ClassDto.Price = ClassHour.Price;
+                    ClassDto.Number_of_session = ClassHour.Number_of_session;
 
-					var response = await _classService.CreateClassAsync(ClassDto, userId);
+                    var response = await _classService.CreateClassAsync(ClassDto, userId);
 
-					if (!response.IsSucceed)
-					{
-						TempData["Error"] = response.Message;
-						TempData["PaymentStatus"] = "2";
-						return Page();
-					}
+                    if (!response.IsSucceed)
+                    {
+                        TempData["Error"] = response.Message;
+                        TempData["PaymentStatus"] = "2";
+                        return Page();
+                    }
 
                     // 1: for Class, 2: for ClassHour
-					var orderType = ClassDto.Type_class == 1 ? 1 : 2;
+                    var orderType = ClassDto.Type_class == 1 ? 1 : 2;
 
-					var vnPayModel = new VnPaymentRequestModel
-					{
-						Amount = totalAmount,
-						CreatedDate = DateTime.Now,
-						Description = "Thanh toán lớp học thuê theo giờ",
-						FullName = userId,
-						OrderId = classId
-					};
+                    var vnPayModel = new VnPaymentRequestModel
+                    {
+                        Amount = totalAmount,
+                        CreatedDate = DateTime.Now,
+                        Description = "Pay for rented classes by the hour",
+                        FullName = userId,
+                        OrderId = classId
+                    };
 
-					TempData["ClassId"] = classId;
-					TempData["OrderType"] = orderType.ToString();
-					TempData["PaymentStatus"] = "1";
+                    TempData["ClassId"] = classId;
+                    TempData["OrderType"] = orderType.ToString();
+                    TempData["PaymentStatus"] = "1";
 
-					var paymentUrl = _vnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
-					return Redirect(paymentUrl);
-				}
-			}
+                    var paymentUrl = _vnPayService.CreatePaymentUrl(HttpContext, vnPayModel);
+                    return Redirect(paymentUrl);
+                }
+            }
 
-			return Page();
-		}
-	}
+            return Page();
+        }
+    }
 }

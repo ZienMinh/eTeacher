@@ -26,14 +26,6 @@ namespace BusinessObject.Models
 		public DbSet<Subject> Subjects { get; set; }
 		public DbSet<AcademicVideo> AcademicVideos { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Requirement> Requirements { get; set; }
-        public DbSet<Report> Reports { get; set; }
-        public DbSet<Qualification> Qualifications { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<ClassHour> ClassHours { get; set; }
-        public DbSet<Class> Classes { get; set; }
-        public DbSet<Subject> Subjects { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -123,7 +115,7 @@ namespace BusinessObject.Models
 
                 entity.HasMany(e => e.Schedules)
                       .WithOne(s => s.Class)
-                      .HasForeignKey(s => s.ClassId)
+                      .HasForeignKey(s => s.Class_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(e => e.Attendances)
@@ -185,12 +177,12 @@ namespace BusinessObject.Models
                 entity.HasKey(e => e.ScheduleId);
                 entity.HasOne(e => e.Class)
                       .WithMany(c => c.Schedules)
-                      .HasForeignKey(e => e.ClassId)
+                      .HasForeignKey(e => e.Class_id)
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(e => e.Student)
                       .WithMany()
-                      .HasForeignKey(e => e.StudentId)
+                      .HasForeignKey(e => e.Student_id)
                       .OnDelete(DeleteBehavior.Restrict);
             });
             // Subject entity configuration

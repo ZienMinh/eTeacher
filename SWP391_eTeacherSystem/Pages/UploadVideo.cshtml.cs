@@ -50,7 +50,6 @@ namespace SWP391_eTeacherSystem.Pages
             };
 
             await _videoService.AddVideoAsync(video);
-
             return RedirectToPage("/TutorPage");
         }
     }

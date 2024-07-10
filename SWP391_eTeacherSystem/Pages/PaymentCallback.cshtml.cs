@@ -37,7 +37,7 @@ namespace SWP391_eTeacherSystem.Pages
 
             if (string.IsNullOrEmpty(classId) || string.IsNullOrEmpty(orderTypeString) || string.IsNullOrEmpty(paymentStatusString))
             {
-                TempData["Message"] = "Không có lớp học nào hoặc thông tin không đầy đủ.";
+                TempData["Message"] = "No classes or incomplete information.";
                 return RedirectToPage("/PaymentFail");
             }
 
@@ -57,8 +57,9 @@ namespace SWP391_eTeacherSystem.Pages
                 Order_type = orderType,
                 Payment_status = paymentStatus,
                 Transaction_id = response?.TransactionId,
-                Amount = totalAmount
-            };
+                Amount = totalAmount,
+				PlatformEarnings = totalAmount
+			};
 
             await _orderService.CreateOrderAsync(order);
 
