@@ -63,6 +63,22 @@ namespace Services
             }
         }
 
+        public async Task<List<ClassHour>> SearchSubjectAsync(string subjectName)
+        {
+            var query = _context.ClassHours
+                .Where(u => u.Subject_name == subjectName);
+
+            if (!string.IsNullOrEmpty(subjectName))
+            {
+                query = query.Where(r => r.Subject.Subject_name.Contains(subjectName));
+            }
+
+            var classes = await query.ToListAsync();
+
+            return classes;
+        }
+
+
         public async Task<ClassHourServiceResponseDto> CreateClassAsync(ClassHourDto model, string userId)
         {
             _logger.LogInformation("Mapping ClassDto to Requirement entity");
