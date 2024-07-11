@@ -1,10 +1,10 @@
 ﻿using BusinessObject.Models;
 using DataAccess;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Http;
 using Repositories;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

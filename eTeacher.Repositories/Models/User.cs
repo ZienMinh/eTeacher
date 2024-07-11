@@ -48,7 +48,6 @@ namespace BusinessObject.Models
         public ICollection<Report> Reports { get; set; }
         public ICollection<Report> TutorReports { get; set; }
         public ICollection<Report> StudentReports { get; set; }
-
-
-    }
+		public ICollection<AcademicVideo> AcademicVideos { get; set; }
+	}
 }

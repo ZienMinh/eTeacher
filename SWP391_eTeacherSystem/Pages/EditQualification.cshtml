@@ -1,0 +1,78 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.EditQualificationModel
+@{
+}
+<section id="cta" class="cta">
+    <div class="container" data-aos="zoom-in">
+
+        <div class="row">
+            <div class="col-lg-9 text-center text-lg-start">
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+            </div>
+        </div>
+
+    </div>
+    <!-- </section>End Cta Section -->
+    <!-- ======= Requirements Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Edit Profile</h2>
+                <p>!!!</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-2"></div>
+
+                <div class="col-lg-8 ">
+                    <form action="" method="post" role="form" class="board">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Qualification.Specialize">Specialize</label>
+                                <input type="text" asp-for="UserDto.Qualification.Specialize" class="form-control" required>
+                                <span asp-validation-for="UserDto.Qualification.Specialize" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Qualification.Classification">Classfication</label>
+                                <input type="text" asp-for="UserDto.Qualification.Classification" class="form-control" required>
+                                <span asp-validation-for="UserDto.Qualification.Classification" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Qualification.Training_facility">Training facility</label>
+                                <input type="text" asp-for="UserDto.Qualification.Training_facility" class="form-control" required>
+                                <span asp-validation-for="UserDto.Qualification.Training_facility" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label asp-for="UserDto.Qualification.Graduation_year">Graduation year</label>
+                                <input type="date" asp-for="UserDto.Qualification.Graduation_year" class="form-control" required>
+                                <span asp-validation-for="UserDto.Qualification.Graduation_year" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label asp-for="UserDto.Image">Img</label>
+                                <input type="file" asp-for="UserDto.Image" class="form-control" required>
+                                <span asp-validation-for="UserDto.Image" class="text-danger"></span>
+
+                                @if (!string.IsNullOrEmpty(Model.UserDto.Image))
+                                {
+                                    <img src="~/img/@Model.UserDto.Image" alt="User Image" class="img-thumbnail mt-2" style="max-width: 100%;">
+                                }
+                            </div>
+                        </div>
+                        <div class="text-center"><button asp-page="Profile" type="submit" class="btn btn-primary form-control">Submit</button></div>
+                    </form>
+                </div>
+                <div class="col-lg-2"></div>
+
+            </div>
+
+        </div>
+    </section>

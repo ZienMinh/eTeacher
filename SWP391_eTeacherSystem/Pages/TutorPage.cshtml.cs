@@ -13,6 +13,7 @@ namespace SWP391_eTeacherSystem.Pages
         {
             _authService = authService;
         }
+
         public async Task<IActionResult> OnPostLogoutAsync()
         {
             await _authService.LogoutAsync();

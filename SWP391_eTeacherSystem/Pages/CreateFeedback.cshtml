@@ -4,6 +4,32 @@
     ViewData["Title"] = "Create Feedback";
 }
 <!-- ======= Create Feedback ======= -->
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
+        <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="StudentPage"></a>
+
+        <h1 class="logo me-auto"><a asp-page="/StudentPage">eTeacher</a></h1>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" asp-page="/StudentPage">Home</a></li>
+                <li><a class="nav-link scrollto active" href="#about">About</a></li>
+                <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto active" href="#searchTutor">Search Tutor</a></li>
+                <li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
+                <li><a class="nav-link scrollto active" asp-page="ClassHour">Class Hour</a></li>
+                <li><a class="nav-link scrollto active" asp-page="ClassList">Class List</a></li>
+                <li>
+                    <form method="post" asp-page-handler="Logout">
+                        <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
 <section id="Feedback" class="contact ctaa">
     <div class="container " data-aos="fade-up">
         <div class="row">
@@ -77,7 +103,7 @@
             const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
             if (checkedStar) {
                 const checkedIndex = parseInt(checkedStar.value);
-                stars.forEach((star, index) => {
+        stars.forEach((star, index) => {
                     if (index < checkedIndex) {
                         star.style.color = '#FFD700';
                     } else {
@@ -107,8 +133,22 @@
                 });
             });
 
-            star.addEventListener('mouseout', updateStars);
+            star.addEventListener('mouseout', () => {
+                stars.forEach((s) => {
+                    s.style.color = '#ccc';
+                });
+                const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
+                if (checkedStar) {
+                    const checkedIndex = Array.from(stars).indexOf(checkedStar.nextElementSibling);
+                    stars.forEach((s, i) => {
+                        if (i <= checkedIndex) {
+                            s.style.color = '#FFD700';
+                        }
+                    });
+                }
+            });
         });
+    });
 
         updateStars();
     });

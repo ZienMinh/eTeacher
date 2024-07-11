@@ -2,6 +2,7 @@
 @model SWP391_eTeacherSystem.Pages.RequirementDetailsModel
 @{
     var requirement = Model.Requirement;
+    //var user = Model.CurrentUser;
 }
 @if (requirement == null)
 {
@@ -13,7 +14,7 @@ else
     <section id="Req" class="contact ctaa">
         <div class="container " data-aos="fade-up">
             <div class="row">
-                 <form method="post" role="form" class="">
+                 <form method="post" role="form" class="board">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row board col-lg-8">
                         <div class=" col-lg-6">
