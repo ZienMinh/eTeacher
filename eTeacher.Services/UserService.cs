@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessObject.Models;
 using DataAccess;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Repositories;
@@ -18,16 +14,12 @@ namespace Services
     public class UserService : IUserService
     {
         private readonly AddDbContext _context;
-        private readonly ILogger<UserService> _logger;
-        private readonly UserManager<User> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<RequirementService> _logger;
 
-        public UserService(AddDbContext context, ILogger<UserService> logger, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public UserService(AddDbContext context, ILogger<RequirementService> logger)
         {
             _context = context;
             _logger = logger;
-            _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<UserServiceResponseDto> GetAllAsync()
@@ -129,202 +121,5 @@ namespace Services
 
             return response;
         }
-
-        public async Task<UserServiceResponseDto> UpdateUserAsync(UserDto userDto)
-        {
-            var userId = GetCurrentUserId();
-            if (string.IsNullOrEmpty(userId))
-            {
-                return new UserServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = "User Not Logged In"
-                };
-            }
-
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return new UserServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = "User Not Found"
-                };
-            }
-
-            user.First_name = userDto.First_name ?? user.First_name;
-            user.Last_name = userDto.Last_name ?? user.Last_name;
-            user.Email = userDto.Email ?? user.Email;
-            user.Gender = userDto.Gender ?? user.Gender;
-            user.Address = userDto.Address ?? user.Address;
-            user.Birth_date = userDto.Birth_date !=default(DateOnly) ? user.Birth_date:user.Birth_date;
-            user.Link_contact = userDto.Link_contact ?? user.Link_contact;
-            user.PhoneNumber = userDto.PhoneNumber ?? user.PhoneNumber;
-            user.Image = userDto.Image ?? user.Image;
-
-            var updateResult = await _userManager.UpdateAsync(user);
-
-            if (!updateResult.Succeeded)
-            {
-                var errorString = "User Update Failed Because: ";
-                foreach (var error in updateResult.Errors)
-                {
-                    errorString += " # " + error.Description;
-                }
-                return new UserServiceResponseDto()
-                {
-                    IsSucceed = false,
-                    Message = errorString
-                };
-            }
-
-            return new UserServiceResponseDto()
-            {
-                IsSucceed = true,
-                Message = "User Updated Successfully"
-            };
-        }
-
-        public string GetCurrentUserId()
-        {
-            var token = _httpContextAccessor.HttpContext?.Session.GetString("AccessToken");
-            if (string.IsNullOrEmpty(token))
-            {
-                return null;
-            }
-
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token);
-
-            return jwtToken?.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
-        }
-
-        public async Task<QualificationServiceResponseDto> CreateQualificationAsync(QualificationDto qualificationDto)
-        {
-            try
-            {
-                _logger.LogInformation("Mapping QualificationDto to Qualification entity");
-
-                var UserId = GetCurrentUserId();
-
-                var qualification = new Qualification
-                {
-                    Qualification_id = qualificationDto.Qualification_id,
-                    User_id = UserId,
-                    Graduation_year = qualificationDto.Graduation_year,
-                    Specialize = qualificationDto.Specialize,
-                    Classification = qualificationDto.Classification,
-                    Image = qualificationDto.Image,
-                    Training_facility = qualificationDto.Training_facility
-                };
-
-                _context.Qualifications.Add(qualification);
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Qualification saved successfully");
-                return new QualificationServiceResponseDto
-                {
-                    IsSucceed = true
-                };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("An error occurred while saving the qualification: " + ex.Message);
-                return new QualificationServiceResponseDto
-                {
-                    IsSucceed = false,
-                    Message = "No qualication found for the given ID.",
-                    Qualifications = null
-                };
-            }
-        }
-
-        public async Task<QualificationServiceResponseDto> UpdateQualificationAsync(QualificationDto qualificationDto)
-        {
-            var response = new QualificationServiceResponseDto();
-
-            try
-            {
-                _logger.LogInformation("Retrieving class hour from database");
-
-                var qualification = await _context.Qualifications.FindAsync(qualificationDto.User_id);
-
-                if (qualification == null)
-                {
-                    _logger.LogWarning($"Class hour with id {qualificationDto.User_id} not found");
-                    response.IsSucceed = false;
-                    response.Message = "Class hour not found";
-                    return response;
-                }
-
-                // Cập nhật các thuộc tính của class hour nếu có giá trị mới
-                _logger.LogInformation("Updating class hour entity");
-
-                qualification.Graduation_year = qualificationDto.Graduation_year != default(int) ? qualificationDto.Graduation_year : qualificationDto.Graduation_year;
-                qualification.Specialize = qualificationDto.Specialize ?? qualificationDto.Specialize;
-                qualification.Classification = qualificationDto.Classification ?? qualificationDto.Qualification_id;
-                qualification.Image = qualificationDto.Image ?? qualificationDto.Image;
-                qualification.Training_facility = qualificationDto.Training_facility ?? qualificationDto.Training_facility;
-
-                // Lưu thay đổi vào database
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Class hour updated successfully");
-                response.IsSucceed = true;
-                response.Message = "Class hour updated successfully";
-                response.CreatedQualification = qualification;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("An error occurred while updating the class hour: " + ex.Message);
-                response.IsSucceed = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-        }
-
-        public async Task<QualificationServiceResponseDto> GetQualificationByIdAsync(QualificationDto qualificationDto, string id)
-        {
-            var qualification = await _context.Qualifications
-                                            .FirstOrDefaultAsync(r => r.User_id == id);
-
-            if (qualification != null)
-            {
-                return new QualificationServiceResponseDto
-                {
-                    IsSucceed = true,
-                    Message = "Qualification found.",
-                    Qualifications = new List<Qualification> { qualification }
-                };
-            }
-            else
-            {
-                return new QualificationServiceResponseDto
-                {
-                    IsSucceed = false,
-                    Message = "No qualification found for the given ID.",
-                    Qualifications = null
-                };
-            }
-        }
-
-        public string GenerateQualificationId()
-        {
-            var maxQuaId = _context.Qualifications
-                .OrderByDescending(c => c.Qualification_id)
-                .Select(c => c.Qualification_id)
-                .FirstOrDefault();
-
-            int currentCount = 0;
-
-            if (maxQuaId != null && maxQuaId.StartsWith("Q") && int.TryParse(maxQuaId.Substring(1), out int parsedId))
-            {
-                currentCount = parsedId;
-            }
-
-            return "Q" + (currentCount + 1).ToString("D9");
-        }
     }
-
 }

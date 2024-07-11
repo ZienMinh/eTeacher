@@ -25,7 +25,6 @@ namespace BusinessObject.Models
         public DbSet<Class> Classes { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Visitor> Visitors { get; set; }
-        public DbSet<Fee> Fees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

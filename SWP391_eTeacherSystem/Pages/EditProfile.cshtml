@@ -32,71 +32,57 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label asp-for="UserDto.First_name">First Name</label>
-                                <input type="text" asp-for="UserDto.First_name" class="form-control" >
+                                <input type="text" asp-for="UserDto.First_name" class="form-control" required>
                                 <span asp-validation-for="UserDto.First_name" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="UserDto.Last_name">Last Name</label>
-                                <input type="text" asp-for="UserDto.Last_name" class="form-control" >
+                                <input type="text" asp-for="UserDto.Last_name" class="form-control" required>
                                 <span asp-validation-for="UserDto.Last_name" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label asp-for="UserDto.Gender">Gender</label>
-                                <input type="text" asp-for="UserDto.Gender" class="form-control" >
+                                <input type="text" asp-for="UserDto.Gender" class="form-control" required>
                                 <span asp-validation-for="UserDto.Gender" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-8">
                                 <label asp-for="UserDto.Birth_date">Date of Birth</label>
-                                <input type="date" asp-for="UserDto.Birth_date" class="form-control" >
+                                <input type="date" asp-for="UserDto.Birth_date" class="form-control" required>
                                 <span asp-validation-for="UserDto.Birth_date" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label asp-for="UserDto.Email">Email</label>
-                                <input type="text" asp-for="UserDto.Email" class="form-control" >
+                                <input type="text" asp-for="UserDto.Email" class="form-control" required>
                                 <span asp-validation-for="UserDto.Email" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
                                 <label asp-for="UserDto.Address">Address</label>
-                                <input type="text" asp-for="UserDto.Address" class="form-control" >
+                                <input type="text" asp-for="UserDto.Address" class="form-control" required>
                                 <span asp-validation-for="UserDto.Address" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label asp-for="UserDto.Link_contact">Link Contact</label>
-                                <input type="text" asp-for="UserDto.Link_contact" class="form-control" >
+                                <input type="text" asp-for="UserDto.Link_contact" class="form-control" required>
                                 <span asp-validation-for="UserDto.Link_contact" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label asp-for="UserDto.Id">User Id</label>
-                                <input type="text" asp-for="UserDto.Id" class="form-control" readonly>
-                                <span asp-validation-for="UserDto.Id" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label asp-for="UserDto.PhoneNumber">Phone Number</label>
-                                <input type="text" asp-for="UserDto.PhoneNumber" class="form-control">
-                                <span asp-validation-for="UserDto.PhoneNumber" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label asp-for="UserDto.Image">Image</label>
-                                <input type="text" asp-for="UserDto.Image" class="form-control">
+                                <label asp-for="UserDto.Image">Img</label>
+                                <input type="file" asp-for="UserDto.Image" class="form-control" required>
                                 <span asp-validation-for="UserDto.Image" class="text-danger"></span>
+
+                                @if (!string.IsNullOrEmpty(Model.UserDto.Image))
+                                {
+                                    <img src="~/img/@Model.UserDto.Image" alt="User Image" class="img-thumbnail mt-2" style="max-width: 100%;">
+                                }
                             </div>
                         </div>
-                        <div class="row">
-                            <input type="hidden" asp-for="UserDto.Rating" class="form-control" >
-                            <span asp-validation-for="UserDto.Rating" class="text-danger"></span>
-                            <input type="hidden" asp-for="UserDto.Role" class="form-control" >
-                            <span asp-validation-for="UserDto.Role" class="text-danger"></span>
-
-                        </div>
-                        <div class="text-center"><button type="submit" class="btn btn-primary form-control">Submit</button></div>
+                        <div class="text-center"><button asp-page="Profile" type="submit" class="btn btn-primary form-control">Submit</button></div>
                     </form>
                 </div>
                 <div class="col-lg-2"></div>

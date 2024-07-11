@@ -39,5 +39,6 @@ namespace DataAccess
             throw new NotImplementedException();
         }
 
+        public QualificationDto Qualification { get; set; } = new QualificationDto();
     }
 }

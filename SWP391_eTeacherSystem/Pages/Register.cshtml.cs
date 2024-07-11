@@ -11,7 +11,6 @@ namespace SWP391_eTeacherSystem.Pages
     public class RegisterModel : PageModel
     {
         private readonly IAuthService _authService;
-        private readonly IUserService _userService;
 
         public RegisterModel(IAuthService authService)
         {
@@ -20,9 +19,6 @@ namespace SWP391_eTeacherSystem.Pages
 
         [BindProperty]
         public RegisterDto RegisterDto { get; set; }
-
-        [BindProperty]
-        public QualificationDto QualificationDto { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -34,11 +30,7 @@ namespace SWP391_eTeacherSystem.Pages
             var result = await _authService.RegisterAsync(RegisterDto);
             if (result.IsSucceed)
             {
-                /*QualificationDto = new QualificationDto
-                {
-                    Qualification_id = _userService.GenerateQualificationId(),
-                };
-                var resultQua = await _userService.CreateQualificationAsync(QualificationDto);*/
+                // Redirect to login page or any other appropriate page
                 return RedirectToPage("/Login");
             }
             else

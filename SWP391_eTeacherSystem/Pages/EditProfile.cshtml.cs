@@ -14,11 +14,13 @@ namespace SWP391_eTeacherSystem.Pages
 	{
 		private readonly AddDbContext _context;
 		private readonly IUserService _userService;
+		private readonly IAuthService _authService;
 		private readonly ILogger<EditProfileModel> _logger;
 
-		public EditProfileModel(AddDbContext context,IUserService userService, ILogger<EditProfileModel> logger)
+		public EditProfileModel(AddDbContext context, IAuthService authService, IUserService userService, ILogger<EditProfileModel> logger)
 		{
 			_context = context;
+			_authService = authService;
 			_userService = userService;
 			_logger = logger;
 		}
@@ -29,7 +31,8 @@ namespace SWP391_eTeacherSystem.Pages
 
 		public async Task OnGetAsync()
 		{
-			var userId = _userService.GetCurrentUserId();
+			var userId = _authService.GetCurrentUserId();
+			
 		}
          
 		public async Task<IActionResult> OnPostAsync()
@@ -39,6 +42,7 @@ namespace SWP391_eTeacherSystem.Pages
 			if (!ModelState.IsValid)
 			{
 				_logger.LogWarning("ModelState is not valid");
+				// Log chi tiết các lỗi trong ModelState
 				foreach (var state in ModelState)
 				{
 					if (state.Value.Errors.Count > 0)
@@ -50,7 +54,7 @@ namespace SWP391_eTeacherSystem.Pages
 				return Page();
 			}
 
-			var userId = _userService.GetCurrentUserId();
+			var userId = _authService.GetCurrentUserId();
 			if (userId == null)
 			{
 				_logger.LogWarning("User is not authenticated");
@@ -58,14 +62,16 @@ namespace SWP391_eTeacherSystem.Pages
 				return Page();
 			}
 
+
+
 			try
 			{
 				_logger.LogInformation("Attempting to edit profile");
-				var result = await _userService.UpdateUserAsync(UserDto);
+				var result = await _authService.UpdateUserAsync(UserDto);
 				if (result.IsSucceed)
 				{
 					_logger.LogInformation("Edit profile successfully");
-					return RedirectToPage("/TutorProfile", new { });
+					return RedirectToPage("/Profile", new { });
 				}
 				else
 				{

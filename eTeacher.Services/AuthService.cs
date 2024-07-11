@@ -320,7 +320,90 @@ namespace eTeacher.Services
             return new string(password);
         }
 
-        
+        public async Task<AuthServiceResponseDto> UpdateUserAsync(UserDto userDto)
+        {
+            var userId = GetCurrentUserId();
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "User Not Logged In"
+                };
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "User Not Found"
+                };
+            }
+
+            user.First_name = userDto.First_name;
+            user.Last_name = userDto.Last_name;
+            user.Email = userDto.Email;
+            user.Gender = userDto.Gender;
+            user.Address = userDto.Address;
+            user.Birth_date = userDto.Birth_date;
+            user.Link_contact = userDto.Link_contact;
+            user.Image = userDto.Image;
+
+            // Cập nhật thông tin qualification
+            var qualification = await _context.Qualifications.FirstOrDefaultAsync(q => q.User_id == userId);
+            if (qualification == null)
+            {
+                qualification = new Qualification
+                {
+                    User_id = userId,
+                    Qualification_id = Guid.NewGuid().ToString()
+                };
+                _context.Qualifications.Add(qualification);
+            }
+
+            qualification.Graduation_year = userDto.Qualification.Graduation_year;
+            qualification.Specialize = userDto.Qualification.Specialize;
+            qualification.Classification = userDto.Qualification.Classification;
+            qualification.Training_facility = userDto.Qualification.Training_facility;
+            qualification.Image = userDto.Qualification.Image;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
+            {
+                var errorString = "User Update Failed Because: ";
+                foreach (var error in updateResult.Errors)
+                {
+                    errorString += " # " + error.Description;
+                }
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = errorString
+                };
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return new AuthServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    Message = "Qualification Update Failed: " + ex.Message
+                };
+            }
+
+            return new AuthServiceResponseDto()
+            {
+                IsSucceed = true,
+                Message = "User Updated Successfully"
+            };
+        }
 
 
         public Task RegisterAsyn(RegisterDto registerDto)
