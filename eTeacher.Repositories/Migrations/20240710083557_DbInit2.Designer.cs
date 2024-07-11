@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240705123716_DbInit")]
-    partial class DbInit
+    [Migration("20240710083557_DbInit2")]
+    partial class DbInit2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,6 +151,28 @@ namespace BusinessObject.Migrations
                     b.ToTable("ClassHour");
                 });
 
+            modelBuilder.Entity("BusinessObject.Models.Fee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PlatformFees")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalFees")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fees");
+                });
+
             modelBuilder.Entity("BusinessObject.Models.Order", b =>
                 {
                     b.Property<string>("Order_id")
@@ -187,25 +209,21 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Classification")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("Graduation_year")
+                    b.Property<int?>("Graduation_year")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Specialize")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Training_facility")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 

@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using BusinessObject.Models;
+using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,15 @@ namespace Repositories
 
         Task<UserServiceResponseDto> DeleteUserAsync(string id);
 
+        Task<UserServiceResponseDto> UpdateUserAsync(UserDto userDto);
+        string GetCurrentUserId();
+
+        Task<QualificationServiceResponseDto> CreateQualificationAsync(QualificationDto qualificationDto);
+
+        Task<QualificationServiceResponseDto> UpdateQualificationAsync(QualificationDto qualificationDto);
+
+        Task<QualificationServiceResponseDto> GetQualificationByIdAsync(QualificationDto qualificationDto, string id);
+
+        string GenerateQualificationId();
     }
 }

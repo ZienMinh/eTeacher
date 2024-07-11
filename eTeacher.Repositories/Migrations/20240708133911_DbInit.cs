@@ -59,6 +59,21 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Fees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TotalFees = table.Column<int>(type: "int", nullable: false),
+                    PlatformFees = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fees", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Subject",
                 columns: table => new
                 {
@@ -531,6 +546,9 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "ClassHour");
+
+            migrationBuilder.DropTable(
+                name: "Fees");
 
             migrationBuilder.DropTable(
                 name: "Order");
