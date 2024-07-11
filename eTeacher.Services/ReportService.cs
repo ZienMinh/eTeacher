@@ -36,6 +36,7 @@ namespace Services
             {
                 var newReportId = GenerateReportId();
 
+                // Create new report
                 var newReport = new Report
                 {
                     Report_id = newReportId,

@@ -10,10 +10,36 @@
 else
 {
     <!-- ======= Class Detail Section ======= -->
+    <header id="header" class="fixed-top ">
+        <div class="container d-flex align-items-center">
+            <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="TutorPage"></a>
+
+            <h1 class="logo me-auto"><a asp-page="/TutorPage">eTeacher</a></h1>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" asp-page="/TutorPage">Home</a></li>
+                    <li><a class="nav-link scrollto active" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="Class">Create Class</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="AcceptClass">Accept Class</a></li>
+                    <li><a class="nav-link scrollto active" asp-page="TuTorClassList">Tutor Class List</a></li>
+                    <li>
+                        <form method="post" asp-page-handler="Logout">
+                            <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
+
+    <!-- End Header -->
     <section id="Req" class="contact ctaa">
         <div class="container " data-aos="fade-up">
             <div class="row">
-                <form method="post" role="form" class="">
+                <form method="post" role="form" class="board textblack">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row board col-lg-8">
                         <div class=" col-lg-6">

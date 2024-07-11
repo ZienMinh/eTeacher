@@ -89,6 +89,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IVisitorCounterService, VisitorCounterService>();
 // Cấu hình Hosted Service
 builder.Services.AddHostedService<ReminderHostedService>();
 
@@ -105,6 +106,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Add services to the container
 builder.Services.AddRazorPages();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

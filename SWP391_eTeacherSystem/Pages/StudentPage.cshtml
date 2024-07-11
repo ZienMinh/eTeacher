@@ -45,6 +45,7 @@
 				<li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
 				<li><a class="nav-link scrollto active" asp-page="ClassHour">Class Hour</a></li>
 				<li><a class="nav-link scrollto active" asp-page="ClassList">Class List</a></li>
+				<li><a class="nav-link scrollto active" asp-page="Profile">Profile</a></li>
 				<li>
 					<form method="post" asp-page-handler="Logout">
 						<button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
@@ -111,71 +112,32 @@
 			<p>Explore our collection of academic videos provided by our talented tutors.</p>
 		</div>
 		<div class="row">
-			@foreach (var video in Model.AcademicVideos)
+			@if (Model.AcademicVideos != null && Model.AcademicVideos.Any())
 			{
-				<div class="col-lg-4 col-md-6">
-					<div class="video-box">
-						<video width="100%" controls>
-							<source src="@video.VideoUrl" type="video/mp4">
-							Your browser does not support the video tag.
-						</video>
-						<div class="video-content">
-							<h5>@video.Title</h5>
-							<p>@video.Description</p>
+				@foreach (var video in Model.AcademicVideos)
+				{
+					<div class="col-lg-4 col-md-6">
+						<div class="video-box">
+							<video width="100%" controls>
+								<source src="@video.VideoUrl" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
+							<div class="video-content">
+								<h5>@video.Title</h5>
+								<p>@video.Description</p>
+							</div>
 						</div>
 					</div>
-				</div>
+				}
+			}
+			else
+			{
+				<p>No academic videos available.</p>
 			}
 		</div>
 	</div>
 </section>
 <!-- End Academic Videos Section -->
-<!-- ======= Services Section ======= -->
-<section id="services" class="services section-bg">
-	<div class="container" data-aos="fade-up">
-
-		<div class="section-title">
-			<h2>Services</h2>
-			<p>At <b>eTeacher</b>, we offer on-demand tutor-matching services, making it easy for students and parents to find the perfect tutor. Whether you need help with core subjects, foreign languages, or special skills, eTeacher has you covered. Our tutors are thoroughly screened and verified, ensuring high-quality teaching and peace of mind for you.</p>
-		</div>
-
-		<div class="row">
-			<div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-				<div class="icon-box">
-					<div class="icon"><i class="bx bx-tachometer"></i></div>
-					<h4><a href="">Class Hour</a></h4>
-					<p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
-				</div>
-			</div>
-
-			<div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-				<div class="icon-box">
-					<div class="icon"><i class="bx bx-file"></i></div>
-					<h4><a href="">Class on requirement</a></h4>
-					<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
-				</div>
-			</div>
-
-			<div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
-				<div class="icon-box">
-					<div class="icon"><i class="bx bx-tachometer"></i></div>
-					<h4><a href="">Chat with tutor</a></h4>
-					<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
-				</div>
-			</div>
-
-			<div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
-				<div class="icon-box">
-					<div class="icon"><i class="bx bx-file"></i></div>
-					<h4><a href="">Feedback</a></h4>
-					<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
-				</div>
-			</div>
-
-		</div>
-
-	</div>
-</section><!-- End Services Section -->
 <!-- ======= Schedule Section ======= -->
 <section id="schedule" class="schedule section-bg">
 	<div class="container" data-aos="fade-up">

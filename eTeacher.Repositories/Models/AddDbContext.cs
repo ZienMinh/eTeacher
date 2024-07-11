@@ -27,6 +27,7 @@ namespace BusinessObject.Models
 		public DbSet<AcademicVideo> AcademicVideos { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Visitor> Visitors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

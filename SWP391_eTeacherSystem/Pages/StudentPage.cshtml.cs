@@ -37,10 +37,9 @@ namespace SWP391_eTeacherSystem.Pages
 
         public List<UserDto> Tutors { get; set; }
 
-		public IEnumerable<AcademicVideo> AcademicVideos { get; set; }
+        public IEnumerable<AcademicVideo> AcademicVideos { get; set; }
         public IEnumerable<Schedule> Schedules { get; set; }
 
-        //public async Task<IActionResult> OnPostAsync()
         public List<ClassHour> Classes { get; set; }
 
         public bool HasSearched { get; set; } = false;
@@ -55,19 +54,20 @@ namespace SWP391_eTeacherSystem.Pages
                 if (userId != null)
                 {
                     ClassDto = new ClassDto { Student_id = userId };
+                    AcademicVideos = await _videoService.GetAllVideosAsync();
+                    Schedules = await _scheduleService.GetSchedulesByStudentIdAsync(userId);
                 }
-				AcademicVideos = await _videoService.GetAllVideosAsync();
-				Schedules = await _scheduleService.GetSchedulesByStudentIdAsync(userId);
-			}
+            }
             catch (Exception ex)
             {
-
+                // Handle exception
             }
         }
 
         public async Task<IActionResult> OnPostSearchTutorAsync()
         {
             Tutors = await _userService.SearchTutorAsync(Name);
+            await LoadAcademicVideosAndSchedules();
             return Page();
         }
 
@@ -77,17 +77,15 @@ namespace SWP391_eTeacherSystem.Pages
             return RedirectToPage("/Index");
         }
 
-        //public async Task<IActionResult> OnGetAsync()
-        //{
-        //    var userId = _authService.GetCurrentUserId();
-        //    if (userId == null)
-        //    {
-        //        return Unauthorized();
-        //    }
-
-            
-        //    return Page();
-        //}
+        private async Task LoadAcademicVideosAndSchedules()
+        {
+            var userId = _authService.GetCurrentUserId();
+            if (userId != null)
+            {
+                AcademicVideos = await _videoService.GetAllVideosAsync();
+                Schedules = await _scheduleService.GetSchedulesByStudentIdAsync(userId);
+            }
+        }
 
         public async Task<IActionResult> OnPostSearchAsync()
         {

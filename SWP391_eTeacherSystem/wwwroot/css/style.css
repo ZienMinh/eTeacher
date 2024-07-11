@@ -1423,3 +1423,15 @@ section {
 .custom-button {
     width: 100px; 
 }
+/*--------------------------------------------------------------
+# Rating star
+--------------------------------------------------------------*/
+.board {
+    background-color: #fff;
+    border: 5px solid orange;
+    padding: 20px;
+}
+
+.textblack p{
+    color:#000000;
+}
