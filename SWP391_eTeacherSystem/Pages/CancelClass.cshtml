@@ -3,6 +3,9 @@
 @{
     var classes = Model.Class;
 }
+<head>
+    <link rel="stylesheet" href="~/css/report.css" />
+</head>
 @if (classes == null)
 {
     <h2>Class not found</h2>
@@ -35,7 +38,7 @@ else
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary form-control">Cancel class</button>
+                                    <button type="submit" id="cancelClassButton" class="btn btn-primary form-control">Cancel class</button>
                                 </div>
                             </div>
                         </div>
@@ -66,4 +69,5 @@ else
         </div>
     </section>
     <!-- ======= End Cancel Class Section ======= -->
+    <script src="~/js/starter.js"></script>
 }
