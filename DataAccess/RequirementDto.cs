@@ -1,4 +1,5 @@
 ﻿using BusinessObject.Models;
+using DataAccess.Attributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +16,11 @@ namespace DataAccess
 
         [Required(ErrorMessage = "Subject name is required")]
         public string Subject_name { get; set; }
+
+        [StartDate(ErrorMessage = "Start date must be today or later")]
         public DateOnly? Start_date { get; set; }
+
+        [EndDate("Start_date", ErrorMessage = "End date must be after start date")]
         public DateOnly? End_date { get; set; }
         public TimeSpan? Start_time { get; set; }
         public TimeSpan? End_time { get; set; }
@@ -28,6 +33,7 @@ namespace DataAccess
         public string Rank { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be positive")]
         public double Price { get; set; }
         [Required(ErrorMessage = "Number of sessions is required")]
         [Range(1, 100, ErrorMessage = "Number of sessions must be between 1 and 100")]
@@ -38,11 +44,6 @@ namespace DataAccess
 
         [MaxLength(450)]
         public string? Description { get; set; }
-
-        public static implicit operator RequirementDto?(Requirement? v)
-        {
-            throw new NotImplementedException();
-        }
 
         public double? Total { get; set; }
 

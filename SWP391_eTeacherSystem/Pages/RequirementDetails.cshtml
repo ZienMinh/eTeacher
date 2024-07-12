@@ -100,11 +100,18 @@ else
                                 <span asp-validation-for="ClassDto.Total" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <input type="hidden" asp-for="ClassDto.Status" class="form-control" value="1">
-                            <span asp-validation-for="ClassDto.Status" class="text-danger"></span>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Status" class="form-control" value="1">
+                                <span asp-validation-for="ClassDto.Status" class="text-danger"></span>
+                            </div>
                         </div>
-
+                        <div class="form-group">
+                            <label asp-for="ClassDto.Link_meet">Link meet</label>
+                            <input type="text" asp-for="ClassDto.Link_meet" class="form-control">
+                            <span asp-validation-for="ClassDto.Link_meet" class="text-danger"></span>
+                        </div>
+                        
                         <div class="my-3">
                             <div class="loading"></div>
                             <div class="error-message"></div>

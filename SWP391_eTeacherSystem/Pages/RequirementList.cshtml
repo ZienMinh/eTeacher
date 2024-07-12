@@ -3,7 +3,7 @@
 @{
 }
 <!-- ======= Requirement List Section ======= -->
-<section id="accept_class" class="accept_class">
+<section id="requirement_list" class="requirement_list">
     <div class="container" data-aos="fade-up">
         <div class="section-title">
             <h2>List of requirements</h2>
@@ -26,15 +26,15 @@
                             @if (requirement.Status == 1)
                             {
                                 <p class="text-success">Available</p>
-                                <form method="post" role="form" class="">
-                                    <input type="hidden" asp-for="requirementDto.Requirement_id" class="form-control" value="@requirement.Requirement_id" />
-                                    <button type="submit" class="btn btn-success">Delete Requirement →</button>
+                                <form method="get" asp-page="/RequirementDeletes">
+                                    <input type="hidden" name="id" value="@requirement.Requirement_id" />
+                                    <button type="submit" class="btn btn-success">Requirement Details →</button>
                                 </form>
                             }
                             else if (requirement.Status == 2)
                             {
                                 <p class="text-danger">Not Available</p>
-                                <button type="button" class="btn btn-secondary" disabled>Delete Requirement →</button>
+                                <button type="button" class="btn btn-secondary" disabled>Requirement Details →</button>
                             }
                         </div>
                     </div>

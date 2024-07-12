@@ -104,18 +104,21 @@ namespace Services
             }
         }
 
+
         public async Task<RequirementServiceResponseDto> GetByUserIdAsync(RequirementDto requirementDto, string id)
         {
             var requirement = await _context.Requirements
-                                            .FirstOrDefaultAsync(r => r.User_id == id);
+                                        .Where(c => c.User_id == id)
+                                        .OrderBy(c => c.Status)
+                                        .ToListAsync();
 
-            if (requirement != null)
+            if (requirement.Any())
             {
                 return new RequirementServiceResponseDto
                 {
                     IsSucceed = true,
-                    Message = "Requirement found.",
-                    Requirements = new List<Requirement> { requirement }
+                    Message = "Classes found.",
+                    Requirements = requirement
                 };
             }
             else
@@ -123,7 +126,7 @@ namespace Services
                 return new RequirementServiceResponseDto
                 {
                     IsSucceed = false,
-                    Message = "No requirement found for the given ID.",
+                    Message = "No class found for the given ID.",
                     Requirements = null
                 };
             }

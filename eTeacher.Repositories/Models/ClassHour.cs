@@ -45,6 +45,8 @@ namespace BusinessObject.Models
 
         public double? Total { get; set; }
 
+        public string Link_meet { get; set; }
+
         public byte? Status { get; set; }
     }
 }

@@ -95,6 +95,11 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label asp-for="ClassHourDto.Link_meet">Link meet</label>
+                        <input type="text" asp-for="ClassHourDto.Link_meet" class="form-control">
+                        <span asp-validation-for="ClassHourDto.Link_meet" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <input type="hidden" asp-for="ClassHourDto.Status" class="form-control" value="1">
                         <span asp-validation-for="ClassHourDto.Status" class="text-danger"></span>
                     </div>
@@ -113,6 +118,11 @@
                         <p></p>
                     </div>
                 </form>
+                <div class="col-lg-8">
+                    <form method="get" asp-page="/ClassHourList">
+                        <button type="submit" class="btn btn-success">View ClassHour →</button>
+                    </form>
+                </div>
             </div>
 
             <div class="col-lg-2"></div>
