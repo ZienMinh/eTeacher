@@ -393,7 +393,6 @@ namespace eTeacher.Services
 
         public async Task<AuthServiceResponseDto> LogoutAsync()
         {
-            // Xóa token khỏi session hoặc cookie
             _httpContextAccessor.HttpContext.Session.Remove("AccessToken");
 
             return new AuthServiceResponseDto

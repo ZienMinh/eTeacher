@@ -140,7 +140,6 @@ namespace Services
             {
                 _logger.LogInformation("Retrieving requirement from database");
 
-                // Lấy requirement từ database
                 var requirement = await _context.Requirements.FindAsync(requirementDto.Requirement_id);
 
                 if (requirement == null)
@@ -151,7 +150,6 @@ namespace Services
                     return response;
                 }
 
-                // Cập nhật các thuộc tính của requirement nếu có giá trị mới
                 _logger.LogInformation("Updating requirement entity");
 
                 requirement.Subject_name = requirementDto.Subject_name ?? requirement.Subject_name;
@@ -168,7 +166,6 @@ namespace Services
                 requirement.Total = requirementDto.Total != null ? requirementDto.Total : requirement.Total;
                 requirement.Status = requirementDto.Status != null ? requirementDto.Status : requirement.Status;
 
-                // Lưu thay đổi vào database
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Requirement updated successfully");
