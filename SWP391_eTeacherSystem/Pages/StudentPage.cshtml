@@ -4,221 +4,287 @@
 }
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Arsha Bootstrap Template - Index</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+	<title>Arsha Bootstrap Template - Index</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
 
-    <!-- Favicons -->
-    <link href="~/img/favicon.png" rel="icon">
-    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+	<!-- Favicons -->
+	<link href="~/img/favicon.png" rel="icon">
+	<link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
-    <link href="~/lib/aos/aos.css" rel="stylesheet">
-    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
-    <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">
+	<!-- Vendor CSS Files -->
+	<link href="~/lib/aos/aos.css" rel="stylesheet">
+	<link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
+	<link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
+	<link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+	<link href="~/css/style.css" rel="stylesheet">
 </head>
 
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top ">
-    <div class="container d-flex align-items-center">
-        <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="StudentPage"></a>
+	<div class="container d-flex align-items-center">
+		<a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="StudentPage"></a>
 
-        <h1 class="logo me-auto"><a asp-page="/StudentPage">eTeacher</a></h1>
+		<h1 class="logo me-auto"><a asp-page="/StudentPage">eTeacher</a></h1>
 
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li><a class="nav-link scrollto active" asp-page="/StudentPage">Home</a></li>
-                <li><a class="nav-link scrollto active" href="#about">About</a></li>
-                <li><a class="nav-link scrollto active" href="#searchTutor">Search Tutor</a></li>
-                <li><a class="nav-link scrollto active" href="#hour_class">Search subject</a></li>
-                <li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
-                <li><a class="nav-link scrollto active" asp-page="ClassHour">Class Hour</a></li>
-                <li><a class="nav-link scrollto active" asp-page="ClassList">Class List</a></li>
-                <li>
-                    <form method="post" asp-page-handler="Logout">
-                        <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </nav><!-- .navbar -->
+		<nav id="navbar" class="navbar">
+			<ul>
+				<li><a class="nav-link scrollto active" asp-page="/StudentPage">Home</a></li>
+				<li><a class="nav-link scrollto active" href="#about">About</a></li>
+				<li><a class="nav-link scrollto active" href="#searchTutor">Search Tutor</a></li>
+				<li><a class="nav-link scrollto active" href="#hour_class">Search subject</a></li>
+				<li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
+				<li><a class="nav-link scrollto active" asp-page="ClassHour">Class Hour</a></li>
+				<li><a class="nav-link scrollto active" asp-page="ClassList">Class List</a></li>
+				<li><a class="nav-link scrollto active" asp-page="Profile">Profile</a></li>
+				<li>
+					<form method="post" asp-page-handler="Logout">
+						<button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
+					</form>
+				</li>
+			</ul>
+		</nav><!-- .navbar -->
 
-    </div>
+	</div>
 </header><!-- End Header -->
-
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                <h1>Better Solutions For Your Education</h1>
-                <h2>We are team of talented tutors training better educators</h2>
-                <div class="d-flex justify-content-center justify-content-lg-start">
-                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
-                </div>
-            </div>
-            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                <img src="~/img/pngegg.png" class="img-fluid animated" alt="">
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
+				<h1>Better Solutions For Your Education</h1>
+				<h2>We are team of talented tutors training better educators</h2>
+				<div class="d-flex justify-content-center justify-content-lg-start">
+					<a href="#about" class="btn-get-started scrollto">Get Started</a>
+				</div>
+			</div>
+			<div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+				<img src="~/img/pngegg.png" class="img-fluid animated" alt="">
+			</div>
+		</div>
+	</div>
 
 </section><!-- End Hero -->
 <!-- ======= About Us Section ======= -->
 <section id="about" class="about">
-    <div class="container" data-aos="fade-up">
+	<div class="container" data-aos="fade-up">
 
-        <div class="section-title">
-            <h2>About Us</h2>
-        </div>
+		<div class="section-title">
+			<h2>About Us</h2>
+		</div>
 
-        <div class="row content">
-            <div class="col-lg-6">
-                <p>
-                    <b>eTeacher</b> is a platform that connects students and parents with high-quality, reputable tutors. We understand that each student has unique learning needs and goals, which is why eTeacher offers a personalized tutor-matching service to help you find the perfect educator.
-                </p>
-                <ul>
-                    <li><i class="ri-check-double-line"></i> Quality: We partner only with tutors who have high-level expertise and extensive teaching experience.</li>
-                    <li><i class="ri-check-double-line"></i> Trustworthiness: Every tutor on the eTeacher platform undergoes thorough screening and verification before joining.</li>
-                    <li><i class="ri-check-double-line"></i> Support: Our dedicated support team is always available to assist students and parents with any questions or concerns.</li>
-                </ul>
-            </div>
-            <div class="col-lg-6 pt-4 pt-lg-0">
-                <p>
-                    Our mission at eTeacher is to provide a flexible and effective educational solution that helps students enhance their knowledge and skills, achieving success in their studies and beyond. We are committed to delivering the best learning experience through a curated selection of skilled, enthusiastic, and dedicated tutors.
-                </p>
-                <a href="#" class="btn-learn-more">Learn More</a>
-            </div>
-        </div>
+		<div class="row content">
+			<div class="col-lg-6">
+				<p>
+					<b>eTeacher</b> is a platform that connects students and parents with high-quality, reputable tutors. We understand that each student has unique learning needs and goals, which is why eTeacher offers a personalized tutor-matching service to help you find the perfect educator.
+				</p>
+				<ul>
+					<li><i class="ri-check-double-line"></i> Quality: We partner only with tutors who have high-level expertise and extensive teaching experience.</li>
+					<li><i class="ri-check-double-line"></i> Trustworthiness: Every tutor on the eTeacher platform undergoes thorough screening and verification before joining.</li>
+					<li><i class="ri-check-double-line"></i> Support: Our dedicated support team is always available to assist students and parents with any questions or concerns.</li>
+				</ul>
+			</div>
+			<div class="col-lg-6 pt-4 pt-lg-0">
+				<p>
+					Our mission at eTeacher is to provide a flexible and effective educational solution that helps students enhance their knowledge and skills, achieving success in their studies and beyond. We are committed to delivering the best learning experience through a curated selection of skilled, enthusiastic, and dedicated tutors.
+				</p>
+				<a href="#" class="btn-learn-more">Learn More</a>
+			</div>
+		</div>
 
-    </div>
+	</div>
 </section><!-- End About Us Section -->
+<!-- ======= Academic Videos Section ======= -->
+<section id="academic-videos" class="academic-videos">
+	<div class="container" data-aos="fade-up">
+		<div class="section-title">
+			<h2>Academic Videos</h2>
+			<p>Explore our collection of academic videos provided by our talented tutors.</p>
+		</div>
+		<div class="row">
+			@if (Model.AcademicVideos != null && Model.AcademicVideos.Any())
+			{
+				@foreach (var video in Model.AcademicVideos)
+				{
+					<div class="col-lg-4 col-md-6">
+						<div class="video-box">
+							<video width="100%" controls>
+								<source src="@video.VideoUrl" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
+							<div class="video-content">
+								<h5>@video.Title</h5>
+								<p>@video.Description</p>
+							</div>
+						</div>
+					</div>
+				}
+			}
+			else
+			{
+				<p>No academic videos available.</p>
+			}
+		</div>
+	</div>
+</section>
+<!-- End Academic Videos Section -->
+<!-- ======= Schedule Section ======= -->
+<section id="schedule" class="schedule section-bg">
+	<div class="container" data-aos="fade-up">
+		<div class="section-title">
+			<h2>Your Schedule</h2>
+			<p>Here are your upcoming classes:</p>
+		</div>
+
+		@if (Model.Schedules != null && Model.Schedules.Any())
+		{
+			<div class="row">
+				@foreach (var schedule in Model.Schedules)
+				{
+					<div class="col-lg-4 col-md-6">
+						<div class="schedule-box">
+							<h4>@schedule.Class.Subject.Subject_name</h4>
+							<p>
+								Start Time: @schedule.StartTime <br />
+								End Time: @schedule.EndTime <br />
+								Class ID: @schedule.Class_id
+							</p>
+						</div>
+					</div>
+				}
+			</div>
+		}
+		else
+		{
+			<p>No upcoming classes.</p>
+		}
+	</div>
+</section>
+<!-- End Schedule Section -->
 <!-- ======= Search Tutor ======= -->
 <section id="searchTutor" class="searchTutor section-bg">
-    <div class="container" data-aos="fade-up">
-        <h2>Search Tutors</h2>
+	<div class="container" data-aos="fade-up">
+		<h2>Search Tutors</h2>
 
-        <form method="post" asp-page-handler="SearchTutor">
-            <div class="form-group">
-                <label asp-for="Name">Name</label>
-                <input asp-for="Name" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+		<form method="post" asp-page-handler="SearchTutor">
+			<div class="form-group">
+				<label asp-for="Name">Name</label>
+				<input asp-for="Name" class="form-control" />
+			</div>
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
 
-        @if (Model.Tutors != null && Model.Tutors.Count > 0)
-        {
-            <h3>Search Results</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>User Name</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Link Contact</th>
-                        <th>Rating</th>
-                        <th>Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var tutor in Model.Tutors)
-                    {
-                        <tr>
-                            <td>@tutor.UserName</td>
-                            <td>@tutor.First_name</td>
-                            <td>@tutor.Last_name</td>
-                            <td>@tutor.Gender</td>
-                            <td>@tutor.Address</td>
-                            <td>@tutor.Link_contact</td>
-                            <td>@tutor.Rating</td>
-                            <td><img src="@tutor.Image" alt="Image" style="width: 100px; height: auto;" /></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-        else if (Model.Tutors != null)
-        {
-            <p>No tutors found matching the search criteria.</p>
-        }
-    </div>
+		@if (Model.Tutors != null && Model.Tutors.Count > 0)
+		{
+			<h3>Search Results</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>User Name</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Gender</th>
+						<th>Address</th>
+						<th>Link Contact</th>
+						<th>Rating</th>
+						<th>Image</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var tutor in Model.Tutors)
+					{
+						<tr>
+							<td>@tutor.UserName</td>
+							<td>@tutor.First_name</td>
+							<td>@tutor.Last_name</td>
+							<td>@tutor.Gender</td>
+							<td>@tutor.Address</td>
+							<td>@tutor.Link_contact</td>
+							<td>@tutor.Rating</td>
+							<td><img src="@tutor.Image" alt="Image" style="width: 100px; height: auto;" /></td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
+		else if (Model.Tutors != null)
+		{
+			<p>No tutors found matching the search criteria.</p>
+		}
+	</div>
 </section>
 <!-- ======= End Search Tutor ======= -->
 <!-- ======= Search Subject ======= -->
 <section id="hour_class" class="hour_class">
-    <div class="container" data-aos="fade-up">
-        <div class="section-title">
-            <h2>List of Class hour</h2>
-            <p>Short lessons to reinforce your knowledge</p>
-        </div>
-        <form method="post" asp-page-handler="Search">
-            <div class="form-group">
-                <label asp-for="SubjectName">Subject Name</label>
-                <input asp-for="SubjectName" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+	<div class="container" data-aos="fade-up">
+		<div class="section-title">
+			<h2>List of Class hour</h2>
+			<p>Short lessons to reinforce your knowledge</p>
+		</div>
+		<form method="post" asp-page-handler="Search">
+			<div class="form-group">
+				<label asp-for="SubjectName">Subject Name</label>
+				<input asp-for="SubjectName" class="form-control" />
+			</div>
+			<button type="submit" class="btn btn-primary">Search</button>
+		</form>
 
-        @if (Model.HasSearched)
-        {
-            @if (Model.Classes != null && Model.Classes.Count > 0)
-            {
-                <h4>Search Results</h4>
-                <div class="row">
-                    @foreach (var classes in Model.Classes)
-                    {
-                        <div class="col-md-3">
-                            <div class="card mb-3">
-                                <div class="card-header bg-primary text-white">
-                                    @classes.Class_id
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">@classes.Subject_name - Grade @classes.Grade</h5>
-                                    <p class="card-text">
-                                        <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
-                                        <i class="fa fa-user"></i> Address: @classes.Address
-                                    </p>
-                                    @if (classes.Status == 1)
-                                    {
-                                        <p class="text-success">Available</p>
-                                        <form method="get" asp-page="/ClassDetails">
-                                            <input type="hidden" name="id" value="@classes.Class_id" />
-                                            <button type="submit" class="btn btn-success">More Details →</button>
-                                        </form>
-                                    }
-                                    else if (classes.Status == 2)
-                                    {
-                                        <p class="text-danger">Not Available</p>
-                                        <button type="button" class="btn btn-secondary" disabled>More Details →</button>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
-            else
-            {
-                <p>No class found matching the search criteria.</p>
-            }
-        }
-    </div>
+		@if (Model.HasSearched)
+		{
+			@if (Model.Classes != null && Model.Classes.Count > 0)
+			{
+				<h4>Search Results</h4>
+				<div class="row">
+					@foreach (var classes in Model.Classes)
+					{
+						<div class="col-md-3">
+							<div class="card mb-3">
+								<div class="card-header bg-primary text-white">
+									@classes.Class_id
+								</div>
+								<div class="card-body">
+									<h5 class="card-title">@classes.Subject_name - Grade @classes.Grade</h5>
+									<p class="card-text">
+										<i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
+										<i class="fa fa-user"></i> Address: @classes.Address
+									</p>
+									@if (classes.Status == 1)
+									{
+										<p class="text-success">Available</p>
+										<form method="get" asp-page="/ClassDetails">
+											<input type="hidden" name="id" value="@classes.Class_id" />
+											<button type="submit" class="btn btn-success">More Details →</button>
+										</form>
+									}
+									else if (classes.Status == 2)
+									{
+										<p class="text-danger">Not Available</p>
+										<button type="button" class="btn btn-secondary" disabled>More Details →</button>
+									}
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			}
+			else
+			{
+				<p>No class found matching the search criteria.</p>
+			}
+		}
+	</div>
 </section>
 <!-- ======= End Search Subject ======= -->
-
 <!-- Vendor JS Files -->
 <script src="~/lib/aos/aos.js"></script>
 <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>

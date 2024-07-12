@@ -39,7 +39,4 @@ namespace eTeacher.Core.Services
             await _smtpClient.SendMailAsync(mailMessage);
         }
     }
-
-
-
 }
