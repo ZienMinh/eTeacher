@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240711070633_DbInit")]
-    partial class DbInit
+    [Migration("20240712033617_InitDc")]
+    partial class InitDc
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -455,7 +455,7 @@ namespace BusinessObject.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("Rating")
+                    b.Property<byte?>("Rating")
                         .HasColumnType("tinyint");
 
                     b.Property<byte>("Role")

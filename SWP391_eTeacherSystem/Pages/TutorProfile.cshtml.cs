@@ -40,13 +40,13 @@ namespace SWP391_eTeacherSystem.Pages
                 if (userId != null)
                 {
                     var userResponse = await _userService.GetByIdAsync(userId);
-                    if (userResponse.IsSucceed && userResponse.Users != null && userResponse.Users.Any())
+                    if (userResponse.IsSucceed)
                     {
                         User = userResponse.Users.First();
                     }
 
                     var qualificationResponse = await _userService.GetQualificationByIdAsync(QualificationDto, userId);
-                    if (qualificationResponse.IsSucceed && qualificationResponse.Qualifications != null && qualificationResponse.Qualifications.Any())
+                    if (qualificationResponse.IsSucceed)
                     {
                         Qualification = qualificationResponse.Qualifications.First();
                     }

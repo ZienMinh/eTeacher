@@ -452,7 +452,7 @@ namespace BusinessObject.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<byte>("Rating")
+                    b.Property<byte?>("Rating")
                         .HasColumnType("tinyint");
 
                     b.Property<byte>("Role")

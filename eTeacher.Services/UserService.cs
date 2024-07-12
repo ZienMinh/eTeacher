@@ -154,6 +154,9 @@ namespace Services
             user.Link_contact = userDto.Link_contact ?? userDto.Link_contact;
             user.PhoneNumber = userDto.PhoneNumber ?? userDto.PhoneNumber;
             user.Image = userDto.Image ?? userDto.Image;
+            user.Rating = userDto.Rating != default(byte) ? userDto.Rating : userDto.Rating;
+            user.Role = userDto.Role != default(byte) ? userDto.Role : userDto.Role;
+
 
             var updateResult = await _userManager.UpdateAsync(user);
 

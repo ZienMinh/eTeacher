@@ -31,18 +31,7 @@
                     <form action="" method="post" role="form" class="board">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label asp-for="QualificationDto.Qualification_id">Qualification Id</label>
-                                <input type="text" asp-for="QualificationDto.Qualification_id" class="form-control" readonly>
-                                <span asp-validation-for="QualificationDto.Qualification_id" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label asp-for="QualificationDto.User_id">User Id</label>
-                                <input type="number" asp-for="QualificationDto.User_id" class="form-control" readonly>
-                                <span asp-validation-for="QualificationDto.User_id" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <div class="row">
+                            <input type="hidden" asp-for="QualificationId" />
                             <div class="form-group col-md-6">
                                 <label asp-for="QualificationDto.Specialize">Specialize</label>
                                 <input type="text" asp-for="QualificationDto.Specialize" class="form-control">

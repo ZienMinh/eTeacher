@@ -93,6 +93,7 @@ namespace SWP391_eTeacherSystem.Pages
             }
 
             QualificationDto.User_id = userId;
+            QualificationDto.Qualification_id = QualificationId;
 
 
             try
