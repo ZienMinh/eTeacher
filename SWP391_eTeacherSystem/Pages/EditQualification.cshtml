@@ -32,42 +32,48 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label asp-for="UserDto.Qualification.Specialize">Specialize</label>
-                                <input type="text" asp-for="UserDto.Qualification.Specialize" class="form-control" required>
-                                <span asp-validation-for="UserDto.Qualification.Specialize" class="text-danger"></span>
+                                <label asp-for="QualificationDto.Qualification_id">Qualification Id</label>
+                                <input type="text" asp-for="QualificationDto.Qualification_id" class="form-control" readonly>
+                                <span asp-validation-for="QualificationDto.Qualification_id" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                <label asp-for="UserDto.Qualification.Classification">Classfication</label>
-                                <input type="text" asp-for="UserDto.Qualification.Classification" class="form-control" required>
-                                <span asp-validation-for="UserDto.Qualification.Classification" class="text-danger"></span>
+                                <label asp-for="QualificationDto.User_id">User Id</label>
+                                <input type="number" asp-for="QualificationDto.User_id" class="form-control" readonly>
+                                <span asp-validation-for="QualificationDto.User_id" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label asp-for="UserDto.Qualification.Training_facility">Training facility</label>
-                                <input type="text" asp-for="UserDto.Qualification.Training_facility" class="form-control" required>
-                                <span asp-validation-for="UserDto.Qualification.Training_facility" class="text-danger"></span>
+                                <label asp-for="QualificationDto.Specialize">Specialize</label>
+                                <input type="text" asp-for="QualificationDto.Specialize" class="form-control">
+                                <span asp-validation-for="QualificationDto.Specialize" class="text-danger"></span>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label asp-for="UserDto.Qualification.Graduation_year">Graduation year</label>
-                                <input type="date" asp-for="UserDto.Qualification.Graduation_year" class="form-control" required>
-                                <span asp-validation-for="UserDto.Qualification.Graduation_year" class="text-danger"></span>
+                            <div class="form-group col-md-6">
+                                <label asp-for="QualificationDto.Classification">Classfication</label>
+                                <input type="text" asp-for="QualificationDto.Classification" class="form-control">
+                                <span asp-validation-for="QualificationDto.Classification" class="text-danger"></span>
                             </div>
                         </div>
-                        
                         <div class="row">
-                            <div class="form-group col-md-12">
-                                <label asp-for="UserDto.Image">Img</label>
-                                <input type="file" asp-for="UserDto.Image" class="form-control" required>
-                                <span asp-validation-for="UserDto.Image" class="text-danger"></span>
-
-                                @if (!string.IsNullOrEmpty(Model.UserDto.Image))
-                                {
-                                    <img src="~/img/@Model.UserDto.Image" alt="User Image" class="img-thumbnail mt-2" style="max-width: 100%;">
-                                }
+                            <div class="form-group col-md-6">
+                                <label asp-for="QualificationDto.Training_facility">Training facility</label>
+                                <input type="text" asp-for="QualificationDto.Training_facility" class="form-control">
+                                <span asp-validation-for="QualificationDto.Training_facility" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-">
+                                <label asp-for="QualificationDto.Graduation_year">Graduation year</label>
+                                <input type="number" asp-for="QualificationDto.Graduation_year" class="form-control">
+                                <span asp-validation-for="QualificationDto.Graduation_year" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="text-center"><button asp-page="Profile" type="submit" class="btn btn-primary form-control">Submit</button></div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="QualificationDto.Image">Image</label>
+                                <input type="file" asp-for="QualificationDto.Image" class="form-control">
+                                <span asp-validation-for="QualificationDto.Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="text-center"><button type="submit" class="btn btn-primary form-control">Submit</button></div>
                     </form>
                 </div>
                 <div class="col-lg-2"></div>

@@ -76,7 +76,6 @@ namespace SWP391_eTeacherSystem.Pages
     public int UserCount { get; set; }
         public void OnGet()
         {
-            VisitorCount = _visitorCounterService.GetVisitorCount();
             RegisteredUserCount = _visitorCounterService.GetRegisteredUserCount();
             RequirementCount = _visitorCounterService.GetRequirementCount();
             ReportCount = _visitorCounterService.GetReportCount();

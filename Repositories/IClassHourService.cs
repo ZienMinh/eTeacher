@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using BusinessObject.Models;
+using DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace Repositories
         Task<ClassHourServiceResponseDto> CreateClassAsync(ClassHourDto model, string userId);
 
         Task<ClassHourServiceResponseDto> GetByIdAsync(ClassHourDto classHourDto, string id);
+
+        Task<List<ClassHour>> SearchSubjectAsync(string subjectName);
+
+        Task<ClassHourServiceResponseDto> UpdateClassHourAsync(ClassHourDto classHourDto);
 
         Task<ClassHourServiceResponseDto> DeleteClassAsync(string id);
 

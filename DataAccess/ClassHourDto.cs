@@ -24,15 +24,13 @@ namespace DataAccess
 
         public DateOnly? End_date { get; set; }
 
-        public TimeOnly? Start_time { get; set; }
+        public TimeSpan? Start_time { get; set; }
 
-        public TimeOnly? End_time { get; set; }
+        public TimeSpan? End_time { get; set; }
 
         [Required(ErrorMessage = "Grade is required")]
         [Range(1, 12, ErrorMessage = "Grade must be between 1 and 12")]
         public byte Grade { get; set; }
-
-        public byte Type_class { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
@@ -44,5 +42,7 @@ namespace DataAccess
         public string? Description { get; set; }
 
         public double? Total { get; set; }
+
+        public byte? Status { get; set; }
     }
 }

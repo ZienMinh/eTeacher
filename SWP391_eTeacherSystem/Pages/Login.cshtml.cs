@@ -34,12 +34,14 @@ namespace SWP391_eTeacherSystem.Pages
                         case 1:
                             return RedirectToPage("/StudentPage");
                         case 2:
-                            return RedirectToPage("/Admin");
+                            return RedirectToPage("/AdminPage");
                         case 3:
                             return RedirectToPage("/TutorPage");
+                        case 4:
+                            return RedirectToPage("/ModeratorPage");
                         default:
-                    return RedirectToPage("/Index");
-                }
+                            return RedirectToPage("/Index");
+                    }
                 }
                 else
                 {

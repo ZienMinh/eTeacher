@@ -24,7 +24,7 @@ namespace BusinessObject.Models
         public DbSet<ClassHour> ClassHours { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<Visitor> Visitors { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -110,6 +110,12 @@ namespace BusinessObject.Models
                       .WithOne(r => r.Class)
                       .HasForeignKey(r => r.Class_id)
                       .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(e => e.Attendances)
+                      .WithOne(r => r.Class)
+                      .HasForeignKey(r => r.Class_id)
+                      .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             // Order entity configuration
@@ -130,13 +136,18 @@ namespace BusinessObject.Models
                 entity.HasKey(e => e.Report_id);
             });
 
-
             // Subject entity configuration
             modelBuilder.Entity<Subject>(entity =>
             {
                 entity.HasKey(e => e.Subject_id);
                 entity.HasIndex(e => e.Subject_name)
                       .IsUnique();
+            });
+
+            // Attendance entity configuration
+            modelBuilder.Entity<Attendance>(entity =>
+            {
+                entity.HasKey(e => e.Attendance_id);
             });
         }
 

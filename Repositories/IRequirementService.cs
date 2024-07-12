@@ -16,8 +16,11 @@ namespace Repositories
 
         Task<RequirementServiceResponseDto> GetAll(RequirementDto requirementDto);
 
-
         Task<RequirementServiceResponseDto> GetByIdAsync(RequirementDto requirementDto, string id);
+
+        Task<RequirementServiceResponseDto> GetByUserIdAsync(RequirementDto requirementDto, string id);
+
+        Task<RequirementServiceResponseDto> UpdateRequirementAsync(RequirementDto requirementDto);
 
         Task<RequirementServiceResponseDto> DeleteByIdAsync(string id);
 

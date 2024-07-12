@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,9 @@ namespace DataAccess
     {
         public bool IsSucceed { get; set; }
         public string Message { get; set; }
+
+        public List<ReportDto> Reports { get; set; }
+
+        public Report CreateReport {  get; set; }
     }
 }

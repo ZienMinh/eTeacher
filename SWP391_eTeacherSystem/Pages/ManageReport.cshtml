@@ -1,0 +1,53 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ManageReportModel
+@{
+    ViewData["Title"] = "Manage Report";
+    var report = Model.Report;
+}
+<!-- ======= Manage Report Section ======= -->
+<link href="~/css/report.css" rel="stylesheet">
+@if (report != null)
+{
+    <section id="ManageReport" class="contact ctaa">
+        <div class="container " data-aos="fade-up">
+            <div class="row">
+                <form method="post" role="form" class="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row board col-lg-8">
+                        <div class="col-lg-6">
+                            <h3>Report details @report.Report_id</h3>
+                            <p>Class @report.Class_id</p>
+                            <p>Student @report.Student_id</p>
+                            <p>Tutor @report.Tutor_id</p>
+                            <p>Title: @report.Title</p>
+                            <p>Content: @report.Content</p>
+                            <input type="hidden" asp-for="ReportId" />
+                        </div>
+                        <div class="my-3">
+                            <div class="loading"></div>
+                            <div class="error-message"></div>
+                            <div class="sent-message"></div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <div class="col-12 text-center">
+                                    <button type="submit" name="action" value="cancel" class="btn btn-primary form-control">Approve && Refund</button>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="col-12 text-center">
+                                    <button type="submit" name="action" value="reject" class="btn btn-danger form-control">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <p>No feedbacks found.</p>
+}
+<!-- ======= End Manage Report Section ======= -->

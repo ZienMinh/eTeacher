@@ -34,9 +34,9 @@ namespace BusinessObject.Models
 
         public DateOnly? End_date { get; set; }
 
-        public TimeOnly? Start_time { get; set; }
+        public TimeSpan? Start_time { get; set; }
 
-        public TimeOnly? End_time { get; set; }
+        public TimeSpan? End_time { get; set; }
 
         public byte Grade { get; set; }
 
@@ -48,7 +48,13 @@ namespace BusinessObject.Models
 
         public double? Total { get; set; }
 
+        public byte? Status { get; set; }
+
+        public string? Link_meet { get; set; }
+
         public ICollection<Report> Reports { get; set; }
+
+        public ICollection<Attendance> Attendances { get; set; }
     }
     
 }

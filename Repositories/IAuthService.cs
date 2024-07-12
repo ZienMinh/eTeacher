@@ -18,8 +18,6 @@ namespace Repositories
         Task<AuthServiceResponseDto> ResetPasswordByEmailAsync(string userName);
         Task RegisterAsyn(RegisterDto registerDto);
 
-        Task<AuthServiceResponseDto> UpdateUserAsync(UserDto userDto);
-
         string GetCurrentUserId();
         string GenerateRandomPassword();
 

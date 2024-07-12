@@ -9,24 +9,20 @@ namespace Repositories
 {
     public interface IClassService
     {
-        Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId);
-
-        Task<ClassServiceResponseDto> DeleteClassAsync(string id);
+        Task<ClassServiceResponseDto> GetByIdAsync(ClassDto classDto, string id);
 
         Task<ClassServiceResponseDto> GetByStudentIdAsync(ClassDto classDto, string id);
 
         Task<ClassServiceResponseDto> GetByTutorIdAsync(ClassDto classDto, string id);
 
-        Task<ClassServiceResponseDto> GetByIdAsync(ClassDto classDto, string id);
+        Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId);
 
-        //Task<ClassServiceResponseDto> GetByTypeAsync(ClassDto classDto, byte type);
+        Task<ClassServiceResponseDto> DeleteClassAsync(string id);
 
-        Task<ClassServiceResponseDto> GetByTypeAsync(ClassDto classDto);
+        Task<ClassServiceResponseDto> UpdateClassAsync(ClassDto classDto);
 
-        Task<ClassServiceResponseDto> UpdateStudentAsync(ClassDto classDto, string userId);
 
         string GenerateClassId();
-
         string GetCurrentUserId();
     }
 }

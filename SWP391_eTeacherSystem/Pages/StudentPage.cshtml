@@ -42,10 +42,11 @@
                 <li><a class="nav-link scrollto active" href="#about">About</a></li>
                 <li><a class="nav-link scrollto active" href="#services">Services</a></li>
                 <li><a class="nav-link scrollto active" href="#searchTutor">Search Tutor</a></li>
+                <li><a class="nav-link scrollto active" href="#hour_class">Search subject</a></li>
                 <li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
                 <li><a class="nav-link scrollto active" asp-page="ClassHour">Class Hour</a></li>
                 <li><a class="nav-link scrollto active" asp-page="ClassList">Class List</a></li>
-                <li><a class="nav-link scrollto active" asp-page="Profile">Profile</a></li>
+                <li><a class="nav-link scrollto active" asp-page="StudentProfile">Profile</a></li>
                 <li>
                     <form method="post" asp-page-handler="Logout">
                         <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
@@ -155,60 +156,121 @@
 <!-- ======= Search Tutor ======= -->
 <section id="searchTutor" class="searchTutor section-bg">
     <div class="container" data-aos="fade-up">
-<h2>Search Tutors</h2>
+        <h2>Search Tutors</h2>
 
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Name">Name</label>
-        <input asp-for="Name" class="form-control" />
-    </div>
+        <form method="post" asp-page-handler="SearchTutor">
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
     <div class="form-group">
         <label asp-for="SubjectName">Subject Name</label>
         <input asp-for="SubjectName" class="form-control" />
     </div>
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
 
-@if (Model.Tutors != null && Model.Tutors.Count > 0)
-{
-    <h3>Search Results</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>User Name</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Gender</th>
-                <th>Address</th>
-                <th>Link Contact</th>
-                <th>Rating</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tutor in Model.Tutors)
-            {
-                <tr>
-                    <td>@tutor.UserName</td>
-                    <td>@tutor.First_name</td>
-                    <td>@tutor.Last_name</td>
-                    <td>@tutor.Gender</td>
-                    <td>@tutor.Address</td>
-                    <td>@tutor.Link_contact</td>
-                    <td>@tutor.Rating</td>
-                    <td><img src="@tutor.Image" alt="Image" style="width: 100px; height: auto;" /></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else if (Model.Tutors != null)
-{
-    <p>No tutors found matching the search criteria.</p>
-}
-</div>
+        @if (Model.Tutors != null && Model.Tutors.Count > 0)
+        {
+            <h3>Search Results</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Link Contact</th>
+                        <th>Rating</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tutor in Model.Tutors)
+                    {
+                        <tr>
+                            <td>@tutor.UserName</td>
+                            <td>@tutor.First_name</td>
+                            <td>@tutor.Last_name</td>
+                            <td>@tutor.Gender</td>
+                            <td>@tutor.Address</td>
+                            <td>@tutor.Link_contact</td>
+                            <td>@tutor.Rating</td>
+                            <td><img src="@tutor.Image" alt="Image" style="width: 100px; height: auto;" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (Model.Tutors != null)
+        {
+            <p>No tutors found matching the search criteria.</p>
+        }
+    </div>
 </section>
 <!-- ======= End Search Tutor ======= -->
+<!-- ======= Search Subject ======= -->
+<section id="hour_class" class="hour_class">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>List of Class hour</h2>
+            <p>Short lessons to reinforce your knowledge</p>
+        </div>
+        <form method="post" asp-page-handler="Search">
+            <div class="form-group">
+                <label asp-for="SubjectName">Subject Name</label>
+                <input asp-for="SubjectName" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        @if (Model.HasSearched)
+        {
+            @if (Model.Classes != null && Model.Classes.Count > 0)
+            {
+                <h4>Search Results</h4>
+                <div class="row">
+                    @foreach (var classes in Model.Classes)
+                    {
+                        <div class="col-md-3">
+                            <div class="card mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    @classes.Class_id
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">@classes.Subject_name - Grade @classes.Grade</h5>
+                                    <p class="card-text">
+                                        <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
+                                        <i class="fa fa-user"></i> Address: @classes.Address
+                                    </p>
+                                    @if (classes.Status == 1)
+                                    {
+                                        <p class="text-success">Available</p>
+                                        <form method="get" asp-page="/ClassDetails">
+                                            <input type="hidden" name="id" value="@classes.Class_id" />
+                                            <button type="submit" class="btn btn-success">More Details →</button>
+                                        </form>
+                                    }
+                                    else if (classes.Status == 2)
+                                    {
+                                        <p class="text-danger">Not Available</p>
+                                        <button type="button" class="btn btn-secondary" disabled>More Details →</button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p>No class found matching the search criteria.</p>
+            }
+        }
+    </div>
+</section>
+<!-- ======= End Search Subject ======= -->
 
 <!-- Vendor JS Files -->
 <script src="~/lib/aos/aos.js"></script>

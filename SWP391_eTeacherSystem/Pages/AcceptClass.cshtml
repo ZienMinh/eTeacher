@@ -48,10 +48,19 @@
                                 <i class="fa fa-dollar-sign"></i> @requirement.Price VNĐ/lesson, @requirement.Number_of_session sessions/course<br />
                                 <i class="fa fa-user"></i> Address: @requirement.Address
                             </p>
-                            <form method="get" asp-page="/RequirementDetails">
-                                <input type="hidden" name="id" value="@requirement.Requirement_id" />
-                                <button type="submit" class="btn btn-success">More Details →</button>
-                            </form>
+                            @if (requirement.Status == 1)
+                            {
+                                <p class="text-success">Available</p>
+                                <form method="get" asp-page="/RequirementDetails">
+                                    <input type="hidden" name="id" value="@requirement.Requirement_id" />
+                                    <button type="submit" class="btn btn-success">More Details →</button>
+                                </form>
+                            }
+                            else if (requirement.Status == 2)
+                            {
+                                <p class="text-danger">Not Available</p>
+                                <button type="button" class="btn btn-secondary" disabled>More Details →</button>
+                            }
                         </div>
                     </div>
                 </div>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240711062213_DbInit2")]
-    partial class DbInit2
+    [Migration("20240711070633_DbInit")]
+    partial class DbInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,32 @@ namespace BusinessObject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
+                {
+                    b.Property<string>("Attendance_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Class_id")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Slot")
+                        .HasColumnType("int");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Attendance_id");
+
+                    b.HasIndex("Class_id");
+
+                    b.ToTable("Attendance");
+                });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
@@ -38,11 +64,14 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
                         .HasColumnType("tinyint");
+
+                    b.Property<string>("Link_meet")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Number_of_session")
                         .HasColumnType("int");
@@ -53,8 +82,11 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Student_id")
                         .HasMaxLength(450)
@@ -108,7 +140,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -123,8 +155,11 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
@@ -133,9 +168,6 @@ namespace BusinessObject.Migrations
 
                     b.Property<double?>("Total")
                         .HasColumnType("float");
-
-                    b.Property<byte>("Type_class")
-                        .HasColumnType("tinyint");
 
                     b.Property<string>("User_id")
                         .IsRequired()
@@ -187,25 +219,21 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Classification")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("Graduation_year")
+                    b.Property<int?>("Graduation_year")
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Specialize")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Training_facility")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -236,7 +264,10 @@ namespace BusinessObject.Migrations
                         .HasMaxLength(750)
                         .HasColumnType("nvarchar(750)");
 
-                    b.Property<byte>("Rating")
+                    b.Property<byte?>("Processing")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("Rating")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Student_id")
@@ -251,6 +282,9 @@ namespace BusinessObject.Migrations
                     b.Property<string>("Tutor_id")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -285,7 +319,7 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("End_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("End_time")
+                    b.Property<TimeSpan?>("End_time")
                         .HasColumnType("time");
 
                     b.Property<byte>("Grade")
@@ -305,8 +339,11 @@ namespace BusinessObject.Migrations
                     b.Property<DateOnly?>("Start_date")
                         .HasColumnType("date");
 
-                    b.Property<TimeOnly?>("Start_time")
+                    b.Property<TimeSpan?>("Start_time")
                         .HasColumnType("time");
+
+                    b.Property<byte?>("Status")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("Subject_name")
                         .IsRequired()
@@ -447,22 +484,6 @@ namespace BusinessObject.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("BusinessObject.Models.Visitor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("VisitDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Visitor");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -594,6 +615,16 @@ namespace BusinessObject.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("BusinessObject.Models.Attendance", b =>
+                {
+                    b.HasOne("BusinessObject.Models.Class", "Class")
+                        .WithMany("Attendances")
+                        .HasForeignKey("Class_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
@@ -761,6 +792,8 @@ namespace BusinessObject.Migrations
 
             modelBuilder.Entity("BusinessObject.Models.Class", b =>
                 {
+                    b.Navigation("Attendances");
+
                     b.Navigation("Reports");
                 });
 

@@ -72,19 +72,6 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Visitor",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Visitor", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -217,11 +204,11 @@ namespace BusinessObject.Migrations
                 {
                     Qualification_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    Graduation_year = table.Column<int>(type: "int", nullable: false),
-                    Specialize = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Classification = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Training_facility = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Graduation_year = table.Column<int>(type: "int", nullable: true),
+                    Specialize = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Classification = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Training_facility = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -245,13 +232,15 @@ namespace BusinessObject.Migrations
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Start_date = table.Column<DateOnly>(type: "date", nullable: true),
                     End_date = table.Column<DateOnly>(type: "date", nullable: true),
-                    Start_time = table.Column<TimeOnly>(type: "time", nullable: true),
-                    End_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    Start_time = table.Column<TimeSpan>(type: "time", nullable: true),
+                    End_time = table.Column<TimeSpan>(type: "time", nullable: true),
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Type_class = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<double>(type: "float", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true),
+                    Link_meet = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -292,14 +281,14 @@ namespace BusinessObject.Migrations
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Start_date = table.Column<DateOnly>(type: "date", nullable: true),
                     End_date = table.Column<DateOnly>(type: "date", nullable: true),
-                    Start_time = table.Column<TimeOnly>(type: "time", nullable: true),
-                    End_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    Start_time = table.Column<TimeSpan>(type: "time", nullable: true),
+                    End_time = table.Column<TimeSpan>(type: "time", nullable: true),
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
-                    Type_class = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
-                    Total = table.Column<double>(type: "float", nullable: true)
+                    Total = table.Column<double>(type: "float", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -327,15 +316,16 @@ namespace BusinessObject.Migrations
                     Subject_name = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
                     Start_date = table.Column<DateOnly>(type: "date", nullable: true),
                     End_date = table.Column<DateOnly>(type: "date", nullable: true),
-                    Start_time = table.Column<TimeOnly>(type: "time", nullable: true),
-                    End_time = table.Column<TimeOnly>(type: "time", nullable: true),
+                    Start_time = table.Column<TimeSpan>(type: "time", nullable: true),
+                    End_time = table.Column<TimeSpan>(type: "time", nullable: true),
                     Grade = table.Column<byte>(type: "tinyint", nullable: false),
                     Rank = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Number_of_session = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
-                    Total = table.Column<double>(type: "float", nullable: true)
+                    Total = table.Column<double>(type: "float", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -355,6 +345,27 @@ namespace BusinessObject.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Attendance",
+                columns: table => new
+                {
+                    Attendance_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Slot = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<byte>(type: "tinyint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attendance", x => x.Attendance_id);
+                    table.ForeignKey(
+                        name: "FK_Attendance_Classes_Class_id",
+                        column: x => x.Class_id,
+                        principalTable: "Classes",
+                        principalColumn: "Class_id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Report",
                 columns: table => new
                 {
@@ -364,7 +375,9 @@ namespace BusinessObject.Migrations
                     Class_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(750)", maxLength: 750, nullable: false),
-                    Rating = table.Column<byte>(type: "tinyint", nullable: false),
+                    Rating = table.Column<byte>(type: "tinyint", nullable: true),
+                    Processing = table.Column<byte>(type: "tinyint", nullable: true),
+                    Type = table.Column<byte>(type: "tinyint", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -433,6 +446,11 @@ namespace BusinessObject.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attendance_Class_id",
+                table: "Attendance",
+                column: "Class_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Classes_Student_id",
@@ -530,6 +548,9 @@ namespace BusinessObject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Attendance");
+
+            migrationBuilder.DropTable(
                 name: "ClassHour");
 
             migrationBuilder.DropTable(
@@ -543,9 +564,6 @@ namespace BusinessObject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Requirement");
-
-            migrationBuilder.DropTable(
-                name: "Visitor");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

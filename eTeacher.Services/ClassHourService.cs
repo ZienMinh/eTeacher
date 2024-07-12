@@ -63,6 +63,22 @@ namespace Services
             }
         }
 
+        public async Task<List<ClassHour>> SearchSubjectAsync(string subjectName)
+        {
+            var query = _context.ClassHours
+                .Where(u => u.Subject_name == subjectName);
+
+            if (!string.IsNullOrEmpty(subjectName))
+            {
+                query = query.Where(r => r.Subject.Subject_name.Contains(subjectName));
+            }
+
+            var classes = await query.ToListAsync();
+
+            return classes;
+        }
+
+
         public async Task<ClassHourServiceResponseDto> CreateClassAsync(ClassHourDto model, string userId)
         {
             _logger.LogInformation("Mapping ClassDto to Requirement entity");
@@ -84,10 +100,11 @@ namespace Services
                         Start_time = model.Start_time,
                         End_time = model.End_time,
                         Grade = model.Grade,
-                        Type_class = model.Type_class,
                         Price = model.Price,
                         Number_of_session = model.Number_of_session,
-                        Description = model.Description
+                        Description = model.Description,
+                        Total = model.Total,
+                        Status = model.Status,
                     };
 
                     await _context.AddAsync(classes);
@@ -113,6 +130,60 @@ namespace Services
                 }
             }
         }
+
+        public async Task<ClassHourServiceResponseDto> UpdateClassHourAsync(ClassHourDto classHourDto)
+        {
+            var response = new ClassHourServiceResponseDto();
+
+            try
+            {
+                _logger.LogInformation("Retrieving class hour from database");
+
+                // Lấy class hour từ database
+                var classHour = await _context.ClassHours.FindAsync(classHourDto.Class_id);
+
+                if (classHour == null)
+                {
+                    _logger.LogWarning($"Class hour with id {classHourDto.Class_id} not found");
+                    response.IsSucceed = false;
+                    response.Message = "Class hour not found";
+                    return response;
+                }
+
+                // Cập nhật các thuộc tính của class hour nếu có giá trị mới
+                _logger.LogInformation("Updating class hour entity");
+
+                classHour.Address = classHourDto.Address ?? classHour.Address;
+                classHour.Subject_name = classHourDto.Subject_name ?? classHour.Subject_name;
+                classHour.Start_date = classHourDto.Start_date ?? classHour.Start_date;
+                classHour.End_date = classHourDto.End_date ?? classHour.End_date;
+                classHour.Start_time = classHourDto.Start_time ?? classHour.Start_time;
+                classHour.End_time = classHourDto.End_time ?? classHour.End_time;
+                classHour.Grade = classHourDto.Grade != default(byte) ? classHourDto.Grade : classHour.Grade;
+                classHour.Price = classHourDto.Price != default(double) ? classHourDto.Price : classHour.Price;
+                classHour.Number_of_session = classHourDto.Number_of_session != default(int) ? classHourDto.Number_of_session : classHour.Number_of_session;
+                classHour.Description = classHourDto.Description ?? classHour.Description;
+                classHour.Total = classHourDto.Total != null ? classHourDto.Total : classHour.Total;
+                classHour.Status = classHourDto.Status != null ? classHourDto.Status : classHour.Status;
+
+                // Lưu thay đổi vào database
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Class hour updated successfully");
+                response.IsSucceed = true;
+                response.Message = "Class hour updated successfully";
+                response.CreatedClass = classHour;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while updating the class hour: " + ex.Message);
+                response.IsSucceed = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
 
         public async Task<ClassHourServiceResponseDto> DeleteClassAsync(string id)
         {

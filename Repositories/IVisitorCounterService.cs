@@ -9,10 +9,6 @@ namespace Repositories
 {
     public interface IVisitorCounterService
     {
-        Task IncrementVisitorCountAsync();
-
-        int GetVisitorCount();
-
         int GetRegisteredUserCount();
 
         int GetRequirementCount();

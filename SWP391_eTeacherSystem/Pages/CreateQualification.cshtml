@@ -1,0 +1,72 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.CreateQualificationModel
+@{
+}
+<section id="contact" class="contact cta">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Requirements</h2>
+            <p>To find the most suitable tutor for you</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2"></div>
+
+            <div class="col-lg-8 ">
+                <form method="post" role="form" class="board">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="QualificationDto.User_id">User Id</label>
+                            <input type="text" asp-for="QualificationDto.User_id" class="form-control">
+                            <span asp-validation-for="QualificationDto.User_id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="QualificationDto.Qualification_id">Qualification Id</label>
+                            <input type="text" asp-for="QualificationDto.Qualification_id" class="form-control" readonly>
+                            <span asp-validation-for="QualificationDto.Qualification_id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="QualificationDto.Graduation_year">Graduation year</label>
+                            <input type="number" asp-for="QualificationDto.Graduation_year" class="form-control" required>
+                            <span asp-validation-for="QualificationDto.Graduation_year" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="QualificationDto.Specialize">Specialize</label>
+                            <input type="text" asp-for="QualificationDto.Specialize" class="form-control" required>
+                            <span asp-validation-for="QualificationDto.Specialize" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="QualificationDto.Classification">Classification</label>
+                            <input type="text" asp-for="QualificationDto.Classification" class="form-control" required>
+                            <span asp-validation-for="QualificationDto.Classification" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="QualificationDto.Training_facility">Training_facility</label>
+                            <input type="text" asp-for="QualificationDto.Training_facility" class="form-control" required>
+                            <span asp-validation-for="QualificationDto.Training_facility" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="my-3">
+                        <div class="loading"></div>
+                        <div class="error-message"></div>
+                        <div class="sent-message"></div>
+                    </div>
+                    <p></p>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary form-control">Submit</button>
+                        <p></p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Contact Section -->

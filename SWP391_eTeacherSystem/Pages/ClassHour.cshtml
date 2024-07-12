@@ -49,12 +49,21 @@
                                 <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
                                 <i class="fa fa-user"></i> Address: @classes.Address
                             </p>
-                            <form method="get" asp-page="/ClassDetails">
-                                <input type="hidden" name="id" value="@classes.Class_id" />
-                                <button type="submit" class="btn btn-success">More Details →</button>
-                            </form>
+                            @if (classes.Status == 1)
+                            {
+                                <p class="text-success">Available</p>
+                                <form method="get" asp-page="/ClassDetails">
+                                    <input type="hidden" name="id" value="@classes.Class_id" />
+                                    <button type="submit" class="btn btn-success">More Details →</button>
+                                </form>
+                            }
+                            else if (classes.Status == 2)
+                            {
+                                <p class="text-danger">Not Available</p>
+                                <button type="button" class="btn btn-secondary" disabled>More Details →</button>
+                            }
                         </div>
-                    </div>
+                    </div> 
                 </div>
             }
         </div>

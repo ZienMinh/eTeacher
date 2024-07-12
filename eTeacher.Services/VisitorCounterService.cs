@@ -20,19 +20,6 @@ namespace Services
         {
             _context = context;
         }
-
-        public async Task IncrementVisitorCountAsync()
-        {
-            var visitor = new Visitor { VisitDate = DateTime.UtcNow };
-            _context.Visitors.Add(visitor);
-            await _context.SaveChangesAsync();
-        }
-
-        public int GetVisitorCount()
-        {
-            return _context.Visitors.Count();
-        }
-
         public int GetRegisteredUserCount()
         {
             return _context.Users.Count();

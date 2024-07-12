@@ -1,0 +1,50 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.ViewReportModel
+@{
+    ViewData["Title"] = "View Report";
+}
+<!-- ======= View Report Section ======= -->
+<link href="~/css/report.css" rel="stylesheet">
+<h1>View Report</h1>
+<input type="hidden" asp-for="ClassId" />
+
+@if (Model.Reports != null && Model.Reports.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Processing</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model.Reports)
+            {
+                <tr>
+                    <td>@report.Title</td>
+                    <td>@report.Content</td>
+                    <td>
+                        @if (report.Processing == 1)
+                        {
+                            <span class="reportbg-warning-light">Pending</span>
+                        }
+                        else if (report.Processing == 2)
+                        {
+                            <span class="reportbg-success-light">Approved</span>
+                        }
+                        else if (report.Processing == 3)
+                        {
+                            <span class="reportbg-danger-light">Reject</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No feedbacks found for this class.</p>
+}
+<!-- ======= End View Report Section ======= -->

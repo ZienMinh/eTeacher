@@ -1,4 +1,4 @@
-
+﻿
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -165,19 +165,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
     .navbar .btnLogin-popup {
-  width: 110px;
-  height: 40px;
-  background: transparent;
-  border: 2px solid #fff;
-  outline: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.1em;
-  color: #fff;
-  font-weight: 500;
-  transition: .5s;
+        width: 110px;
+        height: 40px;
+        background: transparent;
+        border: 2px solid #fff;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #fff;
+        font-weight: 500;
+        transition: .5s;
       
-}
+    }
 
 .navbar .btnLogin-popup:hover{
   background: #fff;
@@ -1364,7 +1364,6 @@ section {
     .star-rating input[type="radio"]:checked ~ label {
         color: #FFD700;
     }
-
 /*--------------------------------------------------------------
 # Rating star
 --------------------------------------------------------------*/

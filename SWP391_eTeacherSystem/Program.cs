@@ -1,7 +1,6 @@
 using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
-using eTeacher.Core.Services.eTeacher.Core.Services;
 using eTeacher.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +30,7 @@ builder.Services.AddDbContext<AddDbContext>(options =>
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<AddDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Config Identity
 builder.Services.Configure<IdentityOptions>(options =>
@@ -73,21 +73,8 @@ builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IVisitorCounterService, VisitorCounterService>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 
-
-//builder.Services.AddSingleton<IEmailService, EmailService>(provider =>
-//{
-//    var configuration = provider.GetRequiredService<IConfiguration>();
-//    var emailSettings = configuration.GetSection("EmailSettings");
-//    return new EmailService(
-//        emailSettings["SmtpHost"],
-//        int.Parse(emailSettings["SmtpPort"]),
-//        emailSettings["FromEmail"],
-//        emailSettings["SmtpUser"],
-//        emailSettings["SmtpPass"]
-//    );
-//});
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>

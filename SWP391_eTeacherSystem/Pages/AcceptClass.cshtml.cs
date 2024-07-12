@@ -15,14 +15,16 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly IClassService _classService;
         private readonly IAuthService _authService;
         private readonly AddDbContext _context;
+        private readonly ILogger<AcceptClassModel> _logger;
 
         public AcceptClassModel(IRequirementService requirementService, IClassService classService, 
-            IAuthService authService, AddDbContext context)
+            IAuthService authService, AddDbContext context, ILogger<AcceptClassModel> logger)
         {
             _requirementService = requirementService;
             _classService = classService;
             _authService = authService;
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -32,12 +34,19 @@ namespace SWP391_eTeacherSystem.Pages
 
         public async Task OnGetAsync()
         {
-            var response = await _requirementService.GetAll(new RequirementDto());
-            Requirements = response.Requirements;
-            var userId = _authService.GetCurrentUserId();
-            if (userId != null)
+            try
             {
-                ClassDto = new ClassDto { Tutor_id = userId };
+                var response = await _requirementService.GetAll(new RequirementDto());
+                Requirements = response.Requirements.OrderBy(r => r.Status).ToList();
+                var userId = _authService.GetCurrentUserId();
+                if (userId != null)
+                {
+                    ClassDto = new ClassDto { Tutor_id = userId };
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching classes in OnGetAsync");
             }
         }
 

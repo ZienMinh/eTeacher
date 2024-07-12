@@ -102,7 +102,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label asp-for="ClassHourDto.Price">Price</label>
-                            <input type="number" asp-for="ClassHourDto.Price" class="form-control" required>
+                            <input type="number" asp-for="ClassHourDto.Price" class="form-control" readonly>
                             <span asp-validation-for="ClassHourDto.Price" class="text-danger"></span>
                         </div>
                     </div>
@@ -118,17 +118,23 @@
                             <span asp-validation-for="ClassHourDto.Description" class="text-danger"></span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="ClassHourDto.Status" class="form-control" value="1">
+                        <span asp-validation-for="ClassHourDto.Status" class="text-danger"></span>
+                    </div>
                     <div class="my-3">
                         <div class="loading"></div>
                         <div class="error-message"></div>
                         <div class="sent-message"></div>
                     </div>
+                    <div class="form-group">
+                        <label>Total Price</label>
+                        <input type="text" id="totalPrice" class="form-control" readonly>
+                    </div>
+                    <p></p>
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary form-control">Submit</button>
                         <p></p>
-                    </div>
-                    <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary form-control">Edit</button>
                     </div>
                 </form>
             </div>
@@ -140,3 +146,36 @@
     </div>
 </section>
 <!-- ======= End Class Hour Section ======= -->
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const startTimeInput = document.querySelector('input[name="ClassHourDto.Start_time"]');
+            const endTimeInput = document.querySelector('input[name="ClassHourDto.End_time"]');
+            const numberOfSessionsInput = document.querySelector('input[name="ClassHourDto.Number_of_session"]');
+            const priceInput = document.querySelector('input[name="ClassHourDto.Price"]');
+            const totalPriceInput = document.getElementById('totalPrice');
+
+            function calculateTotalPrice() {
+                const startTime = startTimeInput.value;
+                const endTime = endTimeInput.value;
+                const numberOfSessions = numberOfSessionsInput.value;
+                const price = priceInput.value;
+
+                if (startTime && endTime && numberOfSessions && price) {
+                    const start = new Date(`1970-01-01T${startTime}:00`);
+                    const end = new Date(`1970-01-01T${endTime}:00`);
+                    const duration = (end - start) / 3600000; // convert milliseconds to hours
+                    const total = duration * numberOfSessions * price;
+                    totalPriceInput.value = total.toFixed(2);
+                }
+            }
+
+            startTimeInput.addEventListener('input', calculateTotalPrice);
+            endTimeInput.addEventListener('input', calculateTotalPrice);
+            numberOfSessionsInput.addEventListener('input', calculateTotalPrice);
+            priceInput.addEventListener('input', calculateTotalPrice);
+
+            calculateTotalPrice(); // Initial calculation
+        });
+    </script>
+}

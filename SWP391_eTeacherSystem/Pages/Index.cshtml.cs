@@ -7,18 +7,11 @@ namespace SWP391_eTeacherSystem.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IVisitorCounterService _visitorCounterService;
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger,IVisitorCounterService visitorCounterService)
+        public IndexModel(ILogger<IndexModel> logger)
         {
-            _visitorCounterService = visitorCounterService;
             _logger = logger;
-        }
-
-        public async Task OnGetAsync()
-        {
-            await _visitorCounterService.IncrementVisitorCountAsync();
         }
 
 

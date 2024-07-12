@@ -68,13 +68,23 @@
                 <div class="form-group">
                     <label asp-for="Feedback.Rating">Rating</label>
                     <div class="star-rating">
-                        @for (int i = 1; i <= 5; i++)
+                        @for (int i = 5; i >= 1; i--)
                         {
                             <input type="radio" asp-for="Feedback.Rating" id="star-@i" name="Feedback.Rating" value="@i" class="d-none" />
                             <label for="star-@i" class="star">&#9733;</label>
                         }
                     </div>
                     <span asp-validation-for="Feedback.Rating" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Type" class="form-control" value="1">
+                        <span asp-validation-for="Feedback.Type" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="hidden" asp-for="Feedback.Processing" class="form-control" value="0">
+                        <span asp-validation-for="Feedback.Processing" class="text-danger"></span>
+                    </div>
                 </div>
                 <div class="col-12 text-center">
                     <button type="submit" class="btn btn-primary form-control">Submit</button>
@@ -87,15 +97,30 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.star-rating .star');
-        stars.forEach((star, index) => {
-            star.addEventListener('click', () => {
-                stars.forEach((s, i) => {
-                    if (i <= index) {
-                        s.style.color = '#FFD700';
+        const radioButtons = document.querySelectorAll('.star-rating input[type="radio"]');
+
+        function updateStars() {
+            const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
+            if (checkedStar) {
+                const checkedIndex = parseInt(checkedStar.value);
+                stars.forEach((star, index) => {
+                    if (index < checkedIndex) {
+                        star.style.color = '#FFD700';
                     } else {
-                        s.style.color = '#ccc';
+                        star.style.color = '#ccc';
                     }
                 });
+            } else {
+                stars.forEach((star) => {
+                    star.style.color = '#ccc';
+                });
+            }
+        }
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                radioButtons[index].checked = true;
+                updateStars();
             });
 
             star.addEventListener('mouseover', () => {
@@ -108,22 +133,10 @@
                 });
             });
 
-            star.addEventListener('mouseout', () => {
-                stars.forEach((s) => {
-                    s.style.color = '#ccc';
-                });
-                const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
-                if (checkedStar) {
-                    const checkedIndex = Array.from(stars).indexOf(checkedStar.nextElementSibling);
-                    stars.forEach((s, i) => {
-                        if (i <= checkedIndex) {
-                            s.style.color = '#FFD700';
-                        }
-                    });
-                }
-            });
+            star.addEventListener('mouseout', updateStars);
         });
-    });
 
+        updateStars();
+    });
 </script>
 <!-- ======= End Create Feedback ======= -->

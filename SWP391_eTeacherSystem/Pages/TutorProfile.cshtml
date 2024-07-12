@@ -1,0 +1,70 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.TutorProfileModel
+@{
+    var user = Model.User;
+    var qualification = Model.Qualification;
+}
+<section id="cta" class="cta">
+    <div class="container" data-aos="zoom-in">
+
+        <div class="row">
+            <div class="col-lg-9 text-center text-lg-start">
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+            </div>
+        </div>
+
+    </div>
+    <!-- </section>End Cta Section -->
+    <!-- ======= Requirements Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+                <h2>Edit Profile</h2>
+                <p>!!!</p>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-2"></div>
+
+                <div class="col-lg-8 textblack">
+                    <form action="" method="post" role="form" class="board">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <p><strong>User Name:</strong> @user.First_name @user.Last_name</p>
+                            <p><strong>Gender:</strong> @user.Gender</p>
+                            <p><strong>Address:</strong> @user.Address</p>
+                            <p><strong>Email:</strong> @user.Email</p>
+                            <p><strong>Birth Date:</strong> @user.Birth_date.ToString("d")</p>
+                            <p><strong>Link Contact:</strong><a href="@user.Link_contact"> @user.Link_contact</a></p>
+                            <p><strong>Rating:</strong> @user.Rating</p>
+                            <p><strong>Image:</strong> @user.Image</p>
+                            <div class="text-center"><button class="btn btn-primary form-control" asp-page="EditProfile">Edit</button></div>
+                    </form>
+                </div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 textblack">
+                    <form action="" method="post" role="form" class="board">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            @if (qualification != null)
+                            {
+                                <p><strong>Qualification ID:</strong> @qualification.Qualification_id</p>
+                                <p><strong>Graduation Year:</strong> @qualification.Graduation_year</p>
+                                <p><strong>Specialize:</strong> @qualification.Specialize</p>
+                                <p><strong>Classification:</strong> @qualification.Classification</p>
+                                <p><strong>Training Facility:</strong> @qualification.Training_facility</p>
+                                <div class="text-center"><button class="btn btn-primary form-control" asp-page="EditQualification">Edit</button></div>
+                            }
+                            else
+                            {
+                                <div class="text-center"><button class="btn btn-primary form-control" asp-page="CreateQualification">Add Qualification</button></div>
+                            }
+                            
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
