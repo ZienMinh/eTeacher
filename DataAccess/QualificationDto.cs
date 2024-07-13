@@ -17,5 +17,6 @@ namespace DataAccess
         public string? Classification { get; set; }
         public string? Training_facility { get; set; }
         public string? Image { get; set; }
+
     }
 }

@@ -130,5 +130,12 @@ namespace Services
 
             return maxSlot.HasValue ? maxSlot.Value + 1 : 1;
         }
+
+        public async Task<List<Attendance>> GetAttendancesByClassIdAsync(string classId)
+        {
+            return await _context.Attendances
+                .Where(a => a.Class_id == classId)
+                .ToListAsync();
+        }
     }
 }

@@ -328,5 +328,6 @@ namespace Services
 
             return "Q" + (currentCount + 1).ToString("D9");
         }
+
     }
 }

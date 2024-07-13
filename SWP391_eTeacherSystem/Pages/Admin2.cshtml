@@ -1,0 +1,85 @@
+﻿@page
+@{
+    Layout = "_AdminLayout";
+}
+@model SWP391_eTeacherSystem.Pages.Admin2Model
+@{
+}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">Account</h3>
+                        <div class="card-tools" >
+                            <a href="#" class="btn btn-tool btn-sm">
+                                <i class="fas fa-times"></i>
+                            </a>
+                            <a href="#" class="btn btn-tool btn-sm">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-valign-middle table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Gender</th>
+                                    <th>Role</th>
+                                    <th>Email</th>
+                                    <th>Link Contact</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model.Users)
+                                {
+                                    <tr>
+                                        <td>
+                                            @user.First_name @user.Last_name
+                                        </td>
+                                        <td>@user.Gender</td>
+                                        <td>
+                                            @if (user.Role == 1)
+                                            {
+                                                <span>User</span>
+                                            }
+                                            else if (user.Role == 2)
+                                            {
+                                                <span>Admin</span>
+                                            }
+                                            else if (user.Role == 3)
+                                            {
+                                                <span>Tutor</span>
+                                            }
+                                        </td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Link_contact</td>
+                                        <td>
+                                            <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                                <button type="submit" class="btn btn-tool btn-sm">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="btn btn-tool btn-sm">
+                                                <i class="fas fa-sync"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div> 
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</div>

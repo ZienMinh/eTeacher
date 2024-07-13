@@ -126,7 +126,11 @@ else
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="ClassDto.Link_meet" class="form-control" value="@classes.Link_meet">
+                                <span asp-validation-for="ClassDto.Link_meet" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <input type="hidden" asp-for="ClassDto.Status" class="form-control" value="1">
                                 <span asp-validation-for="ClassDto.Status" class="text-danger"></span>
                             </div>
@@ -137,7 +141,7 @@ else
                             <div class="sent-message"></div>
                         </div>
                         <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary form-control">Register for class</button>
+                            <button type="submit" class="btn btn-primary form-control" asp-page-handler = "CheckoutPayment" asp-route-payment = "VNPay">Register for class</button>
                             <p></p>
                         </div>
                     </div>
@@ -146,4 +150,5 @@ else
         </div>
     </section>
     <!-- ======= End Class Detail Section ======= -->
+    
 }

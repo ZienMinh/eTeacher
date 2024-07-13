@@ -33,9 +33,13 @@ namespace SWP391_eTeacherSystem.Pages
                 var userId = _authService.GetCurrentUserId();
                 var response = await _classService.GetByTutorIdAsync(ClassDto, userId);
                 Classes = response.Classes;
-                if (userId == null)
+                if (userId != null)
                 {
                     ClassDto = new ClassDto { Student_id = userId };
+                }
+                else
+                {
+                    Classes = new List<Class>();
                 }
             }
             catch (Exception ex)

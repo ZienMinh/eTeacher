@@ -1,4 +1,4 @@
-using BusinessObject.Models;
+﻿using BusinessObject.Models;
 using DataAccess;
 using eTeacher.Core.Services;
 using eTeacher.Services;
@@ -12,7 +12,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
+using Repositories.IRepository;
 using Services;
+using Services.Interfaces;
+using Stripe;
+using SWP391_eTeacherSystem.Helpers;
 using System;
 using System.Text;
 
@@ -43,6 +47,10 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.SignIn.RequireConfirmedEmail = false;
 });
 
+// Add register VnPay Singleton() 
+builder.Services.AddSingleton<IVNPayServices, VnPayService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 // Add Authentication and JwtBearer
 builder.Services
     .AddAuthentication(options =>
@@ -72,16 +80,26 @@ builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IClassHourService, ClassHourService>();
 builder.Services.AddScoped<IRequirementService, RequirementService>();
+builder.Services.AddScoped<IAcademicVideoRepository, AcademicVideoRepository>();
+builder.Services.AddScoped<IAcademicVideoService, AcademicVideoService>();
+builder.Services.AddTransient<SessionHelper>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAttendanceService, AttendanceService>();
-
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IVisitorCounterService, VisitorCounterService>();
+// Cấu hình Hosted Service
+builder.Services.AddHostedService<ReminderHostedService>();
 
 builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
-	options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
-	options.Cookie.HttpOnly = true;
-	options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -127,8 +145,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-//StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,10 +1,14 @@
-using BusinessObject.Models;
+﻿using BusinessObject.Models;
 using DataAccess;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Repositories.Helpers;
 using Services;
+using SWP391_eTeacherSystem.Helpers;
 
 namespace SWP391_eTeacherSystem.Pages
 {
@@ -40,16 +44,16 @@ namespace SWP391_eTeacherSystem.Pages
             }
         }
 
-        public async Task OnGetAsync()
-        {
-            Subjects = await _context.Subjects.ToListAsync();
-            var userId = _authService.GetCurrentUserId();
-            if (userId != null)
-            {
-                ClassHourDto = new ClassHourDto { User_id = userId };
-            }
-            await InitializeClassDtoAsync();
-        }
+		public async Task OnGetAsync()
+		{
+			Subjects = await _context.Subjects.ToListAsync();
+			var userId = _authService.GetCurrentUserId();
+			if (userId != null)
+			{
+				ClassHourDto = new ClassHourDto { User_id = userId };
+			}
+			await InitializeClassDtoAsync();
+		}
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -60,7 +64,7 @@ namespace SWP391_eTeacherSystem.Pages
                 return Page();
             }
 
-            ClassHourDto.User_id = userId;
+			ClassHourDto.User_id = userId;
 
             ClassHourDto.Price = PricePerHour;
             var startTime = ClassHourDto.Start_time.Value;
@@ -85,8 +89,8 @@ namespace SWP391_eTeacherSystem.Pages
                 ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
             }
 
-            await OnGetAsync();
-            return Page();
-        }
-    }
+			await OnGetAsync();
+			return Page();
+		}
+	}
 }

@@ -3,39 +3,18 @@
 @{
 }
 <!-- ======= Class Hour Section ======= -->
-<header id="header" class="fixed-top ">
-    <div class="container d-flex align-items-center">
-        <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="TutorPage"></a>
 
-        <h1 class="logo me-auto"><a asp-page="/TutorPage">eTeacher</a></h1>
+<link href="~/css/report.css" />
+<section id="class-hour" class="class-hour">
+	<div class="container" data-aos="fade-up">
+		<div class="section-title">
+			<h2>Create hourly rental class</h2>
+			<p>For your convenience and to make the most of your free time</p>
+		</div>
+		<div class="row">
 
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li><a class="nav-link scrollto active" asp-page="/TutorPage">Home</a></li>
-                <li><a class="nav-link scrollto active" href="#about">About</a></li>
-                <li><a class="nav-link scrollto active" href="#services">Services</a></li>
-                <li><a class="nav-link scrollto active" asp-page="Class">Create Class</a></li>
-                <li><a class="nav-link scrollto active" asp-page="AcceptClass">Accept Class</a></li>
-                <li><a class="nav-link scrollto active" asp-page="TuTorClassList">Tutor Class List</a></li>
-                <li>
-                    <form method="post" asp-page-handler="Logout">
-                        <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </nav><!-- .navbar -->
 
-    </div>
-</header><!-- End Header -->
-<section id="class-hour" class="class-hour cta">
-    <div class="container" data-aos="fade-up">
-        <div class="section-title">
-            <h2>Create hourly rental class</h2>
-            <p>For your convenience and to make the most of your free time</p>
-        </div>
-        <div class="row">
-
-            <div class="col-lg-2"></div>
+			<div class="col-lg-2"></div>
 
             <div class="col-lg-8">
                 <form method="post" role="form" class="board">
@@ -119,6 +98,11 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label asp-for="ClassHourDto.Link_meet">Link meet</label>
+                        <input type="text" asp-for="ClassHourDto.Link_meet" class="form-control">
+                        <span asp-validation-for="ClassHourDto.Link_meet" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <input type="hidden" asp-for="ClassHourDto.Status" class="form-control" value="1">
                         <span asp-validation-for="ClassHourDto.Status" class="text-danger"></span>
                     </div>
@@ -133,19 +117,27 @@
                     </div>
                     <p></p>
                     <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary form-control">Submit</button>
+                        <button type="submit" class="button btn btn-primary form-control">Submit</button>
                         <p></p>
                     </div>
                 </form>
+                <div class="col-lg-8">
+                    <form method="get" asp-page="/ClassHourList">
+                        <button type="submit" class="btn btn-success">View ClassHour →</button>
+                    </form>
+                </div>
             </div>
 
-            <div class="col-lg-2"></div>
+			<div class="col-lg-2"></div>
 
-        </div>
+		</div>
 
-    </div>
+	</div>
 </section>
+
+
 <!-- ======= End Class Hour Section ======= -->
+<script src="~/js/starter.js"></script>
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function () {

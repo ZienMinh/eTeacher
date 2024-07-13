@@ -1,0 +1,41 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.RequirementDeletesModel
+@{
+    var requirement = Model.Requirement;
+}
+@if (requirement == null)
+{
+    <h2>Requirement not found</h2>
+}
+else
+{
+    <!-- ======= Requirement Detail Section ======= -->
+    <section id="ReqDe" class="contact ctaa">
+        <div class="container " data-aos="fade-up">
+            <div class="row">
+                <form method="post" role="form" class="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row board col-lg-8">
+                        <div class=" col-lg-6">
+                            <h3>Class details @requirement.Requirement_id</h3>
+                            <p>Subject: @requirement.Subject_name - Grade: @requirement.Grade</p>
+                            <p>Tuition fee: @requirement.Price.ToString() VNĐ/lesson - Number of session: @requirement.Number_of_session lesson/course</p>
+                            <p>Start date: @requirement.Start_date - To: @requirement.End_date</p>
+                            <p>Start time: @requirement.Start_time - To: @requirement.End_time</p>
+                            <p>Current learning ability: @requirement.Rank</p>
+                            <p>Address: @requirement.Address</p>
+                            <p>Description of other requirements: @requirement.Description</p>
+                            <p>Total course income: <b>@requirement.Total VNĐ</b></p>
+                            <input type="hidden" asp-for="RequirementId" value="@requirement.Requirement_id" />
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary form-control">Delete Requirement →</button>
+                            <p></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- ======= End Requirement Detail Section ======= -->
+}

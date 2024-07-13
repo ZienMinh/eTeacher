@@ -28,7 +28,5 @@ namespace Repositories
         Task<QualificationServiceResponseDto> GetQualificationByIdAsync(QualificationDto qualificationDto, string id);
 
         string GenerateQualificationId();
-
-
     }
 }

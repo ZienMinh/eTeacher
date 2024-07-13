@@ -103,7 +103,7 @@
             const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
             if (checkedStar) {
                 const checkedIndex = parseInt(checkedStar.value);
-                stars.forEach((star, index) => {
+        stars.forEach((star, index) => {
                     if (index < checkedIndex) {
                         star.style.color = '#FFD700';
                     } else {
@@ -133,8 +133,22 @@
                 });
             });
 
-            star.addEventListener('mouseout', updateStars);
+            star.addEventListener('mouseout', () => {
+                stars.forEach((s) => {
+                    s.style.color = '#ccc';
+                });
+                const checkedStar = document.querySelector('.star-rating input[type="radio"]:checked');
+                if (checkedStar) {
+                    const checkedIndex = Array.from(stars).indexOf(checkedStar.nextElementSibling);
+                    stars.forEach((s, i) => {
+                        if (i <= checkedIndex) {
+                            s.style.color = '#FFD700';
+                        }
+                    });
+                }
+            });
         });
+    });
 
         updateStars();
     });

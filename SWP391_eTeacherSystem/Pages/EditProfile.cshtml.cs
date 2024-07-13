@@ -14,6 +14,7 @@ namespace SWP391_eTeacherSystem.Pages
 	{
 		private readonly AddDbContext _context;
 		private readonly IUserService _userService;
+
 		private readonly ILogger<EditProfileModel> _logger;
 
 		public EditProfileModel(AddDbContext context,IUserService userService, ILogger<EditProfileModel> logger)

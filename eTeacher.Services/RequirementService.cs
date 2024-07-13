@@ -104,18 +104,21 @@ namespace Services
             }
         }
 
+
         public async Task<RequirementServiceResponseDto> GetByUserIdAsync(RequirementDto requirementDto, string id)
         {
             var requirement = await _context.Requirements
-                                            .FirstOrDefaultAsync(r => r.User_id == id);
+                                        .Where(c => c.User_id == id)
+                                        .OrderBy(c => c.Status)
+                                        .ToListAsync();
 
-            if (requirement != null)
+            if (requirement.Any())
             {
                 return new RequirementServiceResponseDto
                 {
                     IsSucceed = true,
-                    Message = "Requirement found.",
-                    Requirements = new List<Requirement> { requirement }
+                    Message = "Classes found.",
+                    Requirements = requirement
                 };
             }
             else
@@ -123,7 +126,7 @@ namespace Services
                 return new RequirementServiceResponseDto
                 {
                     IsSucceed = false,
-                    Message = "No requirement found for the given ID.",
+                    Message = "No class found for the given ID.",
                     Requirements = null
                 };
             }
@@ -137,7 +140,6 @@ namespace Services
             {
                 _logger.LogInformation("Retrieving requirement from database");
 
-                // Lấy requirement từ database
                 var requirement = await _context.Requirements.FindAsync(requirementDto.Requirement_id);
 
                 if (requirement == null)
@@ -148,7 +150,6 @@ namespace Services
                     return response;
                 }
 
-                // Cập nhật các thuộc tính của requirement nếu có giá trị mới
                 _logger.LogInformation("Updating requirement entity");
 
                 requirement.Subject_name = requirementDto.Subject_name ?? requirement.Subject_name;
@@ -165,7 +166,6 @@ namespace Services
                 requirement.Total = requirementDto.Total != null ? requirementDto.Total : requirement.Total;
                 requirement.Status = requirementDto.Status != null ? requirementDto.Status : requirement.Status;
 
-                // Lưu thay đổi vào database
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Requirement updated successfully");

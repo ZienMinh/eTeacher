@@ -16,7 +16,9 @@ namespace SWP391_eTeacherSystem.Pages
         private readonly AddDbContext _context;
         private readonly ILogger<CreateFeedbackModel> _logger;
 
-        public CreateFeedbackModel(IReportService reportService, AddDbContext context, IAuthService authService, ILogger<CreateFeedbackModel> logger )
+
+        public CreateFeedbackModel(IReportService reportService, AddDbContext context, IAuthService authService, ILogger<CreateFeedbackModel> logger)
+
         {
             _reportService = reportService;
             _context = context;
@@ -102,6 +104,10 @@ namespace SWP391_eTeacherSystem.Pages
             Class = await _context.Classes.FirstOrDefaultAsync(c => c.Class_id == ClassId);
 
             if (Class != null)
+            {
+                _logger.LogWarning("Class is null. Unable to set Feedback properties.");
+            }
+            else
             {
                 Feedback.Class_id = ClassId;
                 Feedback.Tutor_id = Class.Tutor_id;

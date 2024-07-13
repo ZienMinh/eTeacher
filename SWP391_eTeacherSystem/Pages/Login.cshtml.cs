@@ -34,7 +34,7 @@ namespace SWP391_eTeacherSystem.Pages
                         case 1:
                             return RedirectToPage("/StudentPage");
                         case 2:
-                            return RedirectToPage("/AdminPage");
+                            return RedirectToPage("/Admin");
                         case 3:
                             return RedirectToPage("/TutorPage");
                         case 4:

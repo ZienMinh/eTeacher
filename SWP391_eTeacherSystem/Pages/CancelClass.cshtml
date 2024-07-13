@@ -3,6 +3,9 @@
 @{
     var classes = Model.Class;
 }
+<head>
+    <link rel="stylesheet" href="~/css/report.css" />
+</head>
 @if (classes == null)
 {
     <h2>Class not found</h2>
@@ -52,6 +55,7 @@ else
                             <p>Start time: @classes.Start_time - To: @classes.End_time</p>
                             <p>Address: @classes.Address</p>
                             <p>Total tuition for the course: <b>@classes.Total VNĐ</b></p>
+                            <a href="@classes.Link_meet">Link meet</a>
                             <input type="hidden" asp-for="ClassId" />
                         </div>
                         <div class="my-3">
@@ -62,7 +66,7 @@ else
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary form-control">Cancel class</button>
+                                    <button type="submit" id="cancelClassButton" class="btn btn-primary form-control">Cancel class</button>
                                 </div>
                             </div>
                         </div>
@@ -93,4 +97,5 @@ else
         </div>
     </section>
     <!-- ======= End Cancel Class Section ======= -->
+    <script src="~/js/starter.js"></script>
 }

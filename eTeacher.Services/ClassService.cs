@@ -109,7 +109,7 @@ namespace Services
 
         public async Task<ClassServiceResponseDto> CreateClassAsync(ClassDto model, string userId)
         {
-            _logger.LogInformation("Mapping ClassDto to Requirement entity");
+            _logger.LogInformation("Mapping ClassDto to Class entity");
 
             using (var transaction = await _context.Database.BeginTransactionAsync())
             {
@@ -136,7 +136,7 @@ namespace Services
 
                     var classId = GenerateClassId();
 
-                    var classes = new Class
+                    var newClass = new Class
                     {
                         Class_id = classId,
                         Address = model.Address,
@@ -156,15 +156,32 @@ namespace Services
                         Link_meet = model.Link_meet,
                     };
 
-                    await _context.AddAsync(classes);
+                    await _context.AddAsync(newClass);
                     await _context.SaveChangesAsync();
+
+                    // Create Schedules for each session
+                    var startDate = newClass.Start_date.HasValue ? newClass.Start_date.Value.ToDateTime(TimeOnly.MinValue) : DateTime.Now;
+                    for (int i = 0; i < newClass.Number_of_session; i++)
+                    {
+                        var schedule = new Schedule
+                        {
+                            Class_id = newClass.Class_id,
+                            Student_id = newClass.Student_id,
+                            StartTime = startDate.AddDays(i).Add(newClass.Start_time.Value),
+                            EndTime = startDate.AddDays(i).Add(newClass.End_time.Value),
+                            ReminderSent = false
+                        };
+                        await _context.Schedules.AddAsync(schedule);
+                    }
+                    await _context.SaveChangesAsync();
+
                     await transaction.CommitAsync();
 
-                    _logger.LogInformation("Class saved successfully");
+                    _logger.LogInformation("Class and schedules saved successfully");
                     return new ClassServiceResponseDto
                     {
                         IsSucceed = true,
-                        CreatedClass = classes,
+                        CreatedClass = newClass,
                         Message = "Class created successfully"
                     };
                 }
@@ -212,6 +229,7 @@ namespace Services
                 classes.Number_of_session = classDto.Number_of_session != default(int) ? classDto.Number_of_session : classes.Number_of_session;
                 classes.Total = classDto.Total != null ? classDto.Total : classes.Total;
                 classes.Status = classDto.Status != null ? classDto.Status : classes.Status;
+                classes.Link_meet = classDto.Link_meet ?? classes.Link_meet;
 
                 await _context.SaveChangesAsync();
 
@@ -260,7 +278,6 @@ namespace Services
             return response;
         }
 
-
         public string GenerateClassId()
         {
             var maxClassId = _context.Classes
@@ -277,8 +294,6 @@ namespace Services
 
             return "C" + (currentCount + 1).ToString("D9");
         }
-
-
 
         public string GetCurrentUserId()
         {
