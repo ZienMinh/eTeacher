@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccess.Attributes;
 
 namespace DataAccess
 {
@@ -19,9 +20,11 @@ namespace DataAccess
 
         [Required(ErrorMessage = "Subject name is required")]
         public string Subject_name { get; set; }
-            
+
+        [StartDate(ErrorMessage = "Start date must be today or later")]
         public DateOnly? Start_date { get; set; }
 
+        [EndDate("Start_date", ErrorMessage = "End date must be after start date")]
         public DateOnly? End_date { get; set; }
 
         public TimeSpan? Start_time { get; set; }
@@ -33,6 +36,7 @@ namespace DataAccess
         public byte Grade { get; set; }
 
         [Required(ErrorMessage = "Price is required")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be positive")]
         public double Price { get; set; }
 
         [Required(ErrorMessage = "Number of sessions is required")]
@@ -42,6 +46,9 @@ namespace DataAccess
         public string? Description { get; set; }
 
         public double? Total { get; set; }
+
+        [Required(ErrorMessage = "Link meet is required")]
+        public string Link_meet { get; set; }
 
         public byte? Status { get; set; }
     }

@@ -3,27 +3,27 @@ using DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Repositories;
+using Services;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class RequirementListModel : PageModel
+    public class ClassHourListModel : PageModel
     {
-        private readonly IRequirementService _requirementService;
+        private readonly IClassHourService _classHourService;
         private readonly IAuthService _authService;
-        private readonly ILogger<RequirementListModel> _logger;
+        private readonly ILogger<ClassHourListModel> _logger;
 
-        public RequirementListModel(IRequirementService requirementService,
-            IAuthService authService, ILogger<RequirementListModel> logger)
+        public ClassHourListModel(IClassHourService classHourService, IAuthService authService, ILogger<ClassHourListModel> logger)
         {
-            _requirementService = requirementService;
+            _classHourService = classHourService;
             _authService = authService;
             _logger = logger;
         }
 
         [BindProperty]
-        public RequirementDto requirementDto { get; set; }
+        public ClassHourDto classHourDto { get; set; }
 
-        public List<Requirement> Requirements { get; set; }
+        public List<ClassHour> ClassHours { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -32,10 +32,10 @@ namespace SWP391_eTeacherSystem.Pages
                 var userId = _authService.GetCurrentUserId();
                 if (userId != null)
                 {
-                    var response = await _requirementService.GetByUserIdAsync(requirementDto, userId);
+                    var response = await _classHourService.GetByUserId(classHourDto, userId);
                     if (response != null)
                     {
-                        Requirements = response.Requirements.OrderBy(r => r.Status).ToList();
+                        ClassHours = response.Classes.OrderBy(c => c.Status).ToList();
                     }
                 }
             }
@@ -44,7 +44,5 @@ namespace SWP391_eTeacherSystem.Pages
                 _logger.LogError(ex, "Error fetching classes in OnGetAsync");
             }
         }
-
-        
     }
 }

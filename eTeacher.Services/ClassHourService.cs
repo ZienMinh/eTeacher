@@ -63,6 +63,30 @@ namespace Services
             }
         }
 
+        public async Task<ClassHourServiceResponseDto> GetByUserId(ClassHourDto classHourDto, string id)
+        {
+            var classes = await _context.ClassHours.Where(c => c.User_id == id).OrderBy(c =>c.Status).ToListAsync();
+
+            if (classes.Any())
+            {
+                return new ClassHourServiceResponseDto
+                {
+                    IsSucceed = true,
+                    Message = "Class found.",
+                    Classes = classes
+                };
+            }
+            else
+            {
+                return new ClassHourServiceResponseDto
+                {
+                    IsSucceed = false,
+                    Message = "No class found for the given ID.",
+                    Classes = null
+                };
+            }
+        }
+
         public async Task<List<ClassHour>> SearchSubjectAsync(string subjectName)
         {
             var query = _context.ClassHours
@@ -105,6 +129,7 @@ namespace Services
                         Description = model.Description,
                         Total = model.Total,
                         Status = model.Status,
+                        Link_meet = model.Link_meet,
                     };
 
                     await _context.AddAsync(classes);
@@ -139,7 +164,6 @@ namespace Services
             {
                 _logger.LogInformation("Retrieving class hour from database");
 
-                // Lấy class hour từ database
                 var classHour = await _context.ClassHours.FindAsync(classHourDto.Class_id);
 
                 if (classHour == null)
@@ -150,7 +174,6 @@ namespace Services
                     return response;
                 }
 
-                // Cập nhật các thuộc tính của class hour nếu có giá trị mới
                 _logger.LogInformation("Updating class hour entity");
 
                 classHour.Address = classHourDto.Address ?? classHour.Address;
@@ -165,8 +188,8 @@ namespace Services
                 classHour.Description = classHourDto.Description ?? classHour.Description;
                 classHour.Total = classHourDto.Total != null ? classHourDto.Total : classHour.Total;
                 classHour.Status = classHourDto.Status != null ? classHourDto.Status : classHour.Status;
+                classHour.Link_meet = classHourDto.Link_meet ?? classHour.Link_meet;
 
-                // Lưu thay đổi vào database
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("Class hour updated successfully");

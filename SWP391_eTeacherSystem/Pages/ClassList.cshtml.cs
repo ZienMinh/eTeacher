@@ -37,6 +37,10 @@ namespace SWP391_eTeacherSystem.Pages
                 {
                     ClassDto = new ClassDto { Student_id = userId };
                 }
+                else
+                {
+                    Classes = new List<Class>();
+                }
             }
             catch (Exception ex)
             {

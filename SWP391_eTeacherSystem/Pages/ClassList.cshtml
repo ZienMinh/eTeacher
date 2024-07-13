@@ -36,39 +36,47 @@
             <p>List of classes you are currently taking</p>
         </div>
         <div class="row">
-            @foreach (var classes in Model.Classes)
+            @if (Model.Classes == null || !Model.Classes.Any())
             {
-                <div class="col-md-3">
-                    <div class="card mb-3 textblack">
-                        <div class="card-header bg-primary text-white">
-                            @classes.Class_id
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">@classes.Subject_name - Grade @classes.Grade</h5>
-                            <p class="card-text">
-                                <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
-                                <i class="fa fa-user"></i> Address: @classes.Address
-                            </p>
-                            @if (classes.Status == 2)
-                            {
-                                <p class="text-danger">Cancelled</p>
-                            }
-                            else
-                            {
-                                <form method="get" asp-page="/CancelClass">
-                                    <input type="hidden" name="id" value="@classes.Class_id" />
-                                    <button type="submit" class="btn btn-success">More details →</button>
-                                </form>
-                                <p></p>
-                                <form method="get" asp-page="/CreateFeedback">
-                                    <input type="hidden" name="id" value="@classes.Class_id" />
-                                    <button type="submit" class="btn btn-success">Feedback class →</button>
-                                </form>
-                            }
+                <h3>Class not found</h3>
+            }
+            else
+            {
+                @foreach (var classes in Model.Classes)
+                {
+                    <div class="col-md-3">
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                @classes.Class_id
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@classes.Subject_name - Grade @classes.Grade</h5>
+                                <p class="card-text">
+                                    <i class="fa fa-dollar-sign"></i> @classes.Price VNĐ/lesson, @classes.Number_of_session sessions/course<br />
+                                    <i class="fa fa-user"></i> Address: @classes.Address
+                                </p>
+                                @if (classes.Status == 2)
+                                {
+                                    <p class="text-danger">Cancelled</p>
+                                }
+                                else
+                                {
+                                    <form method="get" asp-page="/CancelClass">
+                                        <input type="hidden" name="id" value="@classes.Class_id" />
+                                        <button type="submit" class="btn btn-success">More details →</button>
+                                    </form>
+                                    <p></p>
+                                    <form method="get" asp-page="/CreateFeedback">
+                                        <input type="hidden" name="id" value="@classes.Class_id" />
+                                        <button type="submit" class="btn btn-success">Feedback class →</button>
+                                    </form>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
+            
         </div>
     </div>
 </section>

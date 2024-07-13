@@ -229,6 +229,7 @@ namespace Services
                 classes.Number_of_session = classDto.Number_of_session != default(int) ? classDto.Number_of_session : classes.Number_of_session;
                 classes.Total = classDto.Total != null ? classDto.Total : classes.Total;
                 classes.Status = classDto.Status != null ? classDto.Status : classes.Status;
+                classes.Link_meet = classDto.Link_meet ?? classes.Link_meet;
 
                 await _context.SaveChangesAsync();
 
