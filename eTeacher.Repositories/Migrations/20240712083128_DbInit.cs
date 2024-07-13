@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BusinessObject.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDc : Migration
+    public partial class DbInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -203,7 +203,7 @@ namespace BusinessObject.Migrations
                 columns: table => new
                 {
                     Qualification_id = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    User_id = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     Graduation_year = table.Column<int>(type: "int", nullable: true),
                     Specialize = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Classification = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),

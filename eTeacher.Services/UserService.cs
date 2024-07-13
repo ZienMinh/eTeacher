@@ -246,44 +246,46 @@ namespace Services
 
             try
             {
-                _logger.LogInformation("Retrieving class hour from database");
+                _logger.LogInformation("Retrieving Qualification from database");
 
-                var qualification = await _context.Qualifications.FindAsync(qualificationDto.User_id);
+                var qualification = await _context.Qualifications.FindAsync(qualificationDto.Qualification_id);
 
                 if (qualification == null)
                 {
-                    _logger.LogWarning($"Class hour with id {qualificationDto.User_id} not found");
+                    _logger.LogWarning($"Qualification with id {qualificationDto.Qualification_id} not found");
                     response.IsSucceed = false;
-                    response.Message = "Class hour not found";
+                    response.Message = "Qualification not found";
                     return response;
                 }
 
-                // Cập nhật các thuộc tính của class hour nếu có giá trị mới
+                // Update properties
                 _logger.LogInformation("Updating class hour entity");
 
-                qualification.Graduation_year = qualificationDto.Graduation_year != default(int) ? qualificationDto.Graduation_year : qualificationDto.Graduation_year;
-                qualification.Specialize = qualificationDto.Specialize ?? qualificationDto.Specialize;
-                qualification.Classification = qualificationDto.Classification ?? qualificationDto.Qualification_id;
-                qualification.Image = qualificationDto.Image ?? qualificationDto.Image;
-                qualification.Training_facility = qualificationDto.Training_facility ?? qualificationDto.Training_facility;
+                qualification.User_id = qualificationDto.User_id ?? qualificationDto.User_id;
+                qualification.Graduation_year = qualificationDto.Graduation_year != default(int) ? qualificationDto.Graduation_year : qualification.Graduation_year;
+                qualification.Specialize = qualificationDto.Specialize ?? qualification.Specialize;
+                qualification.Classification = qualificationDto.Classification ?? qualification.Classification;
+                qualification.Image = qualificationDto.Image ?? qualification.Image;
+                qualification.Training_facility = qualificationDto.Training_facility ?? qualification.Training_facility;
 
-                // Lưu thay đổi vào database
+                // Save changes to database
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation("Class hour updated successfully");
+                _logger.LogInformation("Qualification updated successfully");
                 response.IsSucceed = true;
-                response.Message = "Class hour updated successfully";
+                response.Message = "Qualification updated successfully";
                 response.CreatedQualification = qualification;
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while updating the class hour: " + ex.Message);
+                _logger.LogError("An error occurred while updating the qualification: " + ex.Message);
                 response.IsSucceed = false;
                 response.Message = ex.Message;
             }
 
             return response;
         }
+
 
         public async Task<QualificationServiceResponseDto> GetQualificationByIdAsync(QualificationDto qualificationDto, string id)
         {

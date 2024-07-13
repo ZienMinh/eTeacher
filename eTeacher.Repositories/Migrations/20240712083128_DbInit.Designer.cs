@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessObject.Migrations
 {
     [DbContext(typeof(AddDbContext))]
-    [Migration("20240712033617_InitDc")]
-    partial class InitDc
+    [Migration("20240712083128_DbInit")]
+    partial class DbInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,7 +238,6 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("User_id")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -689,8 +688,7 @@ namespace BusinessObject.Migrations
                     b.HasOne("BusinessObject.Models.User", null)
                         .WithMany("Qualifications")
                         .HasForeignKey("User_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Report", b =>

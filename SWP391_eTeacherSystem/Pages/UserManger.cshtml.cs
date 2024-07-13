@@ -6,14 +6,14 @@ using Repositories;
 
 namespace SWP391_eTeacherSystem.Pages
 {
-    public class Admin2Model : PageModel
+    public class UserManagerModel : PageModel
     {
         private readonly IAuthService _authService;
         private readonly AddDbContext _context;
-        private readonly ILogger<Admin2Model> _logger;
+        private readonly ILogger<UserManagerModel> _logger;
         private readonly IUserService _userService;
 
-        public Admin2Model(IUserService userService, IAuthService authService, AddDbContext context, ILogger<Admin2Model> logger)
+        public UserManagerModel(IUserService userService, IAuthService authService, AddDbContext context, ILogger<UserManagerModel> logger)
         {
             _authService = authService;
             _context = context;

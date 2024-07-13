@@ -11,7 +11,7 @@ namespace DataAccess
     public class QualificationDto
     {
         public string Qualification_id { get; set; }
-        public string User_id { get; set; }
+        public string? User_id { get; set; }
         public int? Graduation_year { get; set; }
         public string? Specialize { get; set; }
         public string? Classification { get; set; }

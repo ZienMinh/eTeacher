@@ -19,8 +19,7 @@
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>Edit Profile</h2>
-                <p>!!!</p>
+                <h2>Edit Qualification</h2>
             </div>
 
             <div class="row">
@@ -31,7 +30,7 @@
                     <form action="" method="post" role="form" class="board">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="row">
-                            <input type="hidden" asp-for="QualificationId" />
+                            <input type="hidden" asp-for="QualificationDto.Qualification_id" />
                             <div class="form-group col-md-6">
                                 <label asp-for="QualificationDto.Specialize">Specialize</label>
                                 <input type="text" asp-for="QualificationDto.Specialize" class="form-control">

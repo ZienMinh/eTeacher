@@ -235,7 +235,6 @@ namespace BusinessObject.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("User_id")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -686,8 +685,7 @@ namespace BusinessObject.Migrations
                     b.HasOne("BusinessObject.Models.User", null)
                         .WithMany("Qualifications")
                         .HasForeignKey("User_id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("BusinessObject.Models.Report", b =>

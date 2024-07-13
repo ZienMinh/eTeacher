@@ -27,7 +27,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a asp-page="Admin" class="nav-link">Home</a>
+                    <a asp-page="AdminPage" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -68,7 +68,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a asp-page="Admin" class="brand-link">
+            <a asp-page="AdminPage" class="brand-link">
                 <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">eTeacher</span>
             </a>
@@ -112,27 +112,20 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-page="/Admin" class="nav-link active">
+                                    <a asp-page="/AdminPage" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Total</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-page="/Admin2" class="nav-link">
+                                    <a asp-page="/UserManger" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Users Management</p>
+                                        <p>Users Managerment</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    transaction history
-                                </p>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

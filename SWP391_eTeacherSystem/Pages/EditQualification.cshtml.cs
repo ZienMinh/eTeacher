@@ -13,21 +13,23 @@ namespace SWP391_eTeacherSystem.Pages
 {
 	public class EditQualificationModel : PageModel
 	{
-		private readonly AddDbContext _context;
+        private readonly AddDbContext _context;
         private readonly IUserService _userService;
         private readonly ILogger<EditQualificationModel> _logger;
         private readonly IAuthService _authService;
 
-		public EditQualificationModel(AddDbContext context, IUserService userService, 
+        public EditQualificationModel(AddDbContext context, IUserService userService,
             ILogger<EditQualificationModel> logger, IAuthService authService)
-		{
-			_context = context;
-			_logger = logger;
+        {
+            _context = context;
+            _logger = logger;
             _userService = userService;
             _authService = authService;
-		}
+        }
 
         public Qualification Qualification { get; set; }
+
+        public UserDto UserDto { get; set; }
 
         [BindProperty]
         public QualificationDto QualificationDto { get; set; }
@@ -35,22 +37,15 @@ namespace SWP391_eTeacherSystem.Pages
         [BindProperty(SupportsGet = true)]
         public string QualificationId { get; set; }
 
-        /*public async Task InitializeClassDtoAsync()
-        {
-            var userId = _userService.GetCurrentUserId();
-            if (userId != null)
-            {
-                var qualificationId = _userService.GenerateQualificationId();
-                QualificationDto = new QualificationDto { User_id = userId, Qualification_id = qualificationId };
-            }
-        }*/
         public async Task<IActionResult> OnGetAsync(string id)
         {
-
             if (string.IsNullOrEmpty(id))
             {
-                return NotFound("Qua ID is not provided.");
+                _logger.LogWarning("Qualification ID is not provided.");
+                return NotFound("Qualification ID is not provided.");
             }
+
+            _logger.LogInformation($"Retrieving qualification with ID: {id}");
 
             QualificationId = id;
 
@@ -58,32 +53,22 @@ namespace SWP391_eTeacherSystem.Pages
 
             if (Qualification == null)
             {
-                return NotFound();
+                _logger.LogWarning($"Qualification with ID {id} not found.");
+                return NotFound($"Qualification with ID {id} not found.");
             }
 
             var userId = _authService.GetCurrentUserId();
-            
+            if (userId == null)
+            {
+                _logger.LogWarning("User is not authenticated.");
+                return NotFound("User is not authenticated.");
+            }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            _logger.LogInformation("OnPostAsync started");
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning("ModelState is not valid");
-                // Log chi tiết các lỗi trong ModelState
-                foreach (var state in ModelState)
-                {
-                    if (state.Value.Errors.Count > 0)
-                    {
-                        _logger.LogWarning($"Property: {state.Key} - Errors: {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-                    }
-                }
-                return Page();
-            }
-
             var userId = _userService.GetCurrentUserId();
             if (userId == null)
             {
@@ -92,33 +77,30 @@ namespace SWP391_eTeacherSystem.Pages
                 return Page();
             }
 
-            QualificationDto.User_id = userId;
-            QualificationDto.Qualification_id = QualificationId;
-
-
             try
             {
-                _logger.LogInformation("Attempting to create requirement");
-
+                _logger.LogInformation($"Attempting to edit qualification with ID: {QualificationDto.Qualification_id}");
                 var result = await _userService.UpdateQualificationAsync(QualificationDto);
                 if (result.IsSucceed)
                 {
-                    _logger.LogInformation("Qualification updated successfully");
-                    return RedirectToPage("/TutorPage");
+                    _logger.LogInformation("Edit qualification successfully");
+                    return RedirectToPage("/TutorProfile");
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to create requirement: " + result.Message);
+                    _logger.LogWarning($"Failed to edit qualification: {result.Message}");
                     ModelState.AddModelError(string.Empty, result.Message);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError("An error occurred while saving data: " + ex.Message);
-                ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
+                _logger.LogError($"An error occurred while saving data: {ex.Message}");
+                ModelState.AddModelError(string.Empty, $"An error occurred while saving data: {ex.Message}");
             }
 
             return Page();
         }
+
+
     }
 }
