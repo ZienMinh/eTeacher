@@ -30,12 +30,11 @@ namespace BusinessObject.Models
         public string? Link_contact { get; set; }
 
         [Range(0, 5)]
-        public byte Rating { get; set; }
+        public byte? Rating { get; set; }
 
         [MaxLength(100)]
         public string? Image { get; set; }
 
-        [Required]
         public byte Role { get; set; }
 
         public ICollection<Requirement> Requirements { get; set; }

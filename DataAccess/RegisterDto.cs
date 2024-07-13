@@ -31,5 +31,6 @@ namespace DataAccess
 
         [Required(ErrorMessage = "Role is required")]
 		public byte Role { get; set; }
-	}
+
+    }
 }

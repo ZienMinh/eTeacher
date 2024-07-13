@@ -17,5 +17,16 @@ namespace Repositories
 
         Task<UserServiceResponseDto> DeleteUserAsync(string id);
 
+        Task<AuthServiceResponseDto> UpdateUserAsync(UserDto userDto);
+
+        string GetCurrentUserId();
+
+        Task<QualificationServiceResponseDto> CreateQualificationAsync(QualificationDto qualificationDto);
+
+        Task<QualificationServiceResponseDto> UpdateQualificationAsync(QualificationDto qualificationDto);
+
+        Task<QualificationServiceResponseDto> GetQualificationByIdAsync(QualificationDto qualificationDto, string id);
+
+        string GenerateQualificationId();
     }
 }

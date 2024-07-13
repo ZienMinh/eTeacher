@@ -1,0 +1,71 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.UpdateProfileModel
+@{
+}
+<section id="Edit" class="contact ctaa">
+    <div class="container register" data-aos="fade-up">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div id="register" class="col-lg-6">
+                <form method="post" role="form" class="form board" style="border-radius: 8px;" id="registerForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="section-title">
+                            <h3>Edit</h3>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="UserDto.First_name">First Name</label>
+                            <input type="text" asp-for="UserDto.First_name" class="form-control">
+                            <span asp-validation-for="UserDto.First_name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="UserDto.Last_name">Last Name</label>
+                            <input type="text" asp-for="UserDto.Last_name" class="form-control">
+                            <span asp-validation-for="UserDto.Last_name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="UserDto.Email">Your Email</label>
+                            <input type="email" asp-for="UserDto.Email" class="form-control">
+                            <span asp-validation-for="UserDto.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <input type="hidden" asp-for="UserDto.UserName" class="form-control">
+                            <span asp-validation-for="UserDto.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label asp-for="UserDto.PasswordHash">Password</label>
+                            <input type="password" asp-for="UserDto.PasswordHash" class="form-control">
+                            <span asp-validation-for="UserDto.PasswordHash" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Gender">Gender</label>
+                                <select asp-for="UserDto.Gender" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span asp-validation-for="UserDto.Gender" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Address">Your Address</label>
+                                <input type="text" asp-for="UserDto.Address" class="form-control">
+                                <span asp-validation-for="UserDto.Address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserDto.Link_contact">Your Link_contact</label>
+                                <input type="text" asp-for="UserDto.Link_contact" class="form-control">
+                                <span asp-validation-for="UserDto.Link_contact" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <p></p>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn form-control btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+</section>

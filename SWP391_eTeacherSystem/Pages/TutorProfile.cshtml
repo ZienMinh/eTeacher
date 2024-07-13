@@ -1,0 +1,77 @@
+﻿@page
+@model SWP391_eTeacherSystem.Pages.TutorProfileModel
+@{
+    var user = Model.User;
+    var qualification = Model.Qualification;
+}
+<section id="cta" class="cta">
+    <div class="container" data-aos="zoom-in">
+
+        <div class="row">
+            <div class="col-lg-9 text-center text-lg-start">
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+            </div>
+        </div>
+
+    </div>
+    <!-- </section>End Cta Section -->
+    <!-- ======= Requirements Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Edit Profile</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 textblack">
+                    <div class="board">
+                        <p><strong>User Id:</strong>@user.Id</p>
+                        <p><strong>First Name:</strong>@user.First_name</p>
+                        <p><strong>Last Name:</strong>@user.Last_name</p>
+                        <p><strong>Gender:</strong> @user.Gender</p>
+                        <p><strong>Address:</strong> @user.Address</p>
+                        <p><strong>Email:</strong> @user.Email</p>
+                        <p><strong>Birth Date:</strong> @user.Birth_date.ToString("d")</p>
+                        <p><strong>Link Contact:</strong><a href="@user.Link_contact"> @user.Link_contact</a></p>
+                        <p><strong>Rating:</strong> @user.Rating</p>
+                        <p><strong>Image:</strong> @user.Image</p>
+                        <form method="get" asp-page="/UpdateProfile">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn btn-primary form-control">Edit →</button>
+                        </form>
+                        <!--
+                        <div class="text-center"><button class="btn btn-primary form-control" asp-page="EditProfile">Edit</button></div>
+                        -->
+                    </div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8 textblack">
+                    <div class="board">
+                    @if (qualification != null)
+                    {
+                        <p><strong>Qualification ID:</strong> @qualification.Qualification_id</p>
+                        <p><strong>Graduation Year:</strong> @qualification.Graduation_year</p>
+                        <p><strong>Specialize:</strong> @qualification.Specialize</p>
+                        <p><strong>Classification:</strong> @qualification.Classification</p>
+                        <p><strong>Training Facility:</strong> @qualification.Training_facility</p>
+                                <form method="get" asp-page="/EditQualification">
+                                    <input type="hidden" name="id" value="@qualification.Qualification_id" />
+                                    <button type="submit" class="btn btn-primary form-control">Edit →</button>
+                                </form>
+                        <!--
+                        <div class="text-center"><button class="btn btn-primary form-control" asp-page="EditQualification">Edit</button></div>
+                        -->
+                    }
+                    else
+                    {
+                        <form method="get" asp-page="/EditQualification">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button type="submit" class="btn btn-primary form-control " asp-page="CreateQualification">Add Qualification →</button>
+                        </form>
+                        <!--
+                        <div class="text-center"><button class="btn btn-primary form-control" asp-page="CreateQualification">Add Qualification</button></div>
+                        -->
+                    }
+                </div>
+            </div>
+        </div>
+    </section>

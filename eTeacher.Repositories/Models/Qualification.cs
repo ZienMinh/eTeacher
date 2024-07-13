@@ -15,7 +15,7 @@ namespace BusinessObject.Models
         [MaxLength(10)]
         public string Qualification_id { get; set; }
         [MaxLength(450)]
-        public string User_id { get; set; }
+        public string? User_id { get; set; }
         public int? Graduation_year { get; set; }
         [MaxLength(50)]
         public string? Specialize { get; set; }

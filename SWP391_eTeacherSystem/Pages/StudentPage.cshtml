@@ -31,8 +31,33 @@
 
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top ">
-	<div class="container d-flex align-items-center">
-		<a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="StudentPage"></a>
+
+    <div class="container d-flex align-items-center">
+        <a class="nav-link scrollto active" asp-area="" asp-controller="CheckOut" asp-action="StudentPage"></a>
+
+        <h1 class="logo me-auto"><a asp-page="/StudentPage">eTeacher</a></h1>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto active" asp-page="/StudentPage">Home</a></li>
+                <li><a class="nav-link scrollto active" href="#about">About</a></li>
+                <li><a class="nav-link scrollto active" href="#services">Services</a></li>
+                <li><a class="nav-link scrollto active" href="#searchTutor">Search Tutor</a></li>
+                <li><a class="nav-link scrollto active" href="#hour_class">Search subject</a></li>
+                <li><a class="nav-link scrollto active" asp-page="Requirement">Requirement</a></li>
+                <li><a class="nav-link scrollto active" asp-page="ClassHour">Class Hour</a></li>
+                <li><a class="nav-link scrollto active" asp-page="ClassList">Class List</a></li>
+                <li><a class="nav-link scrollto active" asp-page="StudentProfile">Profile</a></li>
+                <li>
+                    <form method="post" asp-page-handler="Logout">
+                        <button type="submit" class="btnLogin-popup" style="margin-left: 25px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->
 
 		<h1 class="logo me-auto"><a asp-page="/StudentPage">eTeacher</a></h1>
 
@@ -104,124 +129,110 @@
 
 	</div>
 </section><!-- End About Us Section -->
-<!-- ======= Academic Videos Section ======= -->
-<section id="academic-videos" class="academic-videos">
-	<div class="container" data-aos="fade-up">
-		<div class="section-title">
-			<h2>Academic Videos</h2>
-			<p>Explore our collection of academic videos provided by our talented tutors.</p>
-		</div>
-		<div class="row">
-			@if (Model.AcademicVideos != null && Model.AcademicVideos.Any())
-			{
-				@foreach (var video in Model.AcademicVideos)
-				{
-					<div class="col-lg-4 col-md-6">
-						<div class="video-box">
-							<video width="100%" controls>
-								<source src="@video.VideoUrl" type="video/mp4">
-								Your browser does not support the video tag.
-							</video>
-							<div class="video-content">
-								<h5>@video.Title</h5>
-								<p>@video.Description</p>
-							</div>
-						</div>
-					</div>
-				}
-			}
-			else
-			{
-				<p>No academic videos available.</p>
-			}
-		</div>
-	</div>
-</section>
-<!-- End Academic Videos Section -->
-<!-- ======= Schedule Section ======= -->
-<section id="schedule" class="schedule section-bg">
-	<div class="container" data-aos="fade-up">
-		<div class="section-title">
-			<h2>Your Schedule</h2>
-			<p>Here are your upcoming classes:</p>
-		</div>
 
-		@if (Model.Schedules != null && Model.Schedules.Any())
-		{
-			<div class="row">
-				@foreach (var schedule in Model.Schedules)
-				{
-					<div class="col-lg-4 col-md-6">
-						<div class="schedule-box">
-							<h4>@schedule.Class.Subject.Subject_name</h4>
-							<p>
-								Start Time: @schedule.StartTime <br />
-								End Time: @schedule.EndTime <br />
-								Class ID: @schedule.Class_id
-							</p>
-						</div>
-					</div>
-				}
-			</div>
-		}
-		else
-		{
-			<p>No upcoming classes.</p>
-		}
-	</div>
-</section>
-<!-- End Schedule Section -->
+<!-- ======= Services Section ======= -->
+<section id="services" class="services section-bg">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Services</h2>
+            <p>At <b>eTeacher</b>, we offer on-demand tutor-matching services, making it easy for students and parents to find the perfect tutor. Whether you need help with core subjects, foreign languages, or special skills, eTeacher has you covered. Our tutors are thoroughly screened and verified, ensuring high-quality teaching and peace of mind for you.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-tachometer"></i></div>
+                    <h4><a href="">Class Hour</a></h4>
+                    <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-file"></i></div>
+                    <h4><a href="">Class on requirement</a></h4>
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-tachometer"></i></div>
+                    <h4><a href="">Chat with tutor</a></h4>
+                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-file"></i></div>
+                    <h4><a href="">Feedback</a></h4>
+                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Services Section -->
+
 <!-- ======= Search Tutor ======= -->
 <section id="searchTutor" class="searchTutor section-bg">
-	<div class="container" data-aos="fade-up">
-		<h2>Search Tutors</h2>
+    <div class="container" data-aos="fade-up">
+        <h2>Search Tutors</h2>
 
-		<form method="post" asp-page-handler="SearchTutor">
-			<div class="form-group">
-				<label asp-for="Name">Name</label>
-				<input asp-for="Name" class="form-control" />
-			</div>
-			<button type="submit" class="btn btn-primary">Search</button>
-		</form>
+        <form method="post" asp-page-handler="SearchTutor">
+            <div class="form-group">
+                <label asp-for="Name">Name</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+    <div class="form-group">
+        <label asp-for="SubjectName">Subject Name</label>
+        <input asp-for="SubjectName" class="form-control" />
+    </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
 
-		@if (Model.Tutors != null && Model.Tutors.Count > 0)
-		{
-			<h3>Search Results</h3>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>User Name</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Gender</th>
-						<th>Address</th>
-						<th>Link Contact</th>
-						<th>Rating</th>
-						<th>Image</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var tutor in Model.Tutors)
-					{
-						<tr>
-							<td>@tutor.UserName</td>
-							<td>@tutor.First_name</td>
-							<td>@tutor.Last_name</td>
-							<td>@tutor.Gender</td>
-							<td>@tutor.Address</td>
-							<td>@tutor.Link_contact</td>
-							<td>@tutor.Rating</td>
-							<td><img src="@tutor.Image" alt="Image" style="width: 100px; height: auto;" /></td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		}
-		else if (Model.Tutors != null)
-		{
-			<p>No tutors found matching the search criteria.</p>
-		}
-	</div>
+        @if (Model.Tutors != null && Model.Tutors.Count > 0)
+        {
+            <h3>Search Results</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Link Contact</th>
+                        <th>Rating</th>
+                        <th>Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tutor in Model.Tutors)
+                    {
+                        <tr>
+                            <td>@tutor.UserName</td>
+                            <td>@tutor.First_name</td>
+                            <td>@tutor.Last_name</td>
+                            <td>@tutor.Gender</td>
+                            <td>@tutor.Address</td>
+                            <td>@tutor.Link_contact</td>
+                            <td>@tutor.Rating</td>
+                            <td><img src="@tutor.Image" alt="Image" style="width: 100px; height: auto;" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else if (Model.Tutors != null)
+        {
+            <p>No tutors found matching the search criteria.</p>
+        }
+    </div>
+
 </section>
 <!-- ======= End Search Tutor ======= -->
 <!-- ======= Search Subject ======= -->

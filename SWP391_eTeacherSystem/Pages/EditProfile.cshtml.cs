@@ -14,79 +14,68 @@ namespace SWP391_eTeacherSystem.Pages
 	{
 		private readonly AddDbContext _context;
 		private readonly IUserService _userService;
-		private readonly IAuthService _authService;
+
 		private readonly ILogger<EditProfileModel> _logger;
 
-		public EditProfileModel(AddDbContext context, IAuthService authService, IUserService userService, ILogger<EditProfileModel> logger)
+		public EditProfileModel(AddDbContext context,IUserService userService, ILogger<EditProfileModel> logger)
 		{
 			_context = context;
-			_authService = authService;
 			_userService = userService;
 			_logger = logger;
 		}
 
+		public User User { get; set; }
+
 		[BindProperty]
 		public UserDto UserDto { get; set; }
-
-
-		public async Task OnGetAsync()
+		public async Task<IActionResult> OnGetAsync()
 		{
-			var userId = _authService.GetCurrentUserId();
-			
+			var userId = _userService.GetCurrentUserId();
+
+			if (userId != null)
+			{
+				User = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+                if (User == null)
+                {
+                    return NotFound();
+                }
+            }
+			return Page();
 		}
          
 		public async Task<IActionResult> OnPostAsync()
 		{
-			_logger.LogInformation("OnPostAsync started");
+            var userId = _userService.GetCurrentUserId();
+            if (userId == null)
+            {
+                _logger.LogWarning("User is not authenticated");
+                ModelState.AddModelError(string.Empty, "User is not authenticated.");
+                return Page();
+            }
 
-			if (!ModelState.IsValid)
-			{
-				_logger.LogWarning("ModelState is not valid");
-				// Log chi tiết các lỗi trong ModelState
-				foreach (var state in ModelState)
-				{
-					if (state.Value.Errors.Count > 0)
-					{
-						_logger.LogWarning($"Property: {state.Key} - Errors: {string.Join(", ", state.Value.Errors.Select(e => e.ErrorMessage))}");
-					}
-				}
-				await OnGetAsync();
-				return Page();
-			}
+            try
+            {
+                _logger.LogInformation("Attempting to edit profile");
+                var result = await _userService.UpdateUserAsync(UserDto);
+                if (result.IsSucceed)
+                {
+                    _logger.LogInformation("Edit profile successfully");
+                    return RedirectToPage("/StudentProfile", new { });
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to edit profile: " + result.Message);
+                    ModelState.AddModelError(string.Empty, result.Message);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An error occurred while saving data: " + ex.Message);
+                ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
+            }
 
-			var userId = _authService.GetCurrentUserId();
-			if (userId == null)
-			{
-				_logger.LogWarning("User is not authenticated");
-				ModelState.AddModelError(string.Empty, "User is not authenticated.");
-				return Page();
-			}
-
-
-
-			try
-			{
-				_logger.LogInformation("Attempting to edit profile");
-				var result = await _authService.UpdateUserAsync(UserDto);
-				if (result.IsSucceed)
-				{
-					_logger.LogInformation("Edit profile successfully");
-					return RedirectToPage("/Profile", new { });
-				}
-				else
-				{
-					_logger.LogWarning("Failed to edit profile: " + result.Message);
-					ModelState.AddModelError(string.Empty, result.Message);
-				}
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError("An error occurred while saving data: " + ex.Message);
-				ModelState.AddModelError(string.Empty, "An error occurred while saving data: " + ex.Message);
-			}
-
-			await OnGetAsync();
-			return Page();
-		}
+            await OnGetAsync();
+            return Page();
+        }
 	}
 }
